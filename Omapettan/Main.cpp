@@ -15,7 +15,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	DrawCircle(320, 270, 120, Cr, TRUE);
 	DrawOval(290, 160, 30, 60, Cr, TRUE);
 	DrawOval(350, 160, 30, 60, Cr, TRUE);
-	Cr = GetColor(0, 0, 0);
+	Cr = GetColor(255, 0, 0);
 	DrawOval(290, 160, 30, 60, Cr, FALSE);
 	DrawOval(350, 160, 30, 60, Cr, FALSE);
 	DrawCircle(290, 150, 5, Cr, TRUE);
