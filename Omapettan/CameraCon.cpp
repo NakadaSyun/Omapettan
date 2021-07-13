@@ -1,5 +1,7 @@
 #include "CameraCon.h"
 
+#define PI 3.141592653589793
+
  c_CameraCon::c_CameraCon() {
 	 VRotate = 0.0f;         //êÇíºâÒì]
 	 HRotate = 0.0f;        //êÖïΩâÒì]
@@ -42,8 +44,7 @@
 		 CamY -= 10.0f;
 	 }
 
-	 printf("X = %f  Y = %f  Z = %f\n", HRotate, VRotate, TRotate);
-
+	 //printf("HRotate X = %f		X = %f\n", HRotate, HRotate * 180.0 / PI);
 	 position = VGet(position.x + CamX, position.y + CamY, position.z + CamZ);
  }
 
@@ -52,6 +53,7 @@
 	 GetMousePoint(&Nowx, &Nowy);
 
 	 static int Oldx = Nowx, Oldy = Nowy;
+	 printf("Nowx = %d		Oldx = %d\n", Nowx, Nowy);
 
 	 if (Oldx < Nowx) {
 		 HRotate += (Nowx % 10) * 0.005f;
@@ -65,9 +67,9 @@
 	 if (Oldy > Nowy) {
 		 VRotate -= (Nowy % 10) * 0.005f;
 	 }
-
 	 rotation = VGet(VRotate, HRotate, TRotate);
-	 
-	 Oldx = Nowx;
-	 Oldy = Nowy;
+
+	 SetMousePoint(640 / 2, 480 / 2);
+	 Oldx = 640 / 2;
+	 Oldy = 480 / 2;
  }

@@ -36,10 +36,11 @@ void GameBase::f_loop()
 {
 	//裏画面を表画面に反映、メッセージ処理、画面クリア
 	while (ScreenFlip() == 0 && ProcessMessage() == 0 && ClearDrawScreen() == 0) {
+
+		SetMouseDispFlag(false);
 		f_input();
 		f_update();
 		f_output();
-
 		//ループ終了判定
 		if (!isRunning) break;
 	}

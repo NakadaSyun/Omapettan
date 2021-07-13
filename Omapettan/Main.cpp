@@ -7,6 +7,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_
 
 	GameBase gameBase;
 
+
 	//デバックコンソールの表示
 	AllocConsole();
 	FILE* fp;
