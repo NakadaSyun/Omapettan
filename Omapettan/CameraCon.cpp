@@ -1,4 +1,5 @@
 #include "CameraCon.h"
+#include <math.h>
 
 #define PI 3.141592653589793
 
@@ -44,8 +45,15 @@
 		 CamY -= 10.0f;
 	 }
 
-	 //printf("HRotate X = %f		X = %f\n", HRotate, HRotate * 180.0 / PI);
-	 position = VGet(position.x + CamX, position.y + CamY, position.z + CamZ);
+	 float HcosTriRot = cos(HRotate);		//カメラのH角度のコサイン
+	 float HsinTriRot = sin(HRotate);		//カメラのH角度のコサイン
+
+
+	 float MoveZ = (CamZ * HcosTriRot) + (CamX * HsinTriRot) * (-1);	//左右の移動量を反転
+	 float MoveX = (CamX * HcosTriRot) + (CamZ * HsinTriRot);
+
+
+	 position = VGet(position.x + MoveX, position.y + CamY, position.z + MoveZ);
  }
 
  void c_CameraCon::f_setRotaion() {
@@ -53,7 +61,6 @@
 	 GetMousePoint(&Nowx, &Nowy);
 
 	 static int Oldx = Nowx, Oldy = Nowy;
-	 printf("Nowx = %d		Oldx = %d\n", Nowx, Nowy);
 
 	 if (Oldx < Nowx) {
 		 HRotate += (Nowx % 10) * 0.005f;

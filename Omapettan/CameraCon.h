@@ -10,6 +10,7 @@ public:
 	void f_setRotaion();
 
 
+
 private:
 	VECTOR position;
 	VECTOR rotation;
