@@ -1,6 +1,7 @@
 #include "DxLib.h"
 #include "GameManeger.h"
 
+VECTOR Playerposition;
 
 // ‰Šú‰»
 void c_GameManeger::f_init()
@@ -12,6 +13,8 @@ void c_GameManeger::f_init()
 	MV1SetPosition(model_Plane, VGet(0.0f,-100.0f,0.0f));
 
 	c_player = new c_Player(model_impostor);
+
+	Playerposition = c_player->f_GetPlayerPosition();
 
 	c_camera = new c_CameraCon();
 
@@ -30,6 +33,9 @@ void c_GameManeger::f_RoadModel()
 void c_GameManeger::f_update()
 {
 	c_player->f_update();
+
+	Playerposition = c_player->f_GetPlayerPosition();
+
 	c_camera->f_update();
 }
 

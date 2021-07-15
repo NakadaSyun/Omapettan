@@ -7,6 +7,8 @@
 #include "CameraCon.h"
 #include "DispUI.h"
 
+extern VECTOR Playerposition;
+
 class c_GameManeger
 {
 public:
@@ -15,16 +17,16 @@ public:
 	void f_update();			//フレームごとの処理
 	void f_output();			//フレームごとの描画
 
-private:
-	// 画像ファイルの読みこみ
-
-	int model_impostor;
-	int model_Plane;
-
 
 	c_DrawCube* c_Dc;
 	c_Player* c_player;
 	c_CameraCon* c_camera;
 	c_DispUI* c_dispUI;
+
+private:
+	// 画像ファイルの読みこみ
+
+	int model_impostor;
+	int model_Plane;
 
 };
