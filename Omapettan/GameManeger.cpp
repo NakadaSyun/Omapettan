@@ -12,6 +12,8 @@ void c_GameManeger::f_init()
 	// ‚R‚cƒ‚ƒfƒ‹‚ÉV‚µ‚¢À•W‚ğƒZƒbƒg
 	MV1SetPosition(model_Plane, VGet(0.0f,-100.0f,0.0f));
 
+	MV1SetPosition(model_Sphere, VGet(0.0f, -850.0f, 0.0f));			//‹…‘Ì
+
 	c_player = new c_Player(model_impostor);
 
 	Playerposition = c_player->f_GetPlayerPosition();
@@ -27,6 +29,7 @@ void c_GameManeger::f_RoadModel()
 	// ‚R‚cƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ
 	model_impostor = MV1LoadModel("models/among us.mv1");
 	model_Plane = MV1LoadModel("models/Plane.mv1");
+	model_Sphere = MV1LoadModel("models/TestSphere.mv1");
 }
 
 // ƒQ[ƒ€XV
@@ -44,7 +47,10 @@ void c_GameManeger::f_output()
 	//c_Dc->f_create(0, 0, 50, 640, 20, 250);
 
 	//°‚Ì¶¬
-	MV1DrawModel(model_Plane);
+	//MV1DrawModel(model_Plane);
+	//‹…‘Ì‚Ì¶¬
+	MV1SetScale(model_Sphere, VGet(3.0f, 3.0f, 3.0f));
+	MV1DrawModel(model_Sphere);
 	c_player->f_draw();
 	c_dispUI->f_draw();
 }
