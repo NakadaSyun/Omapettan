@@ -1,7 +1,9 @@
 #include "Player.h"
 #include "Math.h"
+#include "CameraCon.h"
 
 #define PI 3.141592653589793
+
 
 c_Player::c_Player(const int Model) {
 	p_Model = Model;
@@ -45,7 +47,6 @@ void c_Player::f_update(){
 	if (MoveZ != 0 && MoveX != 0 ) {
 		p_Rotation.y = atan2(-MoveX,-MoveZ);
 	}
-
 
 	p_Position = VAdd(p_Position,VGet(MoveX,0,MoveZ));
 

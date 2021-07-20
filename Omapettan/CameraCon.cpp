@@ -72,8 +72,8 @@
 	 //カメラのY軸の下限設定 0度まで
 	 if (Nowy < 0) Nowy = 0;
 
-	 float Camangle_H = Nowx * PI / 90;	//カメラの水平角度
-	 float Camangle_V = Nowy * PI / 90;	//カメラの垂直角度
+	 Camangle_H = Nowx * PI / 90;	//カメラの水平角度
+	 Camangle_V = Nowy * PI / 90;	//カメラの垂直角度
 
 	 DrawFormatString(0,0,0xffffff,"Nowy %d",Nowy);
 	 DrawFormatString(0, 20, 0xffffff, "Nowx %d", Nowx);
@@ -83,10 +83,11 @@
 	 position.y = Cameradistance.x * sin(Camangle_V) + Cameradistance.z * cos(Camangle_V);
 	 position.x += Playerposition.x;
 	 position.z += Playerposition.z;
-	 position.y += Playerposition.y;
+	 position.y -= Playerposition.y - 500.0f;
 
-	 DrawFormatString(0, 40, 0xffffff, "position.y %f", position.y);
+	 DrawFormatString(0, 40, 0xffffff, "position.x %f", position.x);
 	 DrawFormatString(0, 60, 0xffffff, "Playerposition.y %f", Playerposition.y);
+	 DrawFormatString(0, 80, 0xffffff, "Camangle_V %f", Camangle_V);
 
  }
 

@@ -47,10 +47,10 @@ void c_GameManeger::f_output()
 	//c_Dc->f_create(0, 0, 50, 640, 20, 250);
 
 	//°‚Ì¶¬
-	//MV1DrawModel(model_Plane);
+	MV1DrawModel(model_Plane);
 	//‹…‘Ì‚Ì¶¬
-	MV1SetScale(model_Sphere, VGet(3.0f, 3.0f, 3.0f));
-	MV1DrawModel(model_Sphere);
+	//MV1SetScale(model_Sphere, VGet(3.0f, 3.0f, 3.0f));
+	//MV1DrawModel(model_Sphere);
 	c_player->f_draw();
 	c_dispUI->f_draw();
 }

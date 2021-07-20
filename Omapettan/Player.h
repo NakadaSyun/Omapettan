@@ -9,6 +9,7 @@ public:
 	void f_draw();
 
 	VECTOR f_GetPlayerPosition();		//プレイヤーの座標を戻り値で返す
+
 private:
 	int p_Model;
 	VECTOR p_Rotation;
