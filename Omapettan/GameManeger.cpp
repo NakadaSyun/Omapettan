@@ -30,6 +30,7 @@ void c_GameManeger::f_RoadModel()
 	model_impostor = MV1LoadModel("models/among us.mv1");
 	model_Plane = MV1LoadModel("models/Plane.mv1");
 	model_Sphere = MV1LoadModel("models/TestSphere.mv1");
+	model_entyu = MV1LoadModel("models/entyu.mv1");
 }
 
 // ゲーム更新
@@ -51,6 +52,12 @@ void c_GameManeger::f_output()
 	//球体の生成
 	//MV1SetScale(model_Sphere, VGet(3.0f, 3.0f, 3.0f));
 	//MV1DrawModel(model_Sphere);
+
+	//for (int x = 0; x < 64; x++) {										//exeファイルだと正常に動作しないので一旦コメント化
+	//	MV1SetPosition(model_entyu, VGet(0.0f + (x * 50), 0.0f, 0.0f));
+	//	MV1DrawModel(model_entyu);
+	//}
+
 	c_player->f_draw();
 	c_dispUI->f_draw();
 }

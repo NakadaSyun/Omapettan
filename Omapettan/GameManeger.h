@@ -29,5 +29,5 @@ private:
 	int model_impostor;
 	int model_Plane;
 	int model_Sphere;
-
+	int model_entyu;
 };
