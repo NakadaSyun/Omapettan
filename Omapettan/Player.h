@@ -1,5 +1,6 @@
 #pragma once
 #include "DxLib.h"
+#include "Collision.h"
 
 class c_Player {
 public:
