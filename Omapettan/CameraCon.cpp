@@ -88,6 +88,16 @@
 	 DrawFormatString(0, 40, 0xffffff, "position.x %f", position.x);
 	 DrawFormatString(0, 60, 0xffffff, "Playerposition.y %f", Playerposition.y);
 	 DrawFormatString(0, 80, 0xffffff, "Camangle_V %f", Camangle_V);
+	 //DrawFormatString(0, 100, 0xffffff, "Camangle_H %f", Camangle_H);
+
+	 ////Y軸の回転
+	 //float HcosTriRot = cos(HRotate);		//カメラのH角度のコサイン
+	 //float HsinTriRot = sin(HRotate);		//カメラのH角度のコサイン
+
+	 ////XとZの移動量をY軸の回転量に合わせてsin cosをかける
+	 //float MoveZ = (CamZ * HcosTriRot) + (CamX * HsinTriRot) * (-1);	//左右の移動量を反転
+	 //float MoveX = (CamX * HcosTriRot) + (CamZ * HsinTriRot);
+
 
  }
 
