@@ -10,8 +10,7 @@ c_Collision::c_Collision(VECTOR position, float w, float h, float d) {
 
 bool c_Collision::f_Hit(c_Collision Col) {
 
-
-
+	return false;
 }
 
 void c_Collision::CubeDraw() {
