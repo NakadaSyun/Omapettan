@@ -11,6 +11,8 @@ c_Player::c_Player(const int Model) {
 	p_Position = VGet(0.0f, 10.0f, 150.0f);
 	p_Rotation = VGet(0.0f,PI,0.0f);
 
+	c_colision = new c_Collision(p_Position, 100.0f, 150.0f, 100.0f);
+
 }
 
 void c_Player::f_init() {
@@ -50,6 +52,7 @@ void c_Player::f_update(){
 
 	p_Position = VAdd(p_Position,VGet(MoveX,0,MoveZ));
 
+	c_colision->CubeDraw();
 
 }
 

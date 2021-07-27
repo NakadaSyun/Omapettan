@@ -5,12 +5,15 @@
 class c_Collision {
 public:
 	c_Collision(VECTOR position,float w,float h,float d);
-	bool f_Hit(c_Collision Col);
+	bool f_Hit();
 	void CubeDraw();
+	void f_update();
 	c_DrawCube Cube;
+
 
 private:
 	float wide, hight, depth;
 	VECTOR pos;
+	const int polyNum = 12;		//ボックスのポリゴン数
 	
 };

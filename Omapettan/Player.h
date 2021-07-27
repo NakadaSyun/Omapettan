@@ -10,12 +10,12 @@ public:
 	void f_draw();
 
 	VECTOR f_GetPlayerPosition();		//プレイヤーの座標を戻り値で返す
-
+	c_Collision* c_colision;
 private:
 	int p_Model;
 	VECTOR p_Rotation;
 	VECTOR p_Position;
 
 	const float p_Speed = 10.0f;		//プレイヤーの移動量
-
+	
 };
