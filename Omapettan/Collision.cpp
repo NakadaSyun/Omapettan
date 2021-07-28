@@ -8,6 +8,9 @@ c_Collision::c_Collision(VECTOR position, float w, float h, float d) {
 	depth = d;
 }
 
+c_Collision::c_Collision() {
+}
+
 bool c_Collision::f_Hit() {
 
 	if (HitCheck_Triangle_Triangle(VGet(0.0f, 0.0f, 0.0f), VGet(0.0f, 1.0f, 0.0f), VGet(0.0f, 0.0f, 1.0f), VGet(0.0f, 0.0f, 0.0f), VGet(0.0f, 1.0f, 0.0f), VGet(0.0f, 0.0f, 1.0f))) {

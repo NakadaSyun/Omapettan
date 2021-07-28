@@ -6,8 +6,9 @@ class c_Player {
 public:
 	c_Player(const int Model);
 	void f_init();
-	void f_update();
+	void f_update(bool Isfall);
 	void f_draw();
+	void f_fall();
 
 	VECTOR f_GetPlayerPosition();		//プレイヤーの座標を戻り値で返す
 	c_Collision* c_colision;
@@ -18,17 +19,4 @@ private:
 
 	const float p_Speed = 10.0f;		//プレイヤーの移動量
 	
-};
-
-
-class c_TestPlayer : public c_Player {
-public:
-	c_TestPlayer(const int Model);
-	void f_Fall();
-private:
-	int p_Mode2l;
-	VECTOR p_Rotation;
-	VECTOR p_Position;
-
-	const float p_Speed = 10.0f;		//プレイヤーの移動量
 };

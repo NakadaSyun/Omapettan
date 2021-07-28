@@ -8,7 +8,7 @@
 c_Player::c_Player(const int Model) {
 	p_Model = Model;
 	// ３Ｄモデルの座標を初期化
-	p_Position = VGet(0.0f, 10.0f, 150.0f);
+	p_Position = VGet(0.0f, 500.0f, 150.0f);
 	p_Rotation = VGet(0.0f,PI,0.0f);
 
 	c_colision = new c_Collision(p_Position, 100.0f, 200.0f, 100.0f);
@@ -21,7 +21,7 @@ void c_Player::f_init() {
 	p_Rotation = VGet(0.0f, 0.0f, 0.0f);
 }
 
-void c_Player::f_update(){
+void c_Player::f_update(bool Isfall){
 	// ３Ｄモデルに新しい座標をセット
 	MV1SetPosition(p_Model, p_Position);
 	// ３Ｄモデルに新しい回転値をセット
@@ -50,9 +50,18 @@ void c_Player::f_update(){
 		p_Rotation.y = atan2(-MoveX,-MoveZ);
 	}
 
-	p_Position = VAdd(p_Position,VGet(MoveX,0,MoveZ));
+	if (CheckHitKey(KEY_INPUT_Q) == 1) {
+		p_Position.y += 10;
+	}
 
+
+	p_Position = VAdd(p_Position,VGet(MoveX,0,MoveZ));
+	if(Isfall)f_fall();		//重力
 	c_colision->f_update(p_Position);
+}
+
+void c_Player::f_fall() {
+	p_Position.y -= 5.0f;
 }
 
 void c_Player::f_draw() {
@@ -65,19 +74,3 @@ VECTOR c_Player::f_GetPlayerPosition() {
 	return p_Position;
 }
 
-
-
-//継承クラス定義
-c_TestPlayer::c_TestPlayer(const int Model) : c_Player(Model){
-	p_Mode2l = Model;
-	// ３Ｄモデルの座標を初期化
-	p_Position = VGet(200.0f, 10.0f, 150.0f);
-	p_Rotation = VGet(0.0f, PI, 0.0f);
-
-	c_colision = new c_Collision(p_Position, 100.0f, 200.0f, 100.0f);
-
-}
-
-void c_TestPlayer::f_Fall() {
-	p_Position.y += 10;
-}

@@ -16,7 +16,6 @@ void c_GameManeger::f_init()
 
 
 	c_player = new c_Player(model_impostor);
-	c_testplayer = new c_TestPlayer(model_impostor);
 
 	Playerposition = c_player->f_GetPlayerPosition();
 
@@ -40,15 +39,15 @@ void c_GameManeger::f_RoadModel()
 // ゲーム更新
 void c_GameManeger::f_update()
 {
-	c_player->f_update();
-
-	c_testplayer->f_update();
+	bool Isfall = f_HitCheck(*c_player->c_colision, *c_stage->c_colision);
+	c_player->f_update(Isfall);
 
 	Playerposition = c_player->f_GetPlayerPosition();
 
 	c_camera->f_update();
 
 	c_stage->f_update();
+
 }
 
 void c_GameManeger::f_output()
@@ -67,7 +66,60 @@ void c_GameManeger::f_output()
 									//exeファイルだと正常に動作しないので一旦コメント化
 	c_stage->f_output();
 	c_player->f_draw();
-	c_testplayer->f_draw();
 	c_dispUI->f_draw();
+}
+
+bool c_GameManeger::f_HitCheck(c_Collision col1, c_Collision col2) {
+	VECTOR Cubevertex1[8];        //四角形の頂点8
+	VECTOR Cubevertex2[8];        //四角形の頂点8
+
+
+	//頂点座標の設定
+	Cubevertex1[0] = col1.pos;																			//
+	Cubevertex1[1] = VGet(col1.pos.x + col1.wide, col1.pos.y, col1.pos.z);
+	Cubevertex1[2] = VGet(col1.pos.x, col1.pos.y + col1.hight, col1.pos.z);
+	Cubevertex1[3] = VGet(col1.pos.x + col1.wide, col1.pos.y + col1.hight, col1.pos.z);
+	Cubevertex1[4] = VGet(col1.pos.x, col1.pos.y, col1.pos.z + col1.depth);
+	Cubevertex1[5] = VGet(col1.pos.x + col1.wide, col1.pos.y, col1.pos.z + col1.depth);
+	Cubevertex1[6] = VGet(col1.pos.x, col1.pos.y + col1.hight, col1.pos.z + col1.depth);
+	Cubevertex1[7] = VGet(col1.pos.x + col1.wide, col1.pos.y + col1.hight, col1.pos.z + col1.depth);
+
+	Cubevertex2[0] = col2.pos;
+	Cubevertex2[1] = VGet(col2.pos.x + col2.wide, col2.pos.y, col2.pos.z);
+	Cubevertex2[2] = VGet(col2.pos.x, col2.pos.y + col2.hight, col2.pos.z);
+	Cubevertex2[3] = VGet(col2.pos.x + col2.wide, col2.pos.y + col2.hight, col2.pos.z);
+	Cubevertex2[4] = VGet(col2.pos.x, col2.pos.y, col2.pos.z + col2.depth);
+	Cubevertex2[5] = VGet(col2.pos.x + col2.wide, col2.pos.y, col2.pos.z + col2.depth);
+	Cubevertex2[6] = VGet(col2.pos.x, col2.pos.y + col2.hight, col2.pos.z + col2.depth);
+	Cubevertex2[7] = VGet(col2.pos.x + col2.wide, col2.pos.y + col2.hight, col2.pos.z + col2.depth);
+
+
+	if (HitCheck_Triangle_Triangle(Cubevertex1[0], Cubevertex1[1], Cubevertex1[2], Cubevertex2[0], Cubevertex2[1], Cubevertex2[4])) {
+		return false;
+	}
+	if (HitCheck_Triangle_Triangle(Cubevertex1[0], Cubevertex1[4], Cubevertex1[6], Cubevertex2[0], Cubevertex2[1], Cubevertex2[4])) {
+		return false;
+	}
+	if (HitCheck_Triangle_Triangle(Cubevertex1[4], Cubevertex1[5], Cubevertex1[7], Cubevertex2[0], Cubevertex2[1], Cubevertex2[4])) {
+		return false;
+	}
+	if (HitCheck_Triangle_Triangle(Cubevertex1[1], Cubevertex1[5], Cubevertex1[3], Cubevertex2[0], Cubevertex2[1], Cubevertex2[4])) {
+		return false;
+	}
+
+
+	if (HitCheck_Triangle_Triangle(Cubevertex1[0], Cubevertex1[1], Cubevertex1[2], Cubevertex2[1], Cubevertex2[4], Cubevertex2[5])) {
+		return false;
+	}
+	if (HitCheck_Triangle_Triangle(Cubevertex1[0], Cubevertex1[4], Cubevertex1[6], Cubevertex2[1], Cubevertex2[4], Cubevertex2[5])) {
+		return false;
+	}
+	if (HitCheck_Triangle_Triangle(Cubevertex1[4], Cubevertex1[5], Cubevertex1[7], Cubevertex2[1], Cubevertex2[4], Cubevertex2[5])) {
+		return false;
+	}
+	if (HitCheck_Triangle_Triangle(Cubevertex1[1], Cubevertex1[5], Cubevertex1[3], Cubevertex2[1], Cubevertex2[4], Cubevertex2[5])) {
+		return false;
+	}
+	return true;
 }
 
