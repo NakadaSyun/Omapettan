@@ -19,3 +19,16 @@ private:
 	const float p_Speed = 10.0f;		//プレイヤーの移動量
 	
 };
+
+
+class c_TestPlayer : public c_Player {
+public:
+	c_TestPlayer(const int Model);
+	void f_Fall();
+private:
+	int p_Mode2l;
+	VECTOR p_Rotation;
+	VECTOR p_Position;
+
+	const float p_Speed = 10.0f;		//プレイヤーの移動量
+};

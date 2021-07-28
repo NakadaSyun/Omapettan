@@ -18,12 +18,12 @@ bool c_Collision::f_Hit() {
 	return false;
 }
 
-void c_Collision::f_update() {
-
+void c_Collision::f_update(VECTOR position) {
+	pos = position;
 
 	CubeDraw();
 }
 
 void c_Collision::CubeDraw() {
-	Cube.f_create(pos.x, pos.y, pos.z, wide + (wide / 2), hight, depth);
+	Cube.f_create(pos.x - (wide / 2), pos.y, pos.z - (depth / 2), wide , hight, depth);
 }

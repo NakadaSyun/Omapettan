@@ -7,7 +7,7 @@ public:
 	c_Collision(VECTOR position,float w,float h,float d);
 	bool f_Hit();
 	void CubeDraw();
-	void f_update();
+	void f_update(VECTOR position);
 	c_DrawCube Cube;
 
 

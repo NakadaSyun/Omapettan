@@ -11,7 +11,7 @@ c_Player::c_Player(const int Model) {
 	p_Position = VGet(0.0f, 10.0f, 150.0f);
 	p_Rotation = VGet(0.0f,PI,0.0f);
 
-	c_colision = new c_Collision(p_Position, 100.0f, 150.0f, 100.0f);
+	c_colision = new c_Collision(p_Position, 100.0f, 200.0f, 100.0f);
 
 }
 
@@ -52,15 +52,32 @@ void c_Player::f_update(){
 
 	p_Position = VAdd(p_Position,VGet(MoveX,0,MoveZ));
 
-	c_colision->CubeDraw();
-
+	c_colision->f_update(p_Position);
 }
 
 void c_Player::f_draw() {
+	c_colision->CubeDraw();
 	// ‚R‚cƒ‚ƒfƒ‹‚Ì•`‰æ
 	MV1DrawModel(p_Model);
 }
 
 VECTOR c_Player::f_GetPlayerPosition() {
 	return p_Position;
+}
+
+
+
+//Œp³ƒNƒ‰ƒX’è‹`
+c_TestPlayer::c_TestPlayer(const int Model) : c_Player(Model){
+	p_Mode2l = Model;
+	// ‚R‚cƒ‚ƒfƒ‹‚ÌÀ•W‚ğ‰Šú‰»
+	p_Position = VGet(200.0f, 10.0f, 150.0f);
+	p_Rotation = VGet(0.0f, PI, 0.0f);
+
+	c_colision = new c_Collision(p_Position, 100.0f, 200.0f, 100.0f);
+
+}
+
+void c_TestPlayer::f_Fall() {
+	p_Position.y += 10;
 }

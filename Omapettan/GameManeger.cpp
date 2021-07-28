@@ -16,12 +16,15 @@ void c_GameManeger::f_init()
 
 
 	c_player = new c_Player(model_impostor);
+	c_testplayer = new c_TestPlayer(model_impostor);
 
 	Playerposition = c_player->f_GetPlayerPosition();
 
 	c_camera = new c_CameraCon();
 
 	c_dispUI = new c_DispUI();
+
+	c_stage = new c_Stage(model_Plane);
 
 }
 
@@ -39,9 +42,13 @@ void c_GameManeger::f_update()
 {
 	c_player->f_update();
 
+	c_testplayer->f_update();
+
 	Playerposition = c_player->f_GetPlayerPosition();
 
 	c_camera->f_update();
+
+	c_stage->f_update();
 }
 
 void c_GameManeger::f_output()
@@ -49,7 +56,7 @@ void c_GameManeger::f_output()
 	//c_Dc->f_create(0, 0, 50, 640, 20, 250);
 
 	//床の生成
-	MV1DrawModel(model_Plane);
+	//MV1DrawModel(model_Plane);
 	//球体の生成
 	//MV1SetScale(model_Sphere, VGet(3.0f, 3.0f, 3.0f));
 	//MV1DrawModel(model_Sphere);
@@ -58,8 +65,9 @@ void c_GameManeger::f_output()
 	//	MV1DrawModel(model_Cylinder);
 	//}
 									//exeファイルだと正常に動作しないので一旦コメント化
-
+	c_stage->f_output();
 	c_player->f_draw();
+	c_testplayer->f_draw();
 	c_dispUI->f_draw();
 }
 

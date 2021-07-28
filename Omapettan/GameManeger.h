@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "CameraCon.h"
 #include "DispUI.h"
+#include "Stage.h"
 
 extern VECTOR Playerposition;
 
@@ -22,6 +23,9 @@ public:
 	c_Player* c_player;
 	c_CameraCon* c_camera;
 	c_DispUI* c_dispUI;
+	c_Stage* c_stage;
+
+	c_TestPlayer* c_testplayer;
 
 private:
 	// ‰æ‘œƒtƒ@ƒCƒ‹‚Ì“Ç‚Ý‚±‚Ý
