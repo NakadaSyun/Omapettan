@@ -8,14 +8,17 @@
 #include "DispUI.h"
 #include "Stage.h"
 #include "Collision.h"
+#include "HairVertexBuffer.h"
+
 
 extern VECTOR Playerposition;
 
-class c_GameManeger
+class c_GameManager
 {
 public:
 	void f_init();				//ゲームの初期化
 	void f_RoadModel();			//モデルの読込み
+	void f_RoadImage();         //画像の読み込み
 	void f_update();			//フレームごとの処理
 	void f_output();			//フレームごとの描画
 
@@ -26,12 +29,16 @@ public:
 	c_CameraCon* c_camera;
 	c_DispUI* c_dispUI;
 	c_Stage* c_stage;
+	c_Hair* c_hair;
 
 private:
-	// 画像ファイルの読みこみ
-
+	
+	// モデル
 	int model_impostor;
 	int model_Plane;
 	int model_Sphere;
 	int model_Cylinder;
+
+	// 画像
+	int image_Cylinder;
 };

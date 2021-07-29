@@ -1,7 +1,7 @@
 #pragma once
 
 #include "DxLib.h"
-#include "GameManeger.h"
+#include "GameManager.h"
 
 class GameBase {
 public:
@@ -11,7 +11,7 @@ public:
 private:
 	bool isRunning;
 
-	c_GameManeger* c_gm;
+	c_GameManager* c_gm;
 
 	void f_input();
 	void f_update();

@@ -21,8 +21,14 @@ bool GameBase::f_init()
 	//裏画面設定
 	SetDrawScreen(DX_SCREEN_BACK);
 
+	// Ｚバッファを使用する
+	SetUseZBufferFlag(TRUE);
+
+	// Ｚバッファへの書き込みを行う
+	SetWriteZBufferFlag(TRUE);
+
 	//ゲームマネージャー生成
-	c_gm = new c_GameManeger();
+	c_gm = new c_GameManager();
 
 	// ゲームマネジャ初期化
 	c_gm->f_init();

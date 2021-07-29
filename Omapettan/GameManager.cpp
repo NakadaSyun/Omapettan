@@ -1,12 +1,13 @@
 #include "DxLib.h"
-#include "GameManeger.h"
+#include "GameManager.h"
 
 VECTOR Playerposition;
 
 // 初期化
-void c_GameManeger::f_init()
+void c_GameManager::f_init()
 {
 	f_RoadModel();
+	f_RoadImage();
 
 
 	// ３Ｄモデルに新しい座標をセット
@@ -25,9 +26,11 @@ void c_GameManeger::f_init()
 
 	c_stage = new c_Stage(model_Plane);
 
+	c_hair = new c_Hair(model_Cylinder, image_Cylinder);
 }
 
-void c_GameManeger::f_RoadModel()
+// モデルの読み込み
+void c_GameManager::f_RoadModel()
 {
 	// ３Ｄモデルの読み込み
 	model_impostor = MV1LoadModel("models/among us.mv1");
@@ -36,8 +39,14 @@ void c_GameManeger::f_RoadModel()
 	model_Cylinder = MV1LoadModel("models/cylinder.mv1");
 }
 
+void c_GameManager::f_RoadImage() 
+{
+	// 画像の読み込み
+	image_Cylinder = LoadGraph("images/KabeTex.bmp");
+}
+
 // ゲーム更新
-void c_GameManeger::f_update()
+void c_GameManager::f_update()
 {
 	bool Isfall = f_HitCheck(*c_player->c_colision, *c_stage->c_colision);
 	c_player->f_update(Isfall);
@@ -48,28 +57,20 @@ void c_GameManeger::f_update()
 
 	c_stage->f_update();
 
+	c_hair->f_update();
 }
 
-void c_GameManeger::f_output()
+// 出力(描画)
+void c_GameManager::f_output()
 {
-	//c_Dc->f_create(0, 0, 50, 640, 20, 250);
-
-	//床の生成
-	//MV1DrawModel(model_Plane);
-	//球体の生成
-	//MV1SetScale(model_Sphere, VGet(3.0f, 3.0f, 3.0f));
-	//MV1DrawModel(model_Sphere);
-	//for (int x = 0; x < 64; x++) {
-	//	MV1SetPosition(model_Cylinder, VGet(0.0f + (x * 50), 0.0f, 0.0f));
-	//	MV1DrawModel(model_Cylinder);
-	//}
-									//exeファイルだと正常に動作しないので一旦コメント化
 	c_stage->f_output();
 	c_player->f_draw();
 	c_dispUI->f_draw();
+	c_hair->f_output();
 }
 
-bool c_GameManeger::f_HitCheck(c_Collision col1, c_Collision col2) {
+// 衝突判定
+bool c_GameManager::f_HitCheck(c_Collision col1, c_Collision col2) {
 	VECTOR Cubevertex1[8];        //四角形の頂点8
 	VECTOR Cubevertex2[8];        //四角形の頂点8
 

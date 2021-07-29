@@ -2,7 +2,7 @@
 
 #include "CameraCon.h"
 #include <math.h>
-#include "GameManeger.h"
+#include "GameManager.h"
 
 #define PI 3.141592653589793
 
