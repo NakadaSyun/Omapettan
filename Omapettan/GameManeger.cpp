@@ -75,23 +75,23 @@ bool c_GameManeger::f_HitCheck(c_Collision col1, c_Collision col2) {
 
 
 	//í∏ì_ç¿ïWÇÃê›íË
-	Cubevertex1[0] = col1.pos;																			//
-	Cubevertex1[1] = VGet(col1.pos.x + col1.wide, col1.pos.y, col1.pos.z);
-	Cubevertex1[2] = VGet(col1.pos.x, col1.pos.y + col1.hight, col1.pos.z);
-	Cubevertex1[3] = VGet(col1.pos.x + col1.wide, col1.pos.y + col1.hight, col1.pos.z);
-	Cubevertex1[4] = VGet(col1.pos.x, col1.pos.y, col1.pos.z + col1.depth);
-	Cubevertex1[5] = VGet(col1.pos.x + col1.wide, col1.pos.y, col1.pos.z + col1.depth);
-	Cubevertex1[6] = VGet(col1.pos.x, col1.pos.y + col1.hight, col1.pos.z + col1.depth);
-	Cubevertex1[7] = VGet(col1.pos.x + col1.wide, col1.pos.y + col1.hight, col1.pos.z + col1.depth);
+	Cubevertex1[0] = VGet(col1.pos.x - (col1.wide / 2), col1.pos.y, col1.pos.z - (col1.depth / 2));																			//
+	Cubevertex1[1] = VGet(col1.pos.x + (col1.wide / 2), col1.pos.y, col1.pos.z - (col1.depth / 2));
+	Cubevertex1[2] = VGet(col1.pos.x - (col1.wide / 2), col1.pos.y + col1.hight, col1.pos.z - (col1.depth / 2));
+	Cubevertex1[3] = VGet(col1.pos.x + (col1.wide / 2), col1.pos.y + col1.hight, col1.pos.z - (col1.depth / 2));
+	Cubevertex1[4] = VGet(col1.pos.x - (col1.wide / 2), col1.pos.y, col1.pos.z + (col1.depth / 2));
+	Cubevertex1[5] = VGet(col1.pos.x + (col1.wide / 2), col1.pos.y, col1.pos.z + (col1.depth / 2));
+	Cubevertex1[6] = VGet(col1.pos.x - (col1.wide / 2), col1.pos.y + col1.hight, col1.pos.z + (col1.depth / 2));
+	Cubevertex1[7] = VGet(col1.pos.x + (col1.wide / 2), col1.pos.y + col1.hight, col1.pos.z + (col1.depth / 2));
 
-	Cubevertex2[0] = col2.pos;
-	Cubevertex2[1] = VGet(col2.pos.x + col2.wide, col2.pos.y, col2.pos.z);
-	Cubevertex2[2] = VGet(col2.pos.x, col2.pos.y + col2.hight, col2.pos.z);
-	Cubevertex2[3] = VGet(col2.pos.x + col2.wide, col2.pos.y + col2.hight, col2.pos.z);
-	Cubevertex2[4] = VGet(col2.pos.x, col2.pos.y, col2.pos.z + col2.depth);
-	Cubevertex2[5] = VGet(col2.pos.x + col2.wide, col2.pos.y, col2.pos.z + col2.depth);
-	Cubevertex2[6] = VGet(col2.pos.x, col2.pos.y + col2.hight, col2.pos.z + col2.depth);
-	Cubevertex2[7] = VGet(col2.pos.x + col2.wide, col2.pos.y + col2.hight, col2.pos.z + col2.depth);
+	Cubevertex2[0] = VGet(col2.pos.x - (col2.wide / 2), col2.pos.y, col2.pos.z - (col2.depth / 2));
+	Cubevertex2[1] = VGet(col2.pos.x + (col2.wide / 2), col2.pos.y, col2.pos.z - (col2.depth / 2));
+	Cubevertex2[2] = VGet(col2.pos.x - (col2.wide / 2), col2.pos.y + col2.hight, col2.pos.z - (col2.depth / 2));
+	Cubevertex2[3] = VGet(col2.pos.x + (col2.wide / 2), col2.pos.y + col2.hight, col2.pos.z - (col2.depth / 2));
+	Cubevertex2[4] = VGet(col2.pos.x - (col2.wide / 2), col2.pos.y, col2.pos.z + (col2.depth / 2));
+	Cubevertex2[5] = VGet(col2.pos.x + (col2.wide / 2), col2.pos.y, col2.pos.z + (col2.depth / 2));
+	Cubevertex2[6] = VGet(col2.pos.x - (col2.wide / 2), col2.pos.y + col2.hight, col2.pos.z + (col2.depth / 2));
+	Cubevertex2[7] = VGet(col2.pos.x + (col2.wide / 2), col2.pos.y + col2.hight, col2.pos.z + (col2.depth / 2));
 
 
 	if (HitCheck_Triangle_Triangle(Cubevertex1[0], Cubevertex1[1], Cubevertex1[2], Cubevertex2[0], Cubevertex2[1], Cubevertex2[4])) {

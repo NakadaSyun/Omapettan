@@ -22,7 +22,6 @@ void c_Stage::f_update() {
 
 void c_Stage::f_output() {
 
-	c_colision->CubeDraw();
 	//è∞ÇÃê∂ê¨
 	MV1DrawModel(sModel);
 }

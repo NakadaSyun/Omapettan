@@ -8,8 +8,6 @@ c_Collision::c_Collision(VECTOR position, float w, float h, float d) {
 	depth = d;
 }
 
-c_Collision::c_Collision() {
-}
 
 bool c_Collision::f_Hit() {
 

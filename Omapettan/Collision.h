@@ -4,7 +4,6 @@
 
 class c_Collision {
 public:
-	c_Collision();
 	c_Collision(VECTOR position,float w,float h,float d);
 	bool f_Hit();
 	void CubeDraw();
