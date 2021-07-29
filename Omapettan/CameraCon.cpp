@@ -27,39 +27,6 @@ void c_CameraCon::f_update() {
 }
 
 void c_CameraCon::f_setPosition() {
-	//float CamX = 0.0f;            //カメラのX軸
-	//float CamY = 0.0f;            //カメラのY軸
-	//float CamZ = 0.0f;            //カメラのZ軸
-
-	//if (CheckHitKey(KEY_INPUT_W) == 1) {
-	   // CamZ += 10.0f;
-	//}
-	//if (CheckHitKey(KEY_INPUT_A) == 1) {
-	   // CamX -= 10.0f;
-	//}
-	//if (CheckHitKey(KEY_INPUT_S) == 1) {
-	   // CamZ -= 10.0f;
-	//}
-	//if (CheckHitKey(KEY_INPUT_D) == 1) {
-	   // CamX += 10.0f;
-	//}
-
-	//ズームインアウト
-	//if (CheckHitKey(KEY_INPUT_E) == 1) {
-	   // CamY += 10.0f;
-	//}
-	//if (CheckHitKey(KEY_INPUT_Q) == 1) {
-	   // CamY -= 10.0f;
-	//}
-
-
-	//float MoveZ = (CamZ * HcosTriRot) + (CamX * HsinTriRot) * (-1);	//左右の移動量を反転
-	//float MoveX = (CamX * HcosTriRot) + (CamZ * HsinTriRot);
-
-	//カメラの座標　=　(プレイヤーの座標+プレイヤーとの固定距離)
-	//position = VGet(Playerposition.x + Cameradistance.x, Playerposition.y + Cameradistance.y, Playerposition.z + Cameradistance.z);
-	//position = VGet(Nowx * PI / 180 + Cameradistance.x, Playerposition.y + Cameradistance.y, Nowx * PI / 180 + Cameradistance.z);
-
 
 	int Nowx, Nowy;		//マウスの座標変数
 	GetMousePoint(&Nowx, &Nowy);	//マウスの座標取得
@@ -68,16 +35,12 @@ void c_CameraCon::f_setPosition() {
 	Nowy -= 480 / 2;
 	//カメラのY軸の上限設定 90度まで
 	if (Nowy > 90) Nowy = 90;
-	//カメラのY軸の下限設定 0度まで
-	if (Nowy < 0) Nowy = 0;
+	//カメラのY軸の下限設定 20度まで
+	if (Nowy < 20) Nowy = 20;
 
 	Camangle_H = Nowx * PI / 90;	//カメラの水平角度
 	Camangle_V = Nowy * PI / 90;	//カメラの垂直角度
 
-
-	//Y軸の回転
-	HcosTriRot = cos(Camangle_H);		//カメラのH角度のコサイン
-	HsinTriRot = sin(Camangle_H);		//カメラのH角度のコサイン
 
 	DrawFormatString(0, 0, 0xffffff, "Nowy %d", Nowy);
 	DrawFormatString(0, 20, 0xffffff, "Nowx %d", Nowx);
@@ -91,13 +54,7 @@ void c_CameraCon::f_setPosition() {
 
 	DrawFormatString(0, 40, 0xffffff, "position.x %f", position.x);
 	DrawFormatString(0, 60, 0xffffff, "Playerposition.y %f", Playerposition.y);
-	DrawFormatString(0, 80, 0xffffff, "HcosTriRot %f", HcosTriRot);
-
-
-	////XとZの移動量をY軸の回転量に合わせてsin cosをかける
-	//float MoveZ = (CamZ * HcosTriRot) + (CamX * HsinTriRot) * (-1);	//左右の移動量を反転
-	//float MoveX = (CamX * HcosTriRot) + (CamZ * HsinTriRot);
-
+	DrawFormatString(0, 80, 0xffffff, "position.y %f", position.y);
 
 }
 

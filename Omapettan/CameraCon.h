@@ -15,10 +15,6 @@ public:
 	float Camangle_H;	//カメラの水平角度
 	float Camangle_V;	//カメラの垂直角度
 
-	////Y軸の回転
-	float HcosTriRot;		//カメラのH角度のコサイン
-	float HsinTriRot;		//カメラのH角度のコサイン
-
 	VECTOR position;
 
 
