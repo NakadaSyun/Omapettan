@@ -22,6 +22,9 @@ void c_Stage::f_update() {
 
 void c_Stage::f_output() {
 
+	//òrägëÂï\é¶
+	MV1SetScale(sModel, VGet(4.0f, 4.0f, 4.0f));
+
 	//è∞ÇÃê∂ê¨
 	MV1DrawModel(sModel);
 }

@@ -28,22 +28,46 @@ void c_CameraCon::f_update() {
 
 void c_CameraCon::f_setPosition() {
 
+	static int Camang_Value_X = 0;
+	static int Camang_Value_Y = 0;
+
 	int Nowx, Nowy;		//マウスの座標変数
 	GetMousePoint(&Nowx, &Nowy);	//マウスの座標取得
-	//画面中心が原点に来るように調整
-	Nowx -= 640 / 2;
-	Nowy -= 480 / 2;
+	static int Oldx = Nowx, Oldy = Nowy;
+
+	DrawFormatString(500, 0, 0xffffff, "Mousey %d", Nowy);
+	DrawFormatString(500, 20, 0xffffff, "Oldy %d", Oldy);
+	if (Oldy < Nowy) {
+		Camang_Value_Y++;
+	}
+	if (Oldy > Nowy) {
+		Camang_Value_Y--;
+	}
+	//if (Oldy < Nowy) {
+	//	Camang_Value_Y += (Nowy - Oldy) /4;
+	//}
+	//if (Oldy > Nowy) {
+	//	Camang_Value_Y -= (Oldy - Nowy)/4;
+	//}
+
+	Oldy = Nowy;
+	Nowy = 0;
+	//画面中心が原点に来るように調整 
+	//Nowx -= 640 / 2;
+	//Nowy -= 480 / 2;
 	//カメラのY軸の上限設定 90度まで
-	if (Nowy > 90) Nowy = 90;
+	if (Camang_Value_Y > 90) Camang_Value_Y = 90;
 	//カメラのY軸の下限設定 20度まで
-	if (Nowy < 20) Nowy = 20;
+	if (Camang_Value_Y < 20) Camang_Value_Y = 20;
+
 
 	Camangle_H = Nowx * PI / 90;	//カメラの水平角度
-	Camangle_V = Nowy * PI / 90;	//カメラの垂直角度
+	Camangle_V = Camang_Value_Y * PI / 90;	//カメラの垂直角度
+
+	DrawFormatString(0, 20, 0xffffff, "Camangle_V %f", Camangle_V);
 
 
-	DrawFormatString(0, 0, 0xffffff, "Nowy %d", Nowy);
-	DrawFormatString(0, 20, 0xffffff, "Nowx %d", Nowx);
+	DrawFormatString(0, 0, 0xffffff, "Camang_Value_Y %d", Camang_Value_Y);
 
 	position.x = Cameradistance.x * cos(Camangle_H) + Cameradistance.z * sin(Camangle_H);
 	position.z = -Cameradistance.x * sin(Camangle_H) + Cameradistance.z * cos(Camangle_H);

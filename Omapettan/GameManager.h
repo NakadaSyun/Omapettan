@@ -38,6 +38,7 @@ private:
 	int model_Plane;
 	int model_Sphere;
 	int model_Cylinder;
+	int model_Arm;
 
 	// ‰æ‘œ
 	int image_Cylinder;
