@@ -22,7 +22,7 @@ private:
 	//VECTOR position;
 	VECTOR rotation;
 
-	const VECTOR Cameradistance = VGet(0.0f, 0.0f, -500);	//カメラとプレイヤーの距離
+	const VECTOR Cameradistance = VGet(0.0f, 800.0f, -100.0f);	//カメラとプレイヤーの距離
 
 	float HRotate, VRotate, TRotate;			//垂直：水平：ひねり
 };

@@ -34,6 +34,8 @@ void c_Player::f_update(bool Isfall) {
 
 	c_cameracon->f_update();		//c_cameraconを呼んで値を更新
 
+	p_Rotation.y = c_cameracon->Camangle_H + PI;
+
 	if (CheckHitKey(KEY_INPUT_W) == 1) {
 		p_Rotation.y = c_cameracon->Camangle_H + PI;		//キャラの回転Y軸をカメラに向かって + 90度方向にする
 

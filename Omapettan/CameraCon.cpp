@@ -37,12 +37,12 @@ void c_CameraCon::f_setPosition() {
 
 	DrawFormatString(500, 0, 0xffffff, "Mousey %d", Nowy);
 	DrawFormatString(500, 20, 0xffffff, "Oldy %d", Oldy);
-	if (Oldy < Nowy) {
-		Camang_Value_Y++;
-	}
-	if (Oldy > Nowy) {
-		Camang_Value_Y--;
-	}
+	//if (Oldy < Nowy) {
+	//	Camang_Value_Y++;
+	//}
+	//if (Oldy > Nowy) {
+	//	Camang_Value_Y--;
+	//}
 	//if (Oldy < Nowy) {
 	//	Camang_Value_Y += (Nowy - Oldy) /4;
 	//}
@@ -56,9 +56,9 @@ void c_CameraCon::f_setPosition() {
 	//Nowx -= 640 / 2;
 	//Nowy -= 480 / 2;
 	//カメラのY軸の上限設定 90度まで
-	if (Camang_Value_Y > 90) Camang_Value_Y = 90;
-	//カメラのY軸の下限設定 20度まで
-	if (Camang_Value_Y < 20) Camang_Value_Y = 20;
+	//if (Camang_Value_Y > 90) Camang_Value_Y = 90;
+	////カメラのY軸の下限設定 20度まで
+	//if (Camang_Value_Y < 20) Camang_Value_Y = 20;
 
 
 	Camangle_H = Nowx * PI / 90;	//カメラの水平角度
@@ -71,10 +71,10 @@ void c_CameraCon::f_setPosition() {
 
 	position.x = Cameradistance.x * cos(Camangle_H) + Cameradistance.z * sin(Camangle_H);
 	position.z = -Cameradistance.x * sin(Camangle_H) + Cameradistance.z * cos(Camangle_H);
-	position.y = Cameradistance.x * sin(Camangle_V) + Cameradistance.z * cos(Camangle_V);
+	//position.y = Cameradistance.x * sin(Camangle_V) + Cameradistance.z * cos(Camangle_V);
 	position.x += Playerposition.x;
 	position.z += Playerposition.z;
-	position.y -= Playerposition.y - 500.0f;
+	//position.y -= Playerposition.y - 500.0f;
 
 	DrawFormatString(0, 40, 0xffffff, "position.x %f", position.x);
 	DrawFormatString(0, 60, 0xffffff, "Playerposition.y %f", Playerposition.y);
