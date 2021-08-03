@@ -12,6 +12,7 @@ public:
 	void f_update();
 	void f_modelDuplication();
 private:
+	void f_allocateMemory();
 	VERTEX3D* vertex;
 	DWORD* index;
 	int vertexBufHandle;
