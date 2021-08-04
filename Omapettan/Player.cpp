@@ -6,8 +6,6 @@
 
 #define PI 3.141592653589793
 
-
-
 c_Player::c_Player(const int Model) {
 	p_Model = Model;
 	// ３Ｄモデルの座標を初期化
@@ -77,6 +75,29 @@ void c_Player::f_update(bool Isfall) {
 	if (CheckHitKey(KEY_INPUT_D) == 1 && CheckHitKey(KEY_INPUT_S) == 1) {
 		p_Rotation.y = c_cameracon->Camangle_H - PI / 4;
 	}
+
+	StartPos = VGet(p_Position.x, p_Position.y + 500.0f, p_Position.z);
+	EndPos = VGet(p_Position.x , p_Position.y - 500.0f,p_Position.z);
+
+	static int model_Arm;
+	//static int flg = 0;
+	//if (flg++ == 0 ) {
+	//}
+	model_Arm = MV1LoadModel("models/arm.mv1");
+	MV1SetupCollInfo(model_Arm, -1, 8, 8, 8);		//モデル全体のフレームにコリジョンを準備
+
+	DrawLine3D(StartPos, EndPos, GetColor(255, 0, 0));
+
+	MV1_COLL_RESULT_POLY HitPoly = MV1CollCheck_Line(model_Arm,-1, StartPos, EndPos);
+
+	p_Rotation = HitPoly.Normal;
+
+	DrawFormatString(0, 200, GetColor(255, 255, 255), "Normal.x:%f個", HitPoly.Normal.x);
+	DrawFormatString(0, 220, GetColor(255, 255, 255), "Normal.y:%f個", HitPoly.Normal.y);
+	DrawFormatString(0, 240, GetColor(255, 255, 255), "Normal.z:%f個", HitPoly.Normal.z);
+
+
+	DrawLine3D(HitPoly.Position[0], HitPoly.Normal, GetColor(0, 0, 255));
 
 
 

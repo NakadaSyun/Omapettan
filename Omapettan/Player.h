@@ -5,6 +5,7 @@
 #include "Collision.h"
 #include "CameraCon.h"
 
+
 class c_Player {
 public:
 	c_Player(const int Model);
@@ -16,6 +17,8 @@ public:
 	float PlayerAngle_H = 0.0f;
 
 	VECTOR f_GetPlayerPosition();		//プレイヤーの座標を戻り値で返す
+
+	VECTOR StartPos, EndPos;		//プレイヤーの当たり判定の線分の始点、終点
 
 	c_Collision* c_colision;
 
