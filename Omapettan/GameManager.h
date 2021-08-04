@@ -10,6 +10,8 @@
 #include "Collision.h"
 #include "HairVertexBuffer.h"
 
+#include <iostream>
+
 
 extern VECTOR Playerposition;
 

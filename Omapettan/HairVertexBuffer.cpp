@@ -1,8 +1,15 @@
 #include "HairVertexBuffer.h"
-
-
+#include <iostream>
 
 c_Hair::c_Hair(const int Model, const int Image) {
+	//毛の当たり判定用の座標の初期化
+	//毛の当たり判定用のフラグの初期化
+	for (int num = 0; num < HAIR_NUM; num++)
+	{
+		CollisionPosition[num] = VGet(0.0f, 0.0f, 0.0f);
+		HitHair[num] = true;
+	}
+
 	// モデルの代入
 	modelHandle = Model;
 
@@ -11,9 +18,10 @@ c_Hair::c_Hair(const int Model, const int Image) {
 
 	// メモリの割り当て
 	f_allocateMemory();
-	
+
 	// モデルの複製
 	f_modelDuplication();
+
 }
 
 
@@ -37,18 +45,24 @@ void c_Hair::f_output() {
 
 // 更新
 void c_Hair::f_update() {
-
+	//ボックスコライダーの描画
+	CubeDraw();
 }
 
 
 // モデルの複製
 void c_Hair::f_modelDuplication() {
-	int vnum = 0;
+	int vnum = 0;	
 	int pnum = 0;
-	for (int x = 0; x < 8; x++) {
-		for (int z = 0; z < 8; z++) {
+	
+	for (int x = 0; x < HAIR_NUM_SQUARE_ROOT; x++) {
+		for (int z = 0; z < HAIR_NUM_SQUARE_ROOT; z++) {
 			// 画面に映る位置に３Ｄモデルを移動
 			MV1SetPosition(modelHandle, VGet(x * 100.0f, 0.0f, -z * 100.0f));
+			//モデルの座標を当たり判定用の変数にコピー
+			CollisionPosition[x * HAIR_NUM_SQUARE_ROOT + z] = VGet(x * 100.0f, 0.0f, -z * 100.0f);
+			c_colision[x * HAIR_NUM_SQUARE_ROOT + z] =
+				new c_Collision(CollisionPosition[x * HAIR_NUM_SQUARE_ROOT + z], 200.0f, 600.0f, 200.0f);
 			// Y軸回転
 			MV1SetRotationXYZ(modelHandle, VGet(0.0f, 60.0f * DX_PI_F / 180.0f, 0.0f));
 
@@ -93,6 +107,9 @@ void c_Hair::f_modelDuplication() {
 	SetVertexBufferData(0, vertex, vertexNum, vertexBufHandle);
 	SetIndexBufferData(0, index, indexNum, indexBufHandle);
 
+	//モデルの座標を返す
+	//return position;
+
 	////モデルのコピー
 	//int D_ModelHandle[HAIR_NUM];
 	//for (int x = 0; x < 8; x++) {
@@ -123,4 +140,14 @@ void c_Hair::f_allocateMemory() {
 	// 頂点データとインデックスデータを格納するメモリ領域の確保
 	vertex = (VERTEX3D*)malloc(sizeof(VERTEX3D) * vertexNum);
 	index = (DWORD*)malloc(sizeof(DWORD) * indexNum);
+}
+
+
+void c_Hair::CubeDraw() {
+	//コリジョンの位置調整用の数値
+	for (int num = 0; num < HAIR_NUM; num++)
+	{
+		Cube.f_create(CollisionPosition[num].x - (200 / 2), CollisionPosition[num].y,
+			CollisionPosition[num].z - (200 / 2),200, 600, 200);
+	}	
 }
