@@ -46,7 +46,7 @@ void c_Hair::f_output() {
 // 更新
 void c_Hair::f_update() {
 	//ボックスコライダーの描画
-	CubeDraw();
+	//CubeDraw();
 }
 
 
@@ -58,7 +58,7 @@ void c_Hair::f_modelDuplication() {
 	for (int x = 0; x < HAIR_NUM_SQUARE_ROOT; x++) {
 		for (int z = 0; z < HAIR_NUM_SQUARE_ROOT; z++) {
 			// 画面に映る位置に３Ｄモデルを移動
-			MV1SetPosition(modelHandle, VGet(x * 300.0f, 200.0f, -z * 200.0f));
+			MV1SetPosition(modelHandle, VGet(x * 350.0f, 200.0f, -z * 350.0f + 1000.0f));
 			//モデルの座標を当たり判定用の変数にコピー
 			CollisionPosition[x * HAIR_NUM_SQUARE_ROOT + z] = VGet(x * 100.0f, 0.0f, -z * 100.0f);
 			c_colision[x * HAIR_NUM_SQUARE_ROOT + z] =
