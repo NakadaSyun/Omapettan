@@ -9,7 +9,7 @@
 c_Player::c_Player(const int Model) {
 	p_Model = Model;
 	// ３Ｄモデルの座標を初期化
-	p_Position = VGet(0.0f, 500.0f, 150.0f);
+	p_Position = VGet(0.0f, 760.0f, 4500.0f);
 	p_Rotation = VGet(0.0f, PI, 0.0f);
 
 	c_colision = new c_Collision(p_Position, 100.0f, 200.0f, 100.0f);
@@ -32,78 +32,80 @@ void c_Player::f_update(bool Isfall) {
 
 	c_cameracon->f_update();		//c_cameraconを呼んで値を更新
 
-	p_Rotation.y = c_cameracon->Camangle_H + PI;
+	StartPos = p_Position;
+	EndPos = VGet(p_Position.x , p_Position.y + 250.0f,p_Position.z);
 
-	if (CheckHitKey(KEY_INPUT_W) == 1) {
-		p_Rotation.y = c_cameracon->Camangle_H + PI;		//キャラの回転Y軸をカメラに向かって + 90度方向にする
+	static int model_Arm = MV1LoadModel("models/arm2.mv1");
 
-		//キャラの座標X軸をカメラが向いている方向に進ませる
-		p_Position.x += sin(c_cameracon->Camangle_H) * 10.0f;
-		p_Position.z += cos(c_cameracon->Camangle_H) * 10.0f;
-
-	}
-	if (CheckHitKey(KEY_INPUT_A) == 1) {
-		p_Rotation.y = c_cameracon->Camangle_H + PI / 2;		//キャラの回転Y軸をカメラに向かって + 45度方向にする
-
-		//キャラの座標X軸をカメラが向かって + 45度方向に進ませる
-		p_Position.x -= sin(c_cameracon->Camangle_H + PI / 2) * 10.0f;
-		p_Position.z -= cos(c_cameracon->Camangle_H + PI / 2) * 10.0f;
-	}
-	if (CheckHitKey(KEY_INPUT_W) == 1 && CheckHitKey(KEY_INPUT_A) == 1) {
-		p_Rotation.y = c_cameracon->Camangle_H + PI - PI / 4;
-	}
-	if (CheckHitKey(KEY_INPUT_D) == 1) {
-		p_Rotation.y = c_cameracon->Camangle_H + -PI / 2;		//キャラの回転Y軸をカメラに向かって - 45度方向にする
-
-		//キャラの座標X軸をカメラが向かって - 45度方向に進ませる
-		p_Position.x += sin(c_cameracon->Camangle_H + PI / 2) * 10.0f;
-		p_Position.z += cos(c_cameracon->Camangle_H + PI / 2) * 10.0f;
-	}
-	if (CheckHitKey(KEY_INPUT_W) == 1 && CheckHitKey(KEY_INPUT_D) == 1) {
-		p_Rotation.y = c_cameracon->Camangle_H + PI + PI / 4;
-	}
-	if (CheckHitKey(KEY_INPUT_S) == 1) {
-		p_Rotation.y = c_cameracon->Camangle_H;		//キャラの回転Y軸をカメラに向かう方向にする
-
-		//キャラの座標X軸をカメラが向かう方向に進ませる
-		p_Position.x -= sin(c_cameracon->Camangle_H) * 10.0f;
-		p_Position.z -= cos(c_cameracon->Camangle_H) * 10.0f;
-	}
-	if (CheckHitKey(KEY_INPUT_A) == 1 && CheckHitKey(KEY_INPUT_S) == 1) {
-		p_Rotation.y = c_cameracon->Camangle_H + PI / 4;
-	}
-	if (CheckHitKey(KEY_INPUT_D) == 1 && CheckHitKey(KEY_INPUT_S) == 1) {
-		p_Rotation.y = c_cameracon->Camangle_H - PI / 4;
-	}
-
-	StartPos = VGet(p_Position.x, p_Position.y + 500.0f, p_Position.z);
-	EndPos = VGet(p_Position.x , p_Position.y - 500.0f,p_Position.z);
-
-	static int model_Arm;
-	//static int flg = 0;
-	//if (flg++ == 0 ) {
-	//}
-	model_Arm = MV1LoadModel("models/arm.mv1");
+	MV1SetPosition(model_Arm, VGet(0.0f, 0.0f, 0.0f));
+	MV1SetRotationXYZ(model_Arm,VGet(0.0f,PI/2,0.0f));
 	MV1SetupCollInfo(model_Arm, -1, 8, 8, 8);		//モデル全体のフレームにコリジョンを準備
 
-	DrawLine3D(StartPos, EndPos, GetColor(255, 0, 0));
+	DrawLine3D(StartPos, EndPos, GetColor(255, 0, 0));		//キャラの当たり判定の線分
 
 	MV1_COLL_RESULT_POLY HitPoly = MV1CollCheck_Line(model_Arm,-1, StartPos, EndPos);
 
-	p_Rotation = HitPoly.Normal;
+	VECTOR Pos0= HitPoly.Position[0],
+		   Pos1 = HitPoly.Position[1],
+		   Pos2 = HitPoly.Position[2];
+	int LineColor = GetColor(255,0,0);
 
-	DrawFormatString(0, 200, GetColor(255, 255, 255), "Normal.x:%f個", HitPoly.Normal.x);
-	DrawFormatString(0, 220, GetColor(255, 255, 255), "Normal.y:%f個", HitPoly.Normal.y);
-	DrawFormatString(0, 240, GetColor(255, 255, 255), "Normal.z:%f個", HitPoly.Normal.z);
+	DrawLine3D(Pos0, Pos1, LineColor);
+	DrawLine3D(Pos1, Pos2, LineColor);
+	DrawLine3D(Pos2, Pos0, LineColor);
+
+	//ワールド軸確認
+	DrawLine3D(p_Position, VGet(p_Position.x + 200, p_Position.y, p_Position.z), GetColor(255,0,0));
+	DrawLine3D(p_Position, VGet(p_Position.x, p_Position.y + 200, p_Position.z), GetColor(0, 255, 0));
+	DrawLine3D(p_Position, VGet(p_Position.x, p_Position.y, p_Position.z + 200), GetColor(0, 0, 255));
+
+	//p_Rotation = HitPoly.Normal;		//法線のキャラの向きに代入
+
+	if (HitPoly.HitFlag == 1) {
+		p_Rotation = VGet(HitPoly.Normal.x, p_Rotation.y, HitPoly.Normal.z); 		//法線のキャラの向きに代入
+	}
+
+	DrawFormatString(0, 200, GetColor(255, 255, 255), "Pos0.x:%f個", HitPoly.Position[0].x);
+	DrawFormatString(0, 220, GetColor(255, 255, 255), "Pos0.y:%f個", HitPoly.Position[0].y);
+	DrawFormatString(0, 240, GetColor(255, 255, 255), "Pos0.z:%f個", HitPoly.Position[0].z);
 
 
-	DrawLine3D(HitPoly.Position[0], HitPoly.Normal, GetColor(0, 0, 255));
+	DrawLine3D(HitPoly.Position[0], HitPoly.Normal, GetColor(0, 0, 255));		//ポリゴンの法線描画
+
+	float MoveX = 0,MoveZ = 0;//プレイヤーの移動量
+	static float Arm_XRotate = 0.0f;
+
+	if (CheckHitKey(KEY_INPUT_W) == 1) {
+	    MoveZ = p_Speed;
+	    p_Rotation.y = PI;
+	}
+	if (CheckHitKey(KEY_INPUT_A) == 1) {
+	    p_Rotation.y = PI/2;
+	}
+	if (CheckHitKey(KEY_INPUT_S) == 1) {
+	    MoveZ = -p_Speed;
+	    p_Rotation.y = 0;
+	}
+	if (CheckHitKey(KEY_INPUT_D) == 1) {
+	    p_Rotation.y = -PI / 2;
+	}
+
+
+	//if (MoveZ != 0 && MoveX != 0 ) {
+	//    p_Rotation.y = atan2(-MoveX,-MoveZ);
+	//}
+
+	p_Position = VAdd(p_Position,VGet(MoveX,0,MoveZ));
+	if (p_Position.z > 8000) {
+		p_Position.z = 8000;
+	}
+	if (p_Position.z < 1000) {
+		p_Position.z = 1000;
+	}
 
 
 
-
-
-	if (CheckHitKey(KEY_INPUT_Q) == 1) {
+	if (CheckHitKey(KEY_INPUT_SPACE) == 1) {
 		p_Position.y += 10;
 	}
 
@@ -111,7 +113,7 @@ void c_Player::f_update(bool Isfall) {
 	DrawFormatString(0, 120, 0xffffff, "p_Position.z %f", p_Position.z);
 	DrawFormatString(0, 140, 0xffffff, "p_Rotation.y %f", p_Rotation.y);
 
-	if (Isfall)f_fall();		//重力
+	if (HitPoly.HitFlag == 0)f_fall();		//重力
 	c_colision->f_update(p_Position);
 }
 

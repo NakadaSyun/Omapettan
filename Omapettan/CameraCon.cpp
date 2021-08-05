@@ -8,7 +8,7 @@
 
 
 c_CameraCon::c_CameraCon() {
-	VRotate = PI / 4;         //垂直回転
+	VRotate = 0.0f;         //垂直回転
 	HRotate = 0.0f;        //水平回転
 	TRotate = 0.0f;         //捻り回転
 
@@ -22,92 +22,19 @@ void c_CameraCon::f_update() {
 	//f_setRotaion();
 
 	// カメラの位置と回転値をセット、カメラの位置は原点
-   // SetCameraPositionAndAngle(position, rotation.x, rotation.y, rotation.z );
 	SetCameraPositionAndTarget_UpVecY(position, Playerposition);
 }
 
 void c_CameraCon::f_setPosition() {
 
-	static int Camang_Value_X = 0;
-	static int Camang_Value_Y = 0;
+	position = VAdd(Playerposition, Cameradistance);
 
-	int Nowx, Nowy;		//マウスの座標変数
-	GetMousePoint(&Nowx, &Nowy);	//マウスの座標取得
-	static int Oldx = Nowx, Oldy = Nowy;
-
-	DrawFormatString(500, 0, 0xffffff, "Mousey %d", Nowy);
-	DrawFormatString(500, 20, 0xffffff, "Oldy %d", Oldy);
-	//if (Oldy < Nowy) {
-	//	Camang_Value_Y++;
-	//}
-	//if (Oldy > Nowy) {
-	//	Camang_Value_Y--;
-	//}
-	//if (Oldy < Nowy) {
-	//	Camang_Value_Y += (Nowy - Oldy) /4;
-	//}
-	//if (Oldy > Nowy) {
-	//	Camang_Value_Y -= (Oldy - Nowy)/4;
-	//}
-
-	Oldy = Nowy;
-	Nowy = 0;
-	//画面中心が原点に来るように調整 
-	//Nowx -= 640 / 2;
-	//Nowy -= 480 / 2;
-	//カメラのY軸の上限設定 90度まで
-	//if (Camang_Value_Y > 90) Camang_Value_Y = 90;
-	////カメラのY軸の下限設定 20度まで
-	//if (Camang_Value_Y < 20) Camang_Value_Y = 20;
-
-
-	Camangle_H = Nowx * PI / 90;	//カメラの水平角度
-	Camangle_V = Camang_Value_Y * PI / 90;	//カメラの垂直角度
-
-	DrawFormatString(0, 20, 0xffffff, "Camangle_V %f", Camangle_V);
-
-
-	DrawFormatString(0, 0, 0xffffff, "Camang_Value_Y %d", Camang_Value_Y);
-
-	position.x = Cameradistance.x * cos(Camangle_H) + Cameradistance.z * sin(Camangle_H);
-	position.z = -Cameradistance.x * sin(Camangle_H) + Cameradistance.z * cos(Camangle_H);
-	//position.y = Cameradistance.x * sin(Camangle_V) + Cameradistance.z * cos(Camangle_V);
-	position.x += Playerposition.x;
-	position.z += Playerposition.z;
-	//position.y -= Playerposition.y - 500.0f;
-
-	DrawFormatString(0, 40, 0xffffff, "position.x %f", position.x);
+	DrawFormatString(0, 40, 0xffffff, "Playerposition.x %f", Playerposition.x);
 	DrawFormatString(0, 60, 0xffffff, "Playerposition.y %f", Playerposition.y);
-	DrawFormatString(0, 80, 0xffffff, "position.y %f", position.y);
+	DrawFormatString(0, 80, 0xffffff, "Playerposition.z %f", Playerposition.z);
 
 }
 
 void c_CameraCon::f_setRotaion() {
-	int Nowx, Nowy;
-	GetMousePoint(&Nowx, &Nowy);
 
-	static int Oldx = Nowx, Oldy = Nowy;
-
-	if (Oldx < Nowx) {
-		HRotate += (Nowx % 10) * 0.005f;
-	}
-	if (Oldx > Nowx) {
-		HRotate -= (Nowx % 10) * 0.005f;
-	}
-	if (Oldy < Nowy) {
-		VRotate += (Nowy % 10) * 0.005f;
-	}
-	if (Oldy > Nowy) {
-		VRotate -= (Nowy % 10) * 0.005f;
-	}
-	rotation = VGet(VRotate, HRotate, TRotate);
-
-	//atan2(Nowx * PI/180, Nowy);
-
-	//カメラの座標　=　(プレイヤーの座標+プレイヤーとの固定距離)
-	//position = VGet(Nowx * PI / 180 + Cameradistance.x, Playerposition.y + Cameradistance.y, Playerposition.z + Cameradistance.z);
-
-	SetMousePoint(640 / 2, 480 / 2);
-	Oldx = 640 / 2;
-	Oldy = 480 / 2;
 }
