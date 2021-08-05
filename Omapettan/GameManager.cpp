@@ -12,7 +12,7 @@ void c_GameManager::f_init()
 
 	// ３Ｄモデルに新しい座標をセット
 	//MV1SetPosition(model_Plane, VGet(0.0f,-100.0f,0.0f));
-	MV1SetPosition(model_Arm, VGet(0.0f, -800.0f, 0.0f));
+	MV1SetPosition(model_Arm, VGet(0.0f, 0.0f, 0.0f));
 
 	MV1SetPosition(model_Sphere, VGet(0.0f, -850.0f, 0.0f));			//球体
 
@@ -40,7 +40,7 @@ void c_GameManager::f_RoadModel()
 	model_Plane = MV1LoadModel("models/Plane.mv1");
 	model_Sphere = MV1LoadModel("models/TestSphere.mv1");
 	model_Cylinder = MV1LoadModel("models/cylinder.mv1");
-	model_Arm = MV1LoadModel("models/arm.mv1");
+	model_Arm = MV1LoadModel("models/arm2.mv1");
 }
 
 void c_GameManager::f_RoadImage() 
