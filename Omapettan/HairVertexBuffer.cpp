@@ -164,8 +164,8 @@ void c_Hair::f_moveHair() {
 	for (int x = 0; x < HAIR_NUM_SQUARE_ROOT; x++) {
 		for (int z = 0; z < HAIR_NUM_SQUARE_ROOT; z++) {
 			MV1SetPosition(modelHandle, 
-				VGet(cosf(personalRotation[x * HAIR_NUM_SQUARE_ROOT + z] + stageXRotation) * ARM_RADIUS, 
-					sinf(personalRotation[x * HAIR_NUM_SQUARE_ROOT + z] + stageXRotation) * ARM_RADIUS, 
+				VGet(cosf(personalRotation[x * HAIR_NUM_SQUARE_ROOT + z] - stageXRotation) * ARM_RADIUS, 
+					sinf(personalRotation[x * HAIR_NUM_SQUARE_ROOT + z] - stageXRotation) * ARM_RADIUS, 
 					personalPosZ[x * HAIR_NUM_SQUARE_ROOT + z] + ARM_ADJUST_POS));
 			//モデルの座標を当たり判定用の変数にコピー
 			CollisionPosition[x * HAIR_NUM_SQUARE_ROOT + z] = VGet(x * 100.0f, 0.0f, -z * 100.0f);
@@ -207,9 +207,9 @@ void c_Hair::f_moveHair() {
 	}
 
 
-	// 頂点データとインデックスデータを格納する頂点バッファとインデックスバッファを作成
-	vertexBufHandle = CreateVertexBuffer(vertexNum, DX_VERTEX_TYPE_NORMAL_3D);
-	indexBufHandle = CreateIndexBuffer(indexNum, DX_INDEX_TYPE_32BIT);
+	//// 頂点データとインデックスデータを格納する頂点バッファとインデックスバッファを作成
+	//vertexBufHandle = CreateVertexBuffer(vertexNum, DX_VERTEX_TYPE_NORMAL_3D);
+	//indexBufHandle = CreateIndexBuffer(indexNum, DX_INDEX_TYPE_32BIT);
 
 	// 頂点バッファとインデックスバッファにデータを転送
 	SetVertexBufferData(0, vertex, vertexNum, vertexBufHandle);
