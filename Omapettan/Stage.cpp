@@ -25,11 +25,11 @@ void c_Stage::f_update() {
 	static float Arm_XRotate = 0.0f;
 
 	if (CheckHitKey(KEY_INPUT_A) == 1) {
-		Arm_XRotate -= 0.01f;
+		Arm_XRotate += 0.01f;
 	}
 
 	if (CheckHitKey(KEY_INPUT_D) == 1) {
-		Arm_XRotate += 0.01f;
+		Arm_XRotate -= 0.01f;
 	}
 
 	MV1SetRotationXYZ(sModel, VGet(Arm_XRotate, PI / 2, 0.0f));
