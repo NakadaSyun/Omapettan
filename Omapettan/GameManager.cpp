@@ -46,7 +46,7 @@ void c_GameManager::f_RoadModel()
 void c_GameManager::f_RoadImage() 
 {
 	// ‰æ‘œ‚Ì“Ç‚İ‚İ
-	image_Cylinder = LoadGraph("images/KabeTex.bmp");
+	image_Cylinder = LoadGraph("images/hairtexture.bmp");
 }
 
 // ƒQ[ƒ€XV
