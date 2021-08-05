@@ -10,7 +10,7 @@ using namespace std;
 
 namespace {
 	// ¶¬‚·‚é–Ñ‚Ì”
-	const int HAIR_NUM = 81;
+	const int HAIR_NUM = 64;
 
 	//¶¬‚·‚é–Ñ‚Ì”‚Ì•½•ûª
 	const int HAIR_NUM_SQUARE_ROOT = int(sqrtf(float(HAIR_NUM)));
