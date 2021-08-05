@@ -2,19 +2,30 @@
 
 #include "DxLib.h"
 #include "Collision.h"
+#include <iostream>
 #include <malloc.h>
 #include <math.h>
 using namespace std;
 
+
 namespace {
 	// 生成する毛の数
-	const int HAIR_NUM = 16;
+	const int HAIR_NUM = 81;
 
 	//生成する毛の数の平方根
 	const int HAIR_NUM_SQUARE_ROOT = int(sqrtf(float(HAIR_NUM)));
 
 	// ポリゴンに含まれる頂点の数
 	const int POLY = 3;
+
+	// ステージ(腕)の太さの半径
+	const float ARM_RADIUS = 755.0f;
+
+	// ステージ(腕)の長さ
+	const float ARM_LENGTH = 7000.0f;
+
+	// 腕の座標合わせ
+	const float ARM_ADJUST_POS = 1000.0f;
 }
 
 class c_Hair {
@@ -35,8 +46,16 @@ public:
 	//毛の当たり判定用のフラグ
 	bool HitHair[HAIR_NUM];
 
+	// ステージのX軸の回転(ラジアン)
+	float stageXRotation;
+
 private:
+	// メモリの割り当て
 	void f_allocateMemory();
+	// 髪の移動
+	void f_moveHair();
+	// 髪の座標と角度を設定
+	void f_setPosAndRot();
 	VERTEX3D* vertex;
 	DWORD* index;
 	int vertexBufHandle;
@@ -46,7 +65,10 @@ private:
 	int indexNum = 0;
 	int vertexNum = 0;
 	int i;
+	float personalRotation[HAIR_NUM];   // 各髪の角度
+	float personalPosZ[HAIR_NUM];       // 各髪のZ座標
 	LONGLONG Time1;
 	MV1_REF_POLYGONLIST RefMesh;
+    DATEDATA date;                      // 現在時刻
 
 };

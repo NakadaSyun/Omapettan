@@ -78,6 +78,7 @@ void c_GameManager::f_update()
 	c_camera->f_update();
 
 	c_stage->f_update();
+	c_hair->stageXRotation = c_stage->f_GetXRotation();
 
 	c_hair->f_update();
 }

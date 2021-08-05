@@ -15,6 +15,8 @@ c_Player::c_Player(const int Model) {
 	c_colision = new c_Collision(p_Position, 100.0f, 200.0f, 100.0f);
 
 	c_cameracon = new c_CameraCon;
+
+	model_Arm = MV1LoadModel("models/arm2.mv1");
 }
 
 void c_Player::f_init() {
@@ -34,8 +36,6 @@ void c_Player::f_update(bool Isfall) {
 
 	StartPos = p_Position;
 	EndPos = VGet(p_Position.x , p_Position.y + 250.0f,p_Position.z);
-
-	static int model_Arm = MV1LoadModel("models/arm2.mv1");
 
 	MV1SetPosition(model_Arm, VGet(0.0f, 0.0f, 0.0f));
 	MV1SetRotationXYZ(model_Arm,VGet(0.0f,PI/2,0.0f));
@@ -73,7 +73,7 @@ void c_Player::f_update(bool Isfall) {
 	DrawLine3D(HitPoly.Position[0], HitPoly.Normal, GetColor(0, 0, 255));		//ポリゴンの法線描画
 
 	float MoveX = 0,MoveZ = 0;//プレイヤーの移動量
-	static float Arm_XRotate = 0.0f;
+	Arm_XRotate = 0.0f;
 
 	if (CheckHitKey(KEY_INPUT_W) == 1) {
 	    MoveZ = p_Speed;

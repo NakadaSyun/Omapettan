@@ -26,6 +26,8 @@ public:
 
 private:
 	int p_Model;
+	int model_Arm;
+	float Arm_XRotate;
 	VECTOR p_Rotation;
 	VECTOR p_Position;
 
