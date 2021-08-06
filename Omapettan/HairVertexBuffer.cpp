@@ -56,49 +56,48 @@ void c_Hair::f_modelDuplication() {
 	int pnum = 0;
 	VECTOR debug;
 	
-	for (int x = 0; x < HAIR_NUM_SQUARE_ROOT; x++) {
-		for (int z = 0; z < HAIR_NUM_SQUARE_ROOT; z++) {
-			
-			MV1SetPosition(modelHandle, VGet(cosf(personalRotation[x * HAIR_NUM_SQUARE_ROOT + z]) * ARM_RADIUS,
-				                             sinf(personalRotation[x * HAIR_NUM_SQUARE_ROOT + z]) * ARM_RADIUS,
-				                             personalPosZ[x * HAIR_NUM_SQUARE_ROOT + z] + ARM_ADJUST_POS));
-			//モデルの座標を当たり判定用の変数にコピー
-			CollisionPosition[x * HAIR_NUM_SQUARE_ROOT + z] = VGet(x * 100.0f, 0.0f, -z * 100.0f);
-			c_colision[x * HAIR_NUM_SQUARE_ROOT + z] =
-				new c_Collision(CollisionPosition[x * HAIR_NUM_SQUARE_ROOT + z], 200.0f, 600.0f, 200.0f);
-			// Y軸回転
-			MV1SetRotationXYZ(modelHandle, VGet(0.0f, 60.0f * DX_PI_F / 180.0f, 0.0f));
+	for (int j = 0; j < HAIR_NUM; j++) {
 
-			//// 参照用メッシュの作成
-			MV1SetupReferenceMesh(modelHandle, -1, TRUE);
-			// 参照用メッシュの更新
-			MV1RefreshReferenceMesh(modelHandle, -1, TRUE);
+		MV1SetPosition(modelHandle, VGet(cosf(personalRotation[j]) * ARM_RADIUS,
+			                             sinf(personalRotation[j]) * ARM_RADIUS,
+			                             personalPosZ[j] + ARM_ADJUST_POS));
+		//モデルの座標を当たり判定用の変数にコピー
+		CollisionPosition[j] = VGet(j * 100.0f, 0.0f, -j * 100.0f);
+		c_colision[j] =
+			new c_Collision(CollisionPosition[j], 200.0f, 600.0f, 200.0f);
+		// Y軸回転
+		MV1SetRotationXYZ(modelHandle, VGet(0.0f, 60.0f * DX_PI_F / 180.0f, 0.0f));
 
-			// 参照用メッシュの取得
-			RefMesh = MV1GetReferenceMesh(modelHandle, -1, TRUE);
-			// 頂点データをコピー
-			for (i = 0; i < RefMesh.VertexNum; i++)
-			{
-				vertex[i + vnum].pos = RefMesh.Vertexs[i].Position;
-				vertex[i + vnum].norm = RefMesh.Vertexs[i].Normal;
-				vertex[i + vnum].dif = RefMesh.Vertexs[i].DiffuseColor;
-				vertex[i + vnum].spc = RefMesh.Vertexs[i].SpecularColor;
-				vertex[i + vnum].u = RefMesh.Vertexs[i].TexCoord[0].u;
-				vertex[i + vnum].v = RefMesh.Vertexs[i].TexCoord[0].v;
-				vertex[i + vnum].su = RefMesh.Vertexs[i].TexCoord[1].u;
-				vertex[i + vnum].sv = RefMesh.Vertexs[i].TexCoord[1].v;
-			}
+		//// 参照用メッシュの作成
+		MV1SetupReferenceMesh(modelHandle, -1, TRUE);
+		// 参照用メッシュの更新
+		MV1RefreshReferenceMesh(modelHandle, -1, TRUE);
 
-			// インデックスデータをコピー
-			for (i = 0; i < RefMesh.PolygonNum; i++)
-			{
-				index[i * 3 + 0 + pnum] = (WORD)RefMesh.Polygons[i].VIndex[0] + vnum;
-				index[i * 3 + 1 + pnum] = (WORD)RefMesh.Polygons[i].VIndex[1] + vnum;
-				index[i * 3 + 2 + pnum] = (WORD)RefMesh.Polygons[i].VIndex[2] + vnum;
-			}
-			vnum += RefMesh.VertexNum;
-			pnum += RefMesh.PolygonNum * 3;
+		// 参照用メッシュの取得
+		RefMesh = MV1GetReferenceMesh(modelHandle, -1, TRUE);
+		// 頂点データをコピー
+		for (i = 0; i < RefMesh.VertexNum; i++)
+		{
+			vertex[i + vnum].pos = RefMesh.Vertexs[i].Position;
+			vertex[i + vnum].norm = RefMesh.Vertexs[i].Normal;
+			vertex[i + vnum].dif = RefMesh.Vertexs[i].DiffuseColor;
+			vertex[i + vnum].spc = RefMesh.Vertexs[i].SpecularColor;
+			vertex[i + vnum].u = RefMesh.Vertexs[i].TexCoord[0].u;
+			vertex[i + vnum].v = RefMesh.Vertexs[i].TexCoord[0].v;
+			vertex[i + vnum].su = RefMesh.Vertexs[i].TexCoord[1].u;
+			vertex[i + vnum].sv = RefMesh.Vertexs[i].TexCoord[1].v;
 		}
+
+		// インデックスデータをコピー
+		for (i = 0; i < RefMesh.PolygonNum; i++)
+		{
+			index[i * 3 + 0 + pnum] = (WORD)RefMesh.Polygons[i].VIndex[0] + vnum;
+			index[i * 3 + 1 + pnum] = (WORD)RefMesh.Polygons[i].VIndex[1] + vnum;
+			index[i * 3 + 2 + pnum] = (WORD)RefMesh.Polygons[i].VIndex[2] + vnum;
+		}
+		vnum += RefMesh.VertexNum;
+		pnum += RefMesh.PolygonNum * 3;
+
 	}
 	
 
@@ -161,55 +160,30 @@ void c_Hair::f_moveHair() {
 	int vnum = 0;
 	int pnum = 0;
 
-	for (int x = 0; x < HAIR_NUM_SQUARE_ROOT; x++) {
-		for (int z = 0; z < HAIR_NUM_SQUARE_ROOT; z++) {
-			MV1SetPosition(modelHandle, 
-				VGet(cosf(personalRotation[x * HAIR_NUM_SQUARE_ROOT + z] - stageXRotation) * ARM_RADIUS, 
-					sinf(personalRotation[x * HAIR_NUM_SQUARE_ROOT + z] - stageXRotation) * ARM_RADIUS, 
-					personalPosZ[x * HAIR_NUM_SQUARE_ROOT + z] + ARM_ADJUST_POS));
-			//モデルの座標を当たり判定用の変数にコピー
-			CollisionPosition[x * HAIR_NUM_SQUARE_ROOT + z] = VGet(x * 100.0f, 0.0f, -z * 100.0f);
-			c_colision[x * HAIR_NUM_SQUARE_ROOT + z] =
-				new c_Collision(CollisionPosition[x * HAIR_NUM_SQUARE_ROOT + z], 200.0f, 600.0f, 200.0f);
-			// Y軸回転
-			MV1SetRotationXYZ(modelHandle, VGet(0.0f, personalRotation[x * HAIR_NUM_SQUARE_ROOT + z] + stageXRotation, 0.0f));
+	for (int j = 0; j < HAIR_NUM; j++) {
+		MV1SetPosition(modelHandle,
+			VGet(cosf(personalRotation[j] - stageXRotation) * ARM_RADIUS,
+				 sinf(personalRotation[j] - stageXRotation) * ARM_RADIUS,
+				 personalPosZ[j] + ARM_ADJUST_POS));
+		//モデルの座標を当たり判定用の変数にコピー
+		CollisionPosition[j] = VGet(j * 100.0f, 0.0f, -j * 100.0f);
+		c_colision[j] =
+			new c_Collision(CollisionPosition[j], 200.0f, 600.0f, 200.0f);
+		// Y軸回転
+		MV1SetRotationXYZ(modelHandle, VGet(0.0f, personalRotation[j] + stageXRotation, 0.0f));
 
-			// 参照用メッシュの作成
-			//MV1SetupReferenceMesh(modelHandle, -1, TRUE);
-			// 参照用メッシュの更新
-			MV1RefreshReferenceMesh(modelHandle, -1, TRUE);
+		// 参照用メッシュの更新
+		MV1RefreshReferenceMesh(modelHandle, -1, TRUE);
 
-			//// 参照用メッシュの取得
-			//RefMesh = MV1GetReferenceMesh(modelHandle, -1, TRUE);
-			// 頂点データをコピー
-			for (i = 0; i < RefMesh.VertexNum; i++)
-			{
-				vertex[i + vnum].pos = RefMesh.Vertexs[i].Position;
-				/*vertex[i + vnum].norm = RefMesh.Vertexs[i].Normal;
-				vertex[i + vnum].dif = RefMesh.Vertexs[i].DiffuseColor;
-				vertex[i + vnum].spc = RefMesh.Vertexs[i].SpecularColor;
-				vertex[i + vnum].u = RefMesh.Vertexs[i].TexCoord[0].u;
-				vertex[i + vnum].v = RefMesh.Vertexs[i].TexCoord[0].v;
-				vertex[i + vnum].su = RefMesh.Vertexs[i].TexCoord[1].u;
-				vertex[i + vnum].sv = RefMesh.Vertexs[i].TexCoord[1].v;*/
-			}
-
-			// インデックスデータをコピー
-			/*for (i = 0; i < RefMesh.PolygonNum; i++)
-			{
-				index[i * 3 + 0 + pnum] = (WORD)RefMesh.Polygons[i].VIndex[0] + vnum;
-				index[i * 3 + 1 + pnum] = (WORD)RefMesh.Polygons[i].VIndex[1] + vnum;
-				index[i * 3 + 2 + pnum] = (WORD)RefMesh.Polygons[i].VIndex[2] + vnum;
-			}*/
-			vnum += RefMesh.VertexNum;
-			pnum += RefMesh.PolygonNum * 3;
+		// 頂点データをコピー
+		for (i = 0; i < RefMesh.VertexNum; i++)
+		{
+			vertex[i + vnum].pos = RefMesh.Vertexs[i].Position;
 		}
+
+		vnum += RefMesh.VertexNum;
+		pnum += RefMesh.PolygonNum * 3;
 	}
-
-
-	//// 頂点データとインデックスデータを格納する頂点バッファとインデックスバッファを作成
-	//vertexBufHandle = CreateVertexBuffer(vertexNum, DX_VERTEX_TYPE_NORMAL_3D);
-	//indexBufHandle = CreateIndexBuffer(indexNum, DX_INDEX_TYPE_32BIT);
 
 	// 頂点バッファとインデックスバッファにデータを転送
 	SetVertexBufferData(0, vertex, vertexNum, vertexBufHandle);
@@ -225,9 +199,40 @@ void c_Hair::f_setPosAndRot() {
 
 	for (int i = 0; i < HAIR_NUM; i++) {
 		// 各髪の角度を設定
-		personalRotation[i] = GetRand(2 * DX_PI * 100) * 0.01;
+		personalRotation[i] = GetRand(int(2 * float(DX_PI) * 100)) * 0.01f;
 
 		// 各髪のZ座標を設定
 		personalPosZ[i] = GetRand(ARM_LENGTH);
 	}
+}
+
+// 髪を画面外へ移動
+void c_Hair::f_MoveHairOffScreen() {
+
+	int vnum = 0;
+
+	for (int j = 0; j < HAIR_NUM; j++) {
+		MV1SetPosition(modelHandle, VGet(0, 0, 0));
+		//モデルの座標を当たり判定用の変数にコピー
+		CollisionPosition[j] = VGet(j * 100.0f, 0.0f, -j * 100.0f);
+		c_colision[j] =
+			new c_Collision(CollisionPosition[j], 200.0f, 600.0f, 200.0f);
+		// Y軸回転
+		MV1SetRotationXYZ(modelHandle, VGet(0.0f, personalRotation[j] + stageXRotation, 0.0f));
+
+		// 参照用メッシュの更新
+		MV1RefreshReferenceMesh(modelHandle, -1, TRUE);
+
+		// 頂点データをコピー
+		for (i = 0; i < RefMesh.VertexNum; i++)
+		{
+			vertex[i + vnum].pos = RefMesh.Vertexs[i].Position;
+		}
+
+		vnum += RefMesh.VertexNum;
+	}
+
+	// 頂点バッファとインデックスバッファにデータを転送
+	SetVertexBufferData(0, vertex, vertexNum, vertexBufHandle);
+	SetIndexBufferData(0, index, indexNum, indexBufHandle);
 }

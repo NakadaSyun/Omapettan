@@ -12,9 +12,6 @@ namespace {
 	// 生成する毛の数
 	const int HAIR_NUM = 64;
 
-	//生成する毛の数の平方根
-	const int HAIR_NUM_SQUARE_ROOT = int(sqrtf(float(HAIR_NUM)));
-
 	// ポリゴンに含まれる頂点の数
 	const int POLY = 3;
 
@@ -56,6 +53,8 @@ private:
 	void f_moveHair();
 	// 髪の座標と角度を設定
 	void f_setPosAndRot();
+	// 髪を画面外へ移動
+	void f_MoveHairOffScreen();
 	VERTEX3D* vertex;
 	DWORD* index;
 	int vertexBufHandle;
