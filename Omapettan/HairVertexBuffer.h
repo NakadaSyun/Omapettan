@@ -46,6 +46,9 @@ public:
 	// ステージのX軸の回転(ラジアン)
 	float stageXRotation;
 
+	// 髪を画面外へ移動
+	void f_MoveHairOffScreen(int num);
+
 private:
 	// メモリの割り当て
 	void f_allocateMemory();
@@ -53,8 +56,6 @@ private:
 	void f_moveHair();
 	// 髪の座標と角度を設定
 	void f_setPosAndRot();
-	// 髪を画面外へ移動
-	void f_MoveHairOffScreen();
 	VERTEX3D* vertex;
 	DWORD* index;
 	int vertexBufHandle;
@@ -69,5 +70,6 @@ private:
 	LONGLONG Time1;
 	MV1_REF_POLYGONLIST RefMesh;
     DATEDATA date;                      // 現在時刻
+	VECTOR hairSize;
 
 };
