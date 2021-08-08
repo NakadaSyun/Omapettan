@@ -18,7 +18,6 @@ void c_Stage::f_init() {
 	// ‚R‚cƒ‚ƒfƒ‹‚ÌÀ•W‚ğ‰Šú‰»
 	position = VGet(0.0f, 0.0f, 0.0f);
 
-
 }
 
 void c_Stage::f_update() {
