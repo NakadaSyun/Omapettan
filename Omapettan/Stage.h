@@ -15,5 +15,5 @@ public:
 private:
 	VECTOR position;
 	int sModel;
-	float Arm_XRotate;
+	float Arm_XRotate = 0.0f;
 };

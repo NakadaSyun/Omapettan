@@ -12,8 +12,8 @@ public:
 	void f_setPosition();
 	void f_setRotaion();
 
-	float Camangle_H;	//カメラの水平角度
-	float Camangle_V;	//カメラの垂直角度
+	float Camangle_H = 0.0f;	//カメラの水平角度
+	float Camangle_V = 0.0f;	//カメラの垂直角度
 
 	VECTOR position;
 
