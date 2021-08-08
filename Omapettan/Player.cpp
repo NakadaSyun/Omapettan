@@ -17,12 +17,17 @@ c_Player::c_Player(const int Model) {
 	c_cameracon = new c_CameraCon;
 
 	model_Arm = MV1LoadModel("models/arm2.mv1");
+	model_KAMISORI = MV1LoadModel("models/KKAMISORI.mv1");
 }
 
 void c_Player::f_init() {
 	// ３Ｄモデルの座標を初期化
 	p_Position = VGet(0.0f, 0.0f, 0.0f);
 	p_Rotation = VGet(0.0f, 0.0f, 0.0f);
+
+
+	MV1SetPosition(model_KAMISORI, VGet(p_Position.x,p_Position.y, p_Position.z));
+
 }
 
 void c_Player::f_update(bool Isfall) {
@@ -37,14 +42,23 @@ void c_Player::f_update(bool Isfall) {
 	StartPos = p_Position;
 	EndPos = VGet(p_Position.x , p_Position.y + 250.0f,p_Position.z);
 
+	//腕のモデルに座標、回転値、コリジョンの設定
 	MV1SetPosition(model_Arm, VGet(0.0f, 0.0f, 0.0f));
 	MV1SetRotationXYZ(model_Arm,VGet(0.0f,PI/2,0.0f));
 	MV1SetupCollInfo(model_Arm, -1, 8, 8, 8);		//モデル全体のフレームにコリジョンを準備
 
+	//剃刀のモデルに座標、回転値、コリジョンの設定
+	MV1SetRotationXYZ(model_KAMISORI, VGet(p_Rotation.x, p_Rotation.y, p_Rotation.z));
+	MV1SetupCollInfo(model_KAMISORI, -1, 8, 8, 8);		//モデル全体のフレームにコリジョンを準備
+
 	DrawLine3D(StartPos, EndPos, GetColor(255, 0, 0));		//キャラの当たり判定の線分
 
+	//腕との当たり判定
 	MV1_COLL_RESULT_POLY HitPoly = MV1CollCheck_Line(model_Arm,-1, StartPos, EndPos);
+	//剃刀との当たり判定
+	MV1_COLL_RESULT_POLY KAMISORI_HitPoly = MV1CollCheck_Line(model_KAMISORI, -1, StartPos, EndPos);
 
+	//腕モデルとのヒットポリゴン*************************************************
 	VECTOR Pos0= HitPoly.Position[0],
 		   Pos1 = HitPoly.Position[1],
 		   Pos2 = HitPoly.Position[2];
@@ -53,6 +67,19 @@ void c_Player::f_update(bool Isfall) {
 	DrawLine3D(Pos0, Pos1, LineColor);
 	DrawLine3D(Pos1, Pos2, LineColor);
 	DrawLine3D(Pos2, Pos0, LineColor);
+	//*************************************************************************
+
+
+	//かみそりモデルのヒットポリゴン*******************************************
+	VECTOR KAMI_Pos0 = KAMISORI_HitPoly.Position[0],
+		KAMI_Pos1 = KAMISORI_HitPoly.Position[1],
+		KAMI_Pos2 = KAMISORI_HitPoly.Position[2];
+	int KAMI_LineColor = GetColor(0, 255, 0);
+
+	DrawLine3D(KAMI_Pos0, KAMI_Pos1, KAMI_LineColor);
+	DrawLine3D(KAMI_Pos1, KAMI_Pos2, KAMI_LineColor);
+	DrawLine3D(KAMI_Pos2, KAMI_Pos0, KAMI_LineColor);
+	//*************************************************************************
 
 	//ワールド軸確認
 	DrawLine3D(p_Position, VGet(p_Position.x + 200, p_Position.y, p_Position.z), GetColor(255,0,0));
@@ -65,30 +92,56 @@ void c_Player::f_update(bool Isfall) {
 		p_Rotation = VGet(HitPoly.Normal.x, p_Rotation.y, HitPoly.Normal.z); 		//法線のキャラの向きに代入
 	}
 
-	DrawFormatString(0, 200, GetColor(255, 255, 255), "Pos0.x:%f個", HitPoly.Position[0].x);
-	DrawFormatString(0, 220, GetColor(255, 255, 255), "Pos0.y:%f個", HitPoly.Position[0].y);
-	DrawFormatString(0, 240, GetColor(255, 255, 255), "Pos0.z:%f個", HitPoly.Position[0].z);
+	//腕のモデルとのヒットしたポリゴンの三点座標を表示
+	DrawFormatString(0, 200, GetColor(255, 255, 255), "Pos0.x:%f", HitPoly.Position[0].x);
+	DrawFormatString(0, 220, GetColor(255, 255, 255), "Pos0.y:%f", HitPoly.Position[0].y);
+	DrawFormatString(0, 240, GetColor(255, 255, 255), "Pos0.z:%f", HitPoly.Position[0].z);
+
+
+	//剃刀のモデルとのヒットしたポリゴンの三点座標を表示
+	DrawFormatString(0, 260, GetColor(255, 255, 255), "KAMISORI_HitPoly.x:%f", KAMISORI_HitPoly.Position[0].x);
+	DrawFormatString(0, 280, GetColor(255, 255, 255), "KAMISORI_HitPoly.y:%f", KAMISORI_HitPoly.Position[0].y);
+	DrawFormatString(0, 300, GetColor(255, 255, 255), "KAMISORI_HitPoly.z:%f", KAMISORI_HitPoly.Position[0].z);
 
 
 	DrawLine3D(HitPoly.Position[0], HitPoly.Normal, GetColor(0, 0, 255));		//ポリゴンの法線描画
+
+	/**************************************
+	*プレイヤーの移動処理
+	**************************************/
 
 	float MoveX = 0,MoveZ = 0;//プレイヤーの移動量
 	Arm_XRotate = 0.0f;
 
 	if (CheckHitKey(KEY_INPUT_W) == 1) {
 	    MoveZ = p_Speed;
+		Kamisori_Position.z = 80;
+		Kamisori_Position.x = 0;
 	    p_Rotation.y = PI;
 	}
 	if (CheckHitKey(KEY_INPUT_A) == 1) {
 	    p_Rotation.y = PI/2;
+		Kamisori_Position.x = -80;
+		Kamisori_Position.z = 0;
 	}
 	if (CheckHitKey(KEY_INPUT_S) == 1) {
 	    MoveZ = -p_Speed;
+		Kamisori_Position.z = -80;
+		Kamisori_Position.x = 0;
 	    p_Rotation.y = 0;
 	}
 	if (CheckHitKey(KEY_INPUT_D) == 1) {
 	    p_Rotation.y = -PI / 2;
+		Kamisori_Position.x = 80;
+		Kamisori_Position.z = 0;
 	}
+
+	//剃刀の位置 = プレイヤーの位置　+　向いた方向に
+	MV1SetPosition(model_KAMISORI, VGet(
+		p_Position.x + Kamisori_Position.x, 
+		p_Position.y + Kamisori_Position.y,
+		p_Position.z + Kamisori_Position.z
+	));
 
 
 	//if (MoveZ != 0 && MoveX != 0 ) {
@@ -125,6 +178,9 @@ void c_Player::f_draw() {
 	c_colision->CubeDraw();
 	// ３Ｄモデルの描画
 	MV1DrawModel(p_Model);
+	//MV1SetScale(model_KAMISORI,VGet(-20.0f,-20.0f,-20.0f));
+
+	MV1DrawModel(model_KAMISORI);
 }
 
 VECTOR c_Player::f_GetPlayerPosition() {
