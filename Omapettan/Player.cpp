@@ -113,28 +113,88 @@ void c_Player::f_update(bool Isfall) {
 	float MoveX = 0,MoveZ = 0;//プレイヤーの移動量
 	Arm_XRotate = 0.0f;
 
+	//キャラの今までの移動方法
+
+	//if (CheckHitKey(KEY_INPUT_W) == 1) {
+	//    MoveZ = p_Speed;
+	//	Kamisori_Position.z = 80;
+	//	Kamisori_Position.x = 0;
+	//    p_Rotation.y = PI;			//最終定期なキャラの向く角度
+	//}
+	//if (CheckHitKey(KEY_INPUT_A) == 1) {
+	//    p_Rotation.y = PI/2;
+	//	Kamisori_Position.x = -80;
+	//	Kamisori_Position.z = 0;
+	//	MoveX = -p_Speed;
+	//}
+	//if (CheckHitKey(KEY_INPUT_S) == 1) {
+	//    MoveZ = -p_Speed;
+	//	Kamisori_Position.z = -80;
+	//	Kamisori_Position.x = 0;
+	//    p_Rotation.y = 0;
+	//}
+	//if (CheckHitKey(KEY_INPUT_D) == 1) {
+	//    p_Rotation.y = -PI / 2;
+	//	Kamisori_Position.x = 80;
+	//	Kamisori_Position.z = 0;
+	//	MoveX = p_Speed;
+	//}
+
+	static float Rota_Dif = 0.0;		//Rotate_Difference：：現在の回転値と向きたい方向の角度の差分格納変数
+	static float Rota_Vec = 0.0;		//Rotate_Vectol：：キャラが入力されたキーに対して向くべき方向
+	static float rad = PI/180;				//ラジアンでの1°  rad * 180 =　PI
+	static int Dif_rad = 0;				//整数型での角度差分
+
+
 	if (CheckHitKey(KEY_INPUT_W) == 1) {
-	    MoveZ = p_Speed;
+		MoveZ = p_Speed;
 		Kamisori_Position.z = 80;
 		Kamisori_Position.x = 0;
-	    p_Rotation.y = PI;
+		//プレイヤーの向く方向
+		Rota_Vec = atan2(-MoveX, -MoveZ);
 	}
 	if (CheckHitKey(KEY_INPUT_A) == 1) {
-	    p_Rotation.y = PI/2;
+		MoveX = -p_Speed;
 		Kamisori_Position.x = -80;
 		Kamisori_Position.z = 0;
+		//プレイヤーの向く方向
+		Rota_Vec = atan2(-MoveX, -MoveZ);
 	}
 	if (CheckHitKey(KEY_INPUT_S) == 1) {
-	    MoveZ = -p_Speed;
+		MoveZ = -p_Speed;
 		Kamisori_Position.z = -80;
 		Kamisori_Position.x = 0;
-	    p_Rotation.y = 0;
+		//プレイヤーの向く方向
+		Rota_Vec = atan2(-MoveX, -MoveZ);
 	}
 	if (CheckHitKey(KEY_INPUT_D) == 1) {
-	    p_Rotation.y = -PI / 2;
+		MoveX = p_Speed;
 		Kamisori_Position.x = 80;
 		Kamisori_Position.z = 0;
+		//プレイヤーの向く方向
+		Rota_Vec = atan2(-MoveX, -MoveZ);
 	}
+
+	//p_Rotation.y = Rota_Vec;
+
+	Rota_Dif = Rota_Vec - p_Rotation.y;
+
+	if (Rota_Dif > p_Rotation.y) {
+		p_Rotation.y += rad;
+	}
+	if (Rota_Dif < p_Rotation.y) {
+		p_Rotation.y -= rad;
+	}
+
+	/*
+	* 眠気が来たので明日の俺にまかせる
+	* 取得できたもの
+	*向くべき方向　　Rota_Vec
+	*現在の向いている方向 p_Rotation.y
+	*上二つの値の差分
+	*だからその差分の値分現在の向いている方向から向くべき方向に向けて値を調整すればOK
+	*/
+
 
 	//剃刀の位置 = プレイヤーの位置　+　向いた方向に
 	MV1SetPosition(model_KAMISORI, VGet(
@@ -142,13 +202,9 @@ void c_Player::f_update(bool Isfall) {
 		p_Position.y + Kamisori_Position.y,
 		p_Position.z + Kamisori_Position.z
 	));
+	
 
-
-	//if (MoveZ != 0 && MoveX != 0 ) {
-	//    p_Rotation.y = atan2(-MoveX,-MoveZ);
-	//}
-
-	p_Position = VAdd(p_Position,VGet(MoveX,0,MoveZ));
+	p_Position = VAdd(p_Position,VGet(0,0,MoveZ));
 	if (p_Position.z > 8000) {
 		p_Position.z = 8000;
 	}
@@ -162,9 +218,9 @@ void c_Player::f_update(bool Isfall) {
 		p_Position.y += 10;
 	}
 
-	DrawFormatString(0, 100, 0xffffff, "p_Position.x %f", p_Position.x);
-	DrawFormatString(0, 120, 0xffffff, "p_Position.z %f", p_Position.z);
-	DrawFormatString(0, 140, 0xffffff, "p_Rotation.y %f", p_Rotation.y);
+	DrawFormatString(0, 100, 0x00ffff, "Rota_Vec %f", Rota_Vec);
+	DrawFormatString(0, 120, 0x00ffff, "Rota_Dif %f", Rota_Dif);
+	DrawFormatString(0, 140, 0x00ffff, "p_Rotation.y %f", p_Rotation.y);
 
 	if (HitPoly.HitFlag == 0)f_fall();		//重力
 	c_colision->f_update(p_Position);
