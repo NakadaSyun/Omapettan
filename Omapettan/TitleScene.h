@@ -3,13 +3,16 @@
 #include "Dxlib.h"
 #include "Scene.h"
 
-class c_Title{
+class c_Title : public c_Scene {
 public:
 	c_Title();
-	virtual ~c_Title();
-	void f_update();
-	void f_output();
+	~c_Title();
+	virtual c_Scene* f_update() override;
+	virtual void f_output() const override;
+
+
+	void f_loadImage();
 
 private:
-	int a;
+	int BG;
 };

@@ -28,13 +28,8 @@ bool GameBase::f_init()
 	SetWriteZBufferFlag(TRUE);
 
 	//シーンマネージャー作成
-	c_sm = new c_sceneManager();
+	c_sm = new c_SceneManager();
 
-	//ゲームマネージャー生成
-	//c_gm = new c_GameManager();
-
-	// ゲームマネジャ初期化
-	//c_gm->f_init();
 
 	return true;
 

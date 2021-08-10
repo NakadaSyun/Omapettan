@@ -1,21 +1,25 @@
-#include "TitleScene.h"
+#include"TitleScene.h"
+#include "MainScene.h"
 
-//タイトルシーンのコンストラクタ
+
 c_Title::c_Title() {
-	a = 0;
+
 }
 
-//タイトルシーンのデストラクタ
 c_Title::~c_Title() {
 
 }
 
-void c_Title::f_update() {
+c_Scene* c_Title::f_update() {
+	if (false) {
+		return new c_Main();
+	}
 
 
-	//return this;
+	return this;
 }
 
-void c_Title::f_output() {
+void c_Title::f_output() const{
 
 }
+

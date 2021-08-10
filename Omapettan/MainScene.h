@@ -4,13 +4,12 @@
 #include "Scene.h"
 #include "GameManager.h"
 
-class c_Main{
+class c_Main :public c_Scene{
 public:
 	c_Main();
 	~c_Main();
-	
-	void f_update();
-	void f_output();
+	virtual c_Scene* f_update() override;
+	virtual void f_output() const override;
 
 	c_GameManager* c_gm;
 };

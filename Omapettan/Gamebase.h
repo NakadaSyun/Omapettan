@@ -13,7 +13,7 @@ private:
 	bool isRunning;
 
 	//c_GameManager* c_gm;
-	c_sceneManager* c_sm;
+	c_SceneManager* c_sm;
 
 	void f_input();
 	void f_update();

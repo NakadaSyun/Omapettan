@@ -1,24 +1,16 @@
+
 #pragma once
 #include "DxLib.h"
-#include "SceneManager.h"
-#include "TitleScene.h"
-#include "MainScene.h"
-#include "ResultScene.h"
+#include "Scene.h"
 
-
-class c_sceneManager{
+class c_SceneManager {
 public:
-	c_sceneManager();
-	void f_update();
-	void f_output();
-	void f_NextScene();
-
-
+	c_SceneManager();
+	~c_SceneManager();
 private:
+	c_Scene* mScene;
 
-	c_Title* c_title;
-	c_Main* c_main;
-	c_Result* c_result;
-
-	int selectScene;
+public:
+	void f_update();
+	void f_output() const;
 };
