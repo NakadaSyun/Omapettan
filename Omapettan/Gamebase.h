@@ -2,6 +2,7 @@
 
 #include "DxLib.h"
 #include "GameManager.h"
+#include "SceneManager.h"
 
 class GameBase {
 public:
@@ -11,7 +12,8 @@ public:
 private:
 	bool isRunning;
 
-	c_GameManager* c_gm;
+	//c_GameManager* c_gm;
+	c_sceneManager* c_sm;
 
 	void f_input();
 	void f_update();

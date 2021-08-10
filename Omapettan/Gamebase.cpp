@@ -27,11 +27,14 @@ bool GameBase::f_init()
 	// Ｚバッファへの書き込みを行う
 	SetWriteZBufferFlag(TRUE);
 
+	//シーンマネージャー作成
+	c_sm = new c_sceneManager();
+
 	//ゲームマネージャー生成
-	c_gm = new c_GameManager();
+	//c_gm = new c_GameManager();
 
 	// ゲームマネジャ初期化
-	c_gm->f_init();
+	//c_gm->f_init();
 
 	return true;
 
@@ -72,12 +75,14 @@ void GameBase::f_input()
 //ゲームオブジェクトの更新
 void GameBase::f_update()
 {
-	c_gm->f_update();
+	//c_gm->f_update();
+	c_sm->f_update();
 }
 
 //ゲームオブジェクトの描画
 void GameBase::f_output()
 {
 	//ゲーム描画
-	c_gm->f_output();
+	//c_gm->f_output();
+	c_sm->f_output();
 }
