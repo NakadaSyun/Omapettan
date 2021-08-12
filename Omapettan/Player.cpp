@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Math.h"
 #include "GameManager.h"
+#include <stdlib.h>
 
 #define PI 3.141592653589793
 
@@ -10,7 +11,7 @@ c_Player::c_Player(const int Model) {
 	p_Model = Model;
 	// ３Ｄモデルの座標を初期化
 	p_Position = VGet(0.0f, 760.0f, 4500.0f);
-	p_Rotation = VGet(0.0f, PI, 0.0f);
+	p_Rotation = VGet(0.0f, 0.0f, 0.0f);
 
 	c_colision = new c_Collision(p_Position, 100.0f, 200.0f, 100.0f);
 
@@ -40,11 +41,11 @@ void c_Player::f_update(bool Isfall) {
 	c_cameracon->f_update();		//c_cameraconを呼んで値を更新
 
 	StartPos = p_Position;
-	EndPos = VGet(p_Position.x , p_Position.y + 250.0f,p_Position.z);
+	EndPos = VGet(p_Position.x, p_Position.y + 250.0f, p_Position.z);
 
 	//腕のモデルに座標、回転値、コリジョンの設定
 	MV1SetPosition(model_Arm, VGet(0.0f, 0.0f, 0.0f));
-	MV1SetRotationXYZ(model_Arm,VGet(0.0f,PI/2,0.0f));
+	MV1SetRotationXYZ(model_Arm, VGet(0.0f, PI / 2, 0.0f));
 	MV1SetupCollInfo(model_Arm, -1, 8, 8, 8);		//モデル全体のフレームにコリジョンを準備
 
 	//剃刀のモデルに座標、回転値、コリジョンの設定
@@ -54,15 +55,15 @@ void c_Player::f_update(bool Isfall) {
 	DrawLine3D(StartPos, EndPos, GetColor(255, 0, 0));		//キャラの当たり判定の線分
 
 	//腕との当たり判定
-	MV1_COLL_RESULT_POLY HitPoly = MV1CollCheck_Line(model_Arm,-1, StartPos, EndPos);
+	MV1_COLL_RESULT_POLY HitPoly = MV1CollCheck_Line(model_Arm, -1, StartPos, EndPos);
 	//剃刀との当たり判定
 	MV1_COLL_RESULT_POLY KAMISORI_HitPoly = MV1CollCheck_Line(model_KAMISORI, -1, StartPos, EndPos);
 
 	//腕モデルとのヒットポリゴン*************************************************
-	VECTOR Pos0= HitPoly.Position[0],
-		   Pos1 = HitPoly.Position[1],
-		   Pos2 = HitPoly.Position[2];
-	int LineColor = GetColor(255,0,0);
+	VECTOR Pos0 = HitPoly.Position[0],
+		Pos1 = HitPoly.Position[1],
+		Pos2 = HitPoly.Position[2];
+	int LineColor = GetColor(255, 0, 0);
 
 	DrawLine3D(Pos0, Pos1, LineColor);
 	DrawLine3D(Pos1, Pos2, LineColor);
@@ -82,7 +83,7 @@ void c_Player::f_update(bool Isfall) {
 	//*************************************************************************
 
 	//ワールド軸確認
-	DrawLine3D(p_Position, VGet(p_Position.x + 200, p_Position.y, p_Position.z), GetColor(255,0,0));
+	DrawLine3D(p_Position, VGet(p_Position.x + 200, p_Position.y, p_Position.z), GetColor(255, 0, 0));
 	DrawLine3D(p_Position, VGet(p_Position.x, p_Position.y + 200, p_Position.z), GetColor(0, 255, 0));
 	DrawLine3D(p_Position, VGet(p_Position.x, p_Position.y, p_Position.z + 200), GetColor(0, 0, 255));
 
@@ -110,117 +111,153 @@ void c_Player::f_update(bool Isfall) {
 	*プレイヤーの移動処理
 	**************************************/
 
-	float MoveX = 0,MoveZ = 0;//プレイヤーの移動量
+	float MoveX = 0, MoveZ = 0;//プレイヤーの移動量
 	Arm_XRotate = 0.0f;
 
-	//キャラの今までの移動方法
 
-	//if (CheckHitKey(KEY_INPUT_W) == 1) {
-	//    MoveZ = p_Speed;
-	//	Kamisori_Position.z = 80;
-	//	Kamisori_Position.x = 0;
-	//    p_Rotation.y = PI;			//最終定期なキャラの向く角度
-	//}
-	//if (CheckHitKey(KEY_INPUT_A) == 1) {
-	//    p_Rotation.y = PI/2;
-	//	Kamisori_Position.x = -80;
-	//	Kamisori_Position.z = 0;
-	//	MoveX = -p_Speed;
-	//}
-	//if (CheckHitKey(KEY_INPUT_S) == 1) {
-	//    MoveZ = -p_Speed;
-	//	Kamisori_Position.z = -80;
-	//	Kamisori_Position.x = 0;
-	//    p_Rotation.y = 0;
-	//}
-	//if (CheckHitKey(KEY_INPUT_D) == 1) {
-	//    p_Rotation.y = -PI / 2;
-	//	Kamisori_Position.x = 80;
-	//	Kamisori_Position.z = 0;
-	//	MoveX = p_Speed;
-	//}
+	//static float Rota_Dif = 0.0;		//Rotate_Difference：：現在の回転値と向きたい方向の　時計廻り角度の差分格納変数
+	static float Rota_Vec = 0;		//Rotate_Vectol：：キャラが入力されたキーに対して向くべき方向
+	static float rad = PI / 180;		//ラジアンでの1°  rad * 180 =　PI
+	static float Rota_Dif_L = 0.0f;
+	static int Rota_Dif = 0;
+	static int int_angle = 0;
+	static int NowRota = 0;
 
-	static float Rota_Dif = 0.0;		//Rotate_Difference：：現在の回転値と向きたい方向の角度の差分格納変数
-	static float Rota_Vec = 0.0;		//Rotate_Vectol：：キャラが入力されたキーに対して向くべき方向
-	static float rad = PI/180;				//ラジアンでの1°  rad * 180 =　PI
-	static int Dif_rad = 0;				//整数型での角度差分
+	bool MoveKeyFlag = CheckHitKey(KEY_INPUT_W) ||
+		CheckHitKey(KEY_INPUT_A) ||
+		CheckHitKey(KEY_INPUT_S) ||
+		CheckHitKey(KEY_INPUT_D);
 
 
 	if (CheckHitKey(KEY_INPUT_W) == 1) {
 		MoveZ = p_Speed;
 		Kamisori_Position.z = 80;
 		Kamisori_Position.x = 0;
-		//プレイヤーの向く方向
-		Rota_Vec = atan2(-MoveX, -MoveZ);
+		Rota_Vec = atan2(-MoveX, -MoveZ);			//プレイヤーの向く方向
 	}
 	if (CheckHitKey(KEY_INPUT_A) == 1) {
 		MoveX = -p_Speed;
 		Kamisori_Position.x = -80;
 		Kamisori_Position.z = 0;
-		//プレイヤーの向く方向
-		Rota_Vec = atan2(-MoveX, -MoveZ);
+		Rota_Vec = atan2(-MoveX, -MoveZ);			//プレイヤーの向く方向
 	}
 	if (CheckHitKey(KEY_INPUT_S) == 1) {
 		MoveZ = -p_Speed;
 		Kamisori_Position.z = -80;
 		Kamisori_Position.x = 0;
-		//プレイヤーの向く方向
-		Rota_Vec = atan2(-MoveX, -MoveZ);
+		Rota_Vec = atan2(-MoveX, -MoveZ);			//プレイヤーの向く方向
 	}
 	if (CheckHitKey(KEY_INPUT_D) == 1) {
 		MoveX = p_Speed;
 		Kamisori_Position.x = 80;
 		Kamisori_Position.z = 0;
-		//プレイヤーの向く方向
-		Rota_Vec = atan2(-MoveX, -MoveZ);
+		Rota_Vec = atan2(-MoveX, -MoveZ);			//プレイヤーの向く方向
 	}
 
-	//p_Rotation.y = Rota_Vec;
-
-	Rota_Dif = Rota_Vec - p_Rotation.y;
-
-	if (Rota_Dif > p_Rotation.y) {
-		p_Rotation.y += rad;
-	}
-	if (Rota_Dif < p_Rotation.y) {
-		p_Rotation.y -= rad;
-	}
-
-	/*
-	* 眠気が来たので明日の俺にまかせる
-	* 取得できたもの
-	*向くべき方向　　Rota_Vec
-	*現在の向いている方向 p_Rotation.y
-	*上二つの値の差分
-	*だからその差分の値分現在の向いている方向から向くべき方向に向けて値を調整すればOK
-	*/
-
-
-	//剃刀の位置 = プレイヤーの位置　+　向いた方向に
-	MV1SetPosition(model_KAMISORI, VGet(
-		p_Position.x + Kamisori_Position.x, 
-		p_Position.y + Kamisori_Position.y,
-		p_Position.z + Kamisori_Position.z
-	));
-	
-
-	p_Position = VAdd(p_Position,VGet(0,0,MoveZ));
-	if (p_Position.z > 8000) {
-		p_Position.z = 8000;
-	}
-	if (p_Position.z < 1000) {
-		p_Position.z = 1000;
-	}
-
-
-
-	if (CheckHitKey(KEY_INPUT_SPACE) == 1) {
-		p_Position.y += 10;
+	if (Rota_Vec < 0) {
+		Rota_Vec = PI + (PI + Rota_Vec);
 	}
 
 	DrawFormatString(0, 100, 0x00ffff, "Rota_Vec %f", Rota_Vec);
-	DrawFormatString(0, 120, 0x00ffff, "Rota_Dif %f", Rota_Dif);
-	DrawFormatString(0, 140, 0x00ffff, "p_Rotation.y %f", p_Rotation.y);
+	int_angle = Rota_Vec / rad;
+
+	if (p_Rotation.y < 0) {
+		p_Rotation.y = PI + (PI + p_Rotation.y);
+	}
+
+	NowRota = abs(p_Rotation.y) / rad;		//現在の向いているラジアン角度
+
+	if (int_angle == 0 && NowRota > 180) {
+		int_angle = 360;
+	}
+	if (int_angle > 180 && NowRota == 0) {
+		NowRota = 360;
+	}
+	Rota_Dif = int_angle - NowRota;			//向きたい角度　ー　現在の角度 の差分
+	Rota_Dif = abs(Rota_Dif);
+
+	if (int_angle > NowRota) {
+		if (Rota_Dif <= 180) {
+			if (Rota_Dif != 0) {	//向くべき方向と現在の回転値を比べる
+				p_Rotation.y += rad * 1;		//角度を1°ずつ加算する
+			}
+		}
+		if (Rota_Dif > 180) {
+			if (Rota_Dif != 0) {	//向くべき方向と現在の回転値を比べる
+				p_Rotation.y -= rad * 1;		//角度を1°ずつ加算する
+			}
+		}
+	}
+	if (int_angle < NowRota) {
+		if (Rota_Dif <= 180) {
+			if (Rota_Dif != 0) {	//向くべき方向と現在の回転値を比べる
+				p_Rotation.y -= rad * 1;		//角度を1°ずつ加算する
+			}
+		}
+		if (Rota_Dif > 180) {
+			if (Rota_Dif != 0) {	//向くべき方向と現在の回転値を比べる
+				p_Rotation.y += rad * 1;		//角度を1°ずつ加算する
+			}
+		}
+	}
+
+	//int_angle = abs(int_angle) % 360;
+	//Rota_Dif = abs(Rota_Dif) % 360;
+
+	if (NowRota == 360 && Rota_Dif == 0 && int_angle == 360) {
+		p_Rotation.y = 0.0f;
+	}
+
+	//p_Rotation.y = int_angle * rad;
+
+
+
+	//Rota_Dif = Rota_Vec - 0;//キャラの向くべき方向と現在の回転値との時計廻り分の差分の絶対値を取得
+	//Rota_Dif_L = 0 - Rota_Vec;
+
+	//if (Rota_Vec > p_Rotation.y) {	//向くべき方向と現在の回転値を比べる
+	//	p_Rotation.y += rad * 1;		//角度を1°ずつ加算する
+	//}
+	//if (Rota_Vec < p_Rotation.y) {	//向くべき方向と現在の回転値を比べる
+	//	p_Rotation.y -= rad * 1;		//角度を1°ずつ加算する
+	//}
+
+
+
+	//if (Rota_Vec > p_Rotation.y) {	//向くべき方向と現在の回転値を比べる
+	//	if (Rota_Dif > rad * 10) {
+	//		p_Rotation.y += rad * 10;		//角度を10°ずつ加算する
+	//	}
+	//	else {
+	//		p_Rotation.y += rad * 1;		//角度を1°ずつ加算する
+	//	}
+	//}
+
+
+
+
+	MV1SetPosition(model_KAMISORI, VGet(	//剃刀の位置 = プレイヤーの位置　+　向いた方向に
+		p_Position.x + Kamisori_Position.x,
+		p_Position.y + Kamisori_Position.y,
+		p_Position.z + Kamisori_Position.z
+	));
+
+
+	p_Position = VAdd(p_Position, VGet(0, 0, MoveZ));	//プレイヤーの座標加減算処理
+
+
+	if (p_Position.z > 8000) {						//キャラが腕ステージ内での移動制限//腕の手首より上には行けない
+		p_Position.z = 8000;
+	}
+	if (p_Position.z < 1000) {						//キャラが腕ステージ内での移動制限//肘手前より下には行けない
+		p_Position.z = 1000;
+	}
+
+	DrawFormatString(0, 120, 0x00ffff, "p_Rotation.y %f", p_Rotation.y);
+	DrawFormatString(0, 140, 0x00ffff, "Rota_Dif %d", Rota_Dif);
+	DrawFormatString(0, 160, 0x00ffff, "NowRota %d", NowRota);
+	DrawFormatString(0, 180, 0x00ffff, "int_angle %d", int_angle);
+
 
 	if (HitPoly.HitFlag == 0)f_fall();		//重力
 	c_colision->f_update(p_Position);
