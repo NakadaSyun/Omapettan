@@ -13,7 +13,10 @@ c_Player::c_Player(const int Model) {
 	p_Position = VGet(0.0f, 760.0f, 4500.0f);
 	p_Rotation = VGet(0.0f, 0.0f, 0.0f);
 
-	c_colision = new c_Collision(p_Position, 100.0f, 200.0f, 100.0f);
+	c_colision = new c_Collision(VGet(p_Position.x + Kamisori_Position.x,
+		p_Position.y + Kamisori_Position.y,
+		p_Position.z + Kamisori_Position.z),
+		100.0f, 20.0f, 100.0f);
 
 	c_cameracon = new c_CameraCon;
 
@@ -27,7 +30,7 @@ void c_Player::f_init() {
 	p_Rotation = VGet(0.0f, 0.0f, 0.0f);
 
 
-	MV1SetPosition(model_KAMISORI, VGet(p_Position.x,p_Position.y, p_Position.z));
+	MV1SetPosition(model_KAMISORI, VGet(p_Position.x, p_Position.y, p_Position.z));
 
 }
 
@@ -207,13 +210,11 @@ void c_Player::f_update(bool Isfall) {
 		p_Rotation.y = 0.0f;
 	}
 
-
-	MV1SetPosition(model_KAMISORI, VGet(	//剃刀の位置 = プレイヤーの位置　+　向いた方向に
-		p_Position.x + Kamisori_Position.x,
-		p_Position.y + Kamisori_Position.y,
-		p_Position.z + Kamisori_Position.z
+	MV1SetPosition(model_KAMISORI, VGet(
+		sinf(p_Rotation.y) * -100 + p_Position.x,
+		p_Position.y,
+		cosf(p_Rotation.y) * -100 + p_Position.z
 	));
-
 
 	p_Position = VAdd(p_Position, VGet(0, 0, MoveZ));	//プレイヤーの座標加減算処理
 
