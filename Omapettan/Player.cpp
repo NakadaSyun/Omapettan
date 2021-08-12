@@ -181,29 +181,51 @@ void c_Player::f_update(bool Isfall) {
 	Rota_Dif = int_angle - NowRota;			//Œü‚«‚½‚¢Šp“x@[@Œ»İ‚ÌŠp“x ‚Ì·•ª
 	Rota_Dif = abs(Rota_Dif);
 
+	Rota_Dif = Rota_Dif % 360;
+
 	if (MoveKeyFlag == TRUE) {
 
 		if (int_angle > NowRota) {
 			if (Rota_Dif <= 180) {
 				if (Rota_Dif != 0) {	//Œü‚­‚×‚«•ûŒü‚ÆŒ»İ‚Ì‰ñ“]’l‚ğ”ä‚×‚é
-					p_Rotation.y += rad * 1;		//Šp“x‚ğ1‹‚¸‚Â‰ÁZ‚·‚é
+					if (Rota_Dif > 10) {
+						p_Rotation.y += rad * 10;		//Šp“x‚ğ1‹‚¸‚Â‰ÁZ‚·‚é
+					}
+					else {
+						p_Rotation.y = int_angle * rad;		//Šp“x‚ğ1‹‚¸‚Â‰ÁZ‚·‚é
+					}
 				}
 			}
 			if (Rota_Dif > 180) {
 				if (Rota_Dif != 0) {	//Œü‚­‚×‚«•ûŒü‚ÆŒ»İ‚Ì‰ñ“]’l‚ğ”ä‚×‚é
-					p_Rotation.y -= rad * 1;		//Šp“x‚ğ1‹‚¸‚Â‰ÁZ‚·‚é
+					if (Rota_Dif > 10) {
+						p_Rotation.y -= rad * 10;		//Šp“x‚ğ1‹‚¸‚Â‰ÁZ‚·‚é
+					}
+					else {
+						p_Rotation.y = int_angle * rad;		//Šp“x‚ğ1‹‚¸‚Â‰ÁZ‚·‚é
+					}
 				}
 			}
 		}
 		if (int_angle < NowRota) {
 			if (Rota_Dif <= 180) {
 				if (Rota_Dif != 0) {	//Œü‚­‚×‚«•ûŒü‚ÆŒ»İ‚Ì‰ñ“]’l‚ğ”ä‚×‚é
-					p_Rotation.y -= rad * 1;		//Šp“x‚ğ1‹‚¸‚Â‰ÁZ‚·‚é
+					if (Rota_Dif > 10) {
+						p_Rotation.y -= rad * 10;		//Šp“x‚ğ1‹‚¸‚Â‰ÁZ‚·‚é
+					}
+					else {
+						p_Rotation.y = int_angle * rad;		//Šp“x‚ğ1‹‚¸‚Â‰ÁZ‚·‚é
+					}
 				}
 			}
 			if (Rota_Dif > 180) {
 				if (Rota_Dif != 0) {	//Œü‚­‚×‚«•ûŒü‚ÆŒ»İ‚Ì‰ñ“]’l‚ğ”ä‚×‚é
-					p_Rotation.y += rad * 1;		//Šp“x‚ğ1‹‚¸‚Â‰ÁZ‚·‚é
+					if (Rota_Dif > 10) {
+						p_Rotation.y += rad * 10;		//Šp“x‚ğ1‹‚¸‚Â‰ÁZ‚·‚é
+					}
+					else {
+						p_Rotation.y = int_angle * rad;		//Šp“x‚ğ1‹‚¸‚Â‰ÁZ‚·‚é
+					}
 				}
 			}
 		}
