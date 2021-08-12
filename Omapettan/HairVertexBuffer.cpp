@@ -228,13 +228,13 @@ void c_Hair::f_setPosAndRot() {
 // –Ñ‚ð‰æ–ÊŠO‚ÖˆÚ“®
 void c_Hair::f_MoveHairOffScreen(int num) {
 	
-	personalPosZ[num] = -1000.0f;
+	personalPosZ[num] = -5000.0f;
 
-	(this->*f_hairStatusFuncList[hairStatus[ROOTED_IS]])(num);
+	(this->*f_hairStatusFuncList[ROOTED_IS])(num);
 }
 
 // –Ñ‚Ìó‘Ô‚ð•Ï‰»(ª•t‚¢‚Ä‚¢‚é¨’ä‚ç‚ê‚½)
-void c_Hair::f_changeHairStatus(int num) {
+void c_Hair::f_hairCut(int num) {
 	if (hairStatus[num] == ROOTED_IS) {
 		hairStatus[num] = SHAVED;
 	}
@@ -248,7 +248,7 @@ void c_Hair::f_flyShavedHair(int num) {
 
 	personalRotX[num] += float(DX_PI) / 180;
 
-	(this->*f_hairStatusFuncList[hairStatus[ROOTED_IS]])(num);
+	(this->*f_hairStatusFuncList[ROOTED_IS])(num);
 
 	if (personalRadius[num] >= 2000)
 		hairStatus[num] = OFF_SCREEN;

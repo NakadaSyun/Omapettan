@@ -16,7 +16,7 @@ c_Player::c_Player(const int Model) {
 	c_colision = new c_Collision(VGet(p_Position.x + Kamisori_Position.x,
 		p_Position.y + Kamisori_Position.y,
 		p_Position.z + Kamisori_Position.z),
-		100.0f, 20.0f, 100.0f);
+		100.0f, 10.0f, 100.0f);
 
 	c_cameracon = new c_CameraCon;
 

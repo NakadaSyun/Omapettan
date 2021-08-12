@@ -59,7 +59,7 @@ public:
 	//// –Ñ‚ğ‰æ–ÊŠO‚ÖˆÚ“®
 	//void f_MoveHairOffScreen(int num);
 	// –Ñ‚Ìó‘Ô‚ğ•Ï‰»
-	void f_changeHairStatus(int num);
+	void f_hairCut(int num);
 	//// ’ä‚ç‚ê‚½–Ñ‚ğ”ò‚Î‚·
 	//void f_flyShavedHair(int num);
 

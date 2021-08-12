@@ -56,12 +56,15 @@ void c_GameManager::f_update()
 {
 	bool Isfall = f_HitCheck(*c_player->c_colision, *c_stage->c_colision);
 
-	// プレイヤーと各髪の当たり判定
+	// プレイヤーと各毛の当たり判定
 	for (int num = 0; num < HAIR_NUM; num++)
 	{
 		//c_hair->HitHair[num] = f_HitCheck(*c_player->c_colision, *c_hair->c_colision[num]);
-		if (f_HitCheck(*c_hair->c_colision[num], *c_player->c_colision) == false)
-			c_hair->f_changeHairStatus(num);
+		if (f_HitCheck(*c_hair->c_colision[num], *c_player->c_colision) == false) {
+			c_hair->f_hairCut(num);
+
+			printf("%d\n", num);
+		}
 	}
 
 	////毛の当たり判定用のデバッグ
