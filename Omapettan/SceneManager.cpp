@@ -3,7 +3,9 @@
 #include "MainScene.h"
 
 c_SceneManager::c_SceneManager() : mScene(new c_Main())
-{}
+{
+	printf("SPACEキーを押すとシーンが切り替わります");
+}
 
 c_SceneManager::~c_SceneManager() {
 	delete mScene;

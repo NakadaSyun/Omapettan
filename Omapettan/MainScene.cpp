@@ -7,6 +7,7 @@ c_Main::c_Main() {
 
 	// ゲームマネジャ初期化
 	c_gm->f_init();
+	IsNextScene = false;
 }
 
 c_Main::~c_Main() {
@@ -15,8 +16,12 @@ c_Main::~c_Main() {
 
 c_Scene* c_Main::f_update() {
 	c_gm->f_update();
-	if (CheckHitKey(KEY_INPUT_SPACE) == 1) {
+	if (CheckHitKey(KEY_INPUT_SPACE) == 1 && IsNextScene) {
 		return new c_Result();
+	}
+
+	if (CheckHitKey(KEY_INPUT_SPACE) == 0 && !IsNextScene) {
+		IsNextScene = true;
 	}
 
 

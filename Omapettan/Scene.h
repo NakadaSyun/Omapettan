@@ -17,4 +17,6 @@ public:
 
 	virtual c_Scene* f_update() = 0;
 	virtual void f_output() const = 0;
+
+	bool IsNextScene;
 };
