@@ -29,7 +29,7 @@ c_Hair::c_Hair(const int Model, const int Image) {
 
 	stageXRotation = 0.0f;
 
-	hairSize = VGet(200.0f, 600.0f, 200.0f);
+	hairSize = VGet(50.0f, 50.0f, 50.0f);
 
 	//f_funcList[ROOTED_IS] = f_moveHair();
 	/*(this->*f_hairStatusFuncList[3])(0) =
@@ -163,8 +163,10 @@ void c_Hair::CubeDraw() {
 	//コリジョンの位置調整用の数値
 	for (int num = 0; num < HAIR_NUM; num++)
 	{
+		/*Cube.f_create(CollisionPosition[num].x - (200 / 2), CollisionPosition[num].y,
+			CollisionPosition[num].z - (200 / 2),200, 600, 200);*/
 		Cube.f_create(CollisionPosition[num].x - (200 / 2), CollisionPosition[num].y,
-			CollisionPosition[num].z - (200 / 2),200, 600, 200);
+			CollisionPosition[num].z - (200 / 2), 200, 100, 200);
 	}	
 }
 

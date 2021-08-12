@@ -13,10 +13,14 @@ c_Player::c_Player(const int Model) {
 	p_Position = VGet(0.0f, 760.0f, 4500.0f);
 	p_Rotation = VGet(0.0f, 0.0f, 0.0f);
 
-	c_colision = new c_Collision(VGet(p_Position.x + Kamisori_Position.x,
-		p_Position.y + Kamisori_Position.y,
-		p_Position.z + Kamisori_Position.z),
-		100.0f, 10.0f, 100.0f);
+	c_colision = new c_Collision(VGet(sinf(p_Rotation.y) * -100 + p_Position.x,
+		                              p_Position.y,
+		                              cosf(p_Rotation.y) * -100 + p_Position.z),
+		                         100.0f, 40.0f, 100.0f);
+
+	/*  VGet(p_Position.x + Kamisori_Position.x,
+        p_Position.y + Kamisori_Position.y,
+        p_Position.z + Kamisori_Position.z)*/
 
 	c_cameracon = new c_CameraCon;
 

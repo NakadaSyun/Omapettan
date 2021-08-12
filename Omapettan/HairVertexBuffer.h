@@ -17,7 +17,7 @@ namespace {
 	const int POLY = 3;
 
 	// ステージ(腕)の太さの半径
-	const float ARM_RADIUS = 755.0f - 1.0f;
+	const float ARM_RADIUS = 755.0f - 10.0f;
 
 	// ステージ(腕)の長さ
 	const float ARM_LENGTH = 7000.0f;
