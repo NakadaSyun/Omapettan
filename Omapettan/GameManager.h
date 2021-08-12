@@ -24,6 +24,8 @@ public:
 	void f_update();			//ƒtƒŒ[ƒ€‚²‚Æ‚Ìˆ—
 	void f_output();			//ƒtƒŒ[ƒ€‚²‚Æ‚Ì•`‰æ
 
+	void f_SkyBoxDraw();			//”wŒi‚Ì•`‰æ
+
 	bool f_HitCheck(c_Collision col1,c_Collision col2);			//Õ“Ë”»’è
 
 	c_DrawCube* c_Dc;
@@ -41,6 +43,7 @@ private:
 	int model_Sphere;
 	int model_Cylinder;
 	int model_Arm;
+	int model_SkyBox;
 
 	// ‰æ‘œ
 	int image_Cylinder;
