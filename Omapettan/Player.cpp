@@ -161,7 +161,10 @@ void c_Player::f_update(bool Isfall) {
 	}
 
 	DrawFormatString(0, 100, 0x00ffff, "Rota_Vec %f", Rota_Vec);
-	int_angle = Rota_Vec / rad;
+	//int_angle = Rota_Vec / rad;
+	if (Rota_Dif == 0) {
+		int_angle = Rota_Vec / rad;
+	}
 
 	if (p_Rotation.y < 0) {
 		p_Rotation.y = PI + (PI + p_Rotation.y);
