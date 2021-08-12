@@ -118,7 +118,6 @@ void c_Player::f_update(bool Isfall) {
 	//static float Rota_Dif = 0.0;		//Rotate_Difference：：現在の回転値と向きたい方向の　時計廻り角度の差分格納変数
 	static float Rota_Vec = 0;		//Rotate_Vectol：：キャラが入力されたキーに対して向くべき方向
 	static float rad = PI / 180;		//ラジアンでの1°  rad * 180 =　PI
-	static float Rota_Dif_L = 0.0f;
 	static int Rota_Dif = 0;
 	static int int_angle = 0;
 	static int NowRota = 0;
@@ -176,64 +175,37 @@ void c_Player::f_update(bool Isfall) {
 	Rota_Dif = int_angle - NowRota;			//向きたい角度　ー　現在の角度 の差分
 	Rota_Dif = abs(Rota_Dif);
 
-	if (int_angle > NowRota) {
-		if (Rota_Dif <= 180) {
-			if (Rota_Dif != 0) {	//向くべき方向と現在の回転値を比べる
-				p_Rotation.y += rad * 1;		//角度を1°ずつ加算する
-			}
-		}
-		if (Rota_Dif > 180) {
-			if (Rota_Dif != 0) {	//向くべき方向と現在の回転値を比べる
-				p_Rotation.y -= rad * 1;		//角度を1°ずつ加算する
-			}
-		}
-	}
-	if (int_angle < NowRota) {
-		if (Rota_Dif <= 180) {
-			if (Rota_Dif != 0) {	//向くべき方向と現在の回転値を比べる
-				p_Rotation.y -= rad * 1;		//角度を1°ずつ加算する
-			}
-		}
-		if (Rota_Dif > 180) {
-			if (Rota_Dif != 0) {	//向くべき方向と現在の回転値を比べる
-				p_Rotation.y += rad * 1;		//角度を1°ずつ加算する
-			}
-		}
-	}
+	if (MoveKeyFlag == TRUE) {
 
-	//int_angle = abs(int_angle) % 360;
-	//Rota_Dif = abs(Rota_Dif) % 360;
+		if (int_angle > NowRota) {
+			if (Rota_Dif <= 180) {
+				if (Rota_Dif != 0) {	//向くべき方向と現在の回転値を比べる
+					p_Rotation.y += rad * 1;		//角度を1°ずつ加算する
+				}
+			}
+			if (Rota_Dif > 180) {
+				if (Rota_Dif != 0) {	//向くべき方向と現在の回転値を比べる
+					p_Rotation.y -= rad * 1;		//角度を1°ずつ加算する
+				}
+			}
+		}
+		if (int_angle < NowRota) {
+			if (Rota_Dif <= 180) {
+				if (Rota_Dif != 0) {	//向くべき方向と現在の回転値を比べる
+					p_Rotation.y -= rad * 1;		//角度を1°ずつ加算する
+				}
+			}
+			if (Rota_Dif > 180) {
+				if (Rota_Dif != 0) {	//向くべき方向と現在の回転値を比べる
+					p_Rotation.y += rad * 1;		//角度を1°ずつ加算する
+				}
+			}
+		}
+	}
 
 	if (NowRota == 360 && Rota_Dif == 0 && int_angle == 360) {
 		p_Rotation.y = 0.0f;
 	}
-
-	//p_Rotation.y = int_angle * rad;
-
-
-
-	//Rota_Dif = Rota_Vec - 0;//キャラの向くべき方向と現在の回転値との時計廻り分の差分の絶対値を取得
-	//Rota_Dif_L = 0 - Rota_Vec;
-
-	//if (Rota_Vec > p_Rotation.y) {	//向くべき方向と現在の回転値を比べる
-	//	p_Rotation.y += rad * 1;		//角度を1°ずつ加算する
-	//}
-	//if (Rota_Vec < p_Rotation.y) {	//向くべき方向と現在の回転値を比べる
-	//	p_Rotation.y -= rad * 1;		//角度を1°ずつ加算する
-	//}
-
-
-
-	//if (Rota_Vec > p_Rotation.y) {	//向くべき方向と現在の回転値を比べる
-	//	if (Rota_Dif > rad * 10) {
-	//		p_Rotation.y += rad * 10;		//角度を10°ずつ加算する
-	//	}
-	//	else {
-	//		p_Rotation.y += rad * 1;		//角度を1°ずつ加算する
-	//	}
-	//}
-
-
 
 
 	MV1SetPosition(model_KAMISORI, VGet(	//剃刀の位置 = プレイヤーの位置　+　向いた方向に
