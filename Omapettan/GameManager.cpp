@@ -13,6 +13,7 @@ void c_GameManager::f_init()
 	// ３Ｄモデルに新しい座標をセット
 	//MV1SetPosition(model_Plane, VGet(0.0f,-100.0f,0.0f));
 	MV1SetPosition(model_Arm, VGet(0.0f, 0.0f, 0.0f));
+	MV1SetDifColorScale(model_Arm, GetColorF(0.8f, 0.6f, 0.4f, 1.0f));
 
 	MV1SetPosition(model_Sphere, VGet(0.0f, -850.0f, 0.0f));
 
