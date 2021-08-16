@@ -14,5 +14,5 @@ public:
 	void f_loadImage();
 
 private:
-	int BG;
+	int BG;			//”wŒi‰æ‘œ—p•Ï”
 };
