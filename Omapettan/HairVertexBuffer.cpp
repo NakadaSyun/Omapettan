@@ -229,7 +229,7 @@ void c_Hair::f_setPosAndRot() {
 
 // –Ñ‚ð‰æ–ÊŠO‚ÖˆÚ“®
 void c_Hair::f_MoveHairOffScreen(int num) {
-	
+	// –Ñ‚ð‰æ–Ê‚É‰f‚ç‚È‚¢ˆÊ’u‚ÖˆÚ“®
 	personalPosZ[num] = -5000.0f;
 
 	(this->*f_hairStatusFuncList[ROOTED_IS])(num);
