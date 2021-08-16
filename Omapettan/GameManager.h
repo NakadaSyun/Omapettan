@@ -9,6 +9,7 @@
 #include "Stage.h"
 #include "Collision.h"
 #include "HairVertexBuffer.h"
+#include "DrawAcne.h"
 
 #include <iostream>
 
@@ -34,7 +35,7 @@ public:
 	c_DispUI* c_dispUI;
 	c_Stage* c_stage;
 	c_Hair* c_hair;
-
+	c_Acne* c_acne;
 private:
 	
 	// ƒ‚ƒfƒ‹
@@ -44,7 +45,9 @@ private:
 	int model_Cylinder;
 	int model_Arm;
 	int model_SkyBox;
+	int model_Acne;
 
 	// ‰æ‘œ
 	int image_Cylinder;
+	int image_Acne;
 };
