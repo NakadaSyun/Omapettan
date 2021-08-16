@@ -16,6 +16,7 @@ void c_GameManager::f_init()
 
 	MV1SetPosition(model_Sphere, VGet(0.0f, -850.0f, 0.0f));
 
+	MV1SetPosition(model_SkyBox, VGet(0.0f, 760.0f, 10000.0f));
 
 
 	c_player = new c_Player(model_impostor);
@@ -90,7 +91,6 @@ void c_GameManager::f_update()
 	c_hair->f_update();
 
 	//背景移動のアップデート
-	MV1SetPosition(model_SkyBox, Playerposition);
 	MV1SetRotationXYZ(model_SkyBox, VGet(c_hair->stageXRotation, DX_PI_F / 2, 0.0f));
 }
 
