@@ -11,6 +11,7 @@ public:
 	virtual void f_output() const override;
 
 
+
 	void f_loadImage();
 
 private:

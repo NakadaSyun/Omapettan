@@ -26,6 +26,7 @@ c_Scene* c_Result::f_update() {
 
 void c_Result::f_output() const {
 	DrawGraph(0, 0, BG, true);
+	DrawFormatString(250, 400, 0x000000, "SPACEキーでタイトルに戻る");
 }
 
 void c_Result::f_loadImage() {

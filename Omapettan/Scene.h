@@ -20,3 +20,14 @@ public:
 
 	bool IsNextScene;
 };
+
+
+//—ñ‹“‘ÌŒ^‚ÌŒ»Ý‚ÌƒQ[ƒ€ƒ‚[ƒh
+enum GAME_MODE {		
+	GAME_TITLE,
+	GAME_MAIN,
+	GAME_RESULT,
+	GAME_OVER,
+	GAME_END,
+	END = 99
+};

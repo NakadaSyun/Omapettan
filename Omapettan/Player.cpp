@@ -96,9 +96,9 @@ void c_Player::f_update(bool Isfall) {
 
 	//p_Rotation = HitPoly.Normal;		//法線のキャラの向きに代入
 
-	if (HitPoly.HitFlag == 1) {
-		p_Rotation = VGet(HitPoly.Normal.x, p_Rotation.y, HitPoly.Normal.z); 		//法線のキャラの向きに代入
-	}
+	//if (HitPoly.HitFlag == 1) {
+	//	p_Rotation = VGet(HitPoly.Normal.x, p_Rotation.y, HitPoly.Normal.z); 		//法線のキャラの向きに代入
+	//}
 
 	//腕のモデルとのヒットしたポリゴンの三点座標を表示
 	DrawFormatString(0, 200, GetColor(255, 255, 255), "Pos0.x:%f", HitPoly.Position[0].x);
