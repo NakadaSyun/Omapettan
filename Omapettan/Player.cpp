@@ -122,14 +122,13 @@ void c_Player::f_update(bool Isfall) {
 	Arm_XRotate = 0.0f;
 
 
-	//static float Rota_Dif = 0.0;		//Rotate_Difference：：現在の回転値と向きたい方向の　時計廻り角度の差分格納変数
 	static float Rota_Vec = 0;		//Rotate_Vectol：：キャラが入力されたキーに対して向くべき方向
+	static int int_angle = 0;			//Rotate_Vectolをラジアン角度に直したint型整数
 	static float rad = PI / 180;		//ラジアンでの1°  rad * 180 =　PI
-	static int Rota_Dif = 0;
-	static int int_angle = 0;
-	static int NowRota = 0;
+	static int Rota_Dif = 0;			//Rotate_Difference：：現在の回転値と向きたい方向の　時計廻り角度の差分格納変数
+	static int NowRota = 0;				//Now_Rotate：：現在の向いているラジアン角度
 
-	bool MoveKeyFlag = CheckHitKey(KEY_INPUT_W) ||
+	bool MoveKeyFlag = CheckHitKey(KEY_INPUT_W) ||		//移動キーが一つでも押されているかのフラグ
 		CheckHitKey(KEY_INPUT_A) ||
 		CheckHitKey(KEY_INPUT_S) ||
 		CheckHitKey(KEY_INPUT_D);
@@ -137,73 +136,64 @@ void c_Player::f_update(bool Isfall) {
 
 	if (CheckHitKey(KEY_INPUT_W) == 1) {
 		MoveZ = p_Speed;
-		Kamisori_Position.z = 80;
-		Kamisori_Position.x = 0;
 		Rota_Vec = atan2(-MoveX, -MoveZ);			//プレイヤーの向く方向
 	}
 	if (CheckHitKey(KEY_INPUT_A) == 1) {
 		MoveX = -p_Speed;
-		Kamisori_Position.x = -80;
-		Kamisori_Position.z = 0;
 		Rota_Vec = atan2(-MoveX, -MoveZ);			//プレイヤーの向く方向
 	}
 	if (CheckHitKey(KEY_INPUT_S) == 1) {
 		MoveZ = -p_Speed;
-		Kamisori_Position.z = -80;
-		Kamisori_Position.x = 0;
 		Rota_Vec = atan2(-MoveX, -MoveZ);			//プレイヤーの向く方向
 	}
 	if (CheckHitKey(KEY_INPUT_D) == 1) {
 		MoveX = p_Speed;
-		Kamisori_Position.x = 80;
-		Kamisori_Position.z = 0;
 		Rota_Vec = atan2(-MoveX, -MoveZ);			//プレイヤーの向く方向
 	}
 
-	if (Rota_Vec < 0) {
-		Rota_Vec = PI + (PI + Rota_Vec);
+	if (Rota_Vec < 0) {								//プレイヤーの向くべき方向が-3.14など反時計廻りに回るときに-の値になった時
+		Rota_Vec = PI + (PI + Rota_Vec);			//2PIで一周換算した値にする
 	}
 
 	DrawFormatString(0, 100, 0x00ffff, "Rota_Vec %f", Rota_Vec);
-	//int_angle = Rota_Vec / rad;
-	if (Rota_Dif == 0) {
-		int_angle = Rota_Vec / rad;
+
+	int_angle = Rota_Vec / rad;						//向くべき方向をラジアン角度に変換
+
+	if (p_Rotation.y < 0) {							//プレイヤーの向いている方向が-3.14など反時計廻りに回るときに-の値になった時
+		p_Rotation.y = PI + (PI + p_Rotation.y);	//2PIで一周換算した値にする
 	}
 
-	if (p_Rotation.y < 0) {
-		p_Rotation.y = PI + (PI + p_Rotation.y);
-	}
-
-	NowRota = abs(p_Rotation.y) / rad;		//現在の向いているラジアン角度
+	NowRota = abs(p_Rotation.y) / rad;				//現在の向いているラジアン角度
 
 	if (int_angle == 0 && NowRota > 180) {
 		int_angle = 360;
 	}
 	if (int_angle > 180 && NowRota == 0) {
 		NowRota = 360;
-	}
+	}	
 	Rota_Dif = int_angle - NowRota;			//向きたい角度　ー　現在の角度 の差分
-	Rota_Dif = abs(Rota_Dif);
+	Rota_Dif = abs(Rota_Dif);				//上記の値の差分の絶対値
 
-	Rota_Dif = Rota_Dif % 360;
+	Rota_Dif = Rota_Dif % 360;				//差分が360°以上行かないようにする
 
-	if (MoveKeyFlag == TRUE) {
+	if (MoveKeyFlag == TRUE) {				//移動キーが押されている時
 
-		if (int_angle > NowRota) {
-			if (Rota_Dif <= 180) {
-				if (Rota_Dif != 0) {	//向くべき方向と現在の回転値を比べる
-					if (Rota_Dif > 10) {
-						p_Rotation.y += rad * 10;		//角度を1°ずつ加算する
+		//現在の角度から向きたい方向に向く処理
+		if (int_angle > NowRota) {			//現在の角度と、向きべき角度を比べる
+			if (Rota_Dif <= 180) {			//差分を比べる
+				if (Rota_Dif != 0) {		//差分が0になるまで
+					if (Rota_Dif > 10) {	//差分が10°以上あるとき
+						p_Rotation.y += rad * 10;		//角度を10°ずつ加算する
 					}
 					else {
 						p_Rotation.y = int_angle * rad;		//角度を1°ずつ加算する
 					}
 				}
 			}
-			if (Rota_Dif > 180) {
-				if (Rota_Dif != 0) {	//向くべき方向と現在の回転値を比べる
-					if (Rota_Dif > 10) {
-						p_Rotation.y -= rad * 10;		//角度を1°ずつ加算する
+			if (Rota_Dif > 180) {			//現在の角度と、向くべき角度を比べる
+				if (Rota_Dif != 0) {		//差分が0になるまで
+					if (Rota_Dif > 10) {	//差分が10°以上あるとき
+						p_Rotation.y -= rad * 10;		//角度を10°ずつ加算する
 					}
 					else {
 						p_Rotation.y = int_angle * rad;		//角度を1°ずつ加算する
@@ -211,21 +201,21 @@ void c_Player::f_update(bool Isfall) {
 				}
 			}
 		}
-		if (int_angle < NowRota) {
-			if (Rota_Dif <= 180) {
-				if (Rota_Dif != 0) {	//向くべき方向と現在の回転値を比べる
-					if (Rota_Dif > 10) {
-						p_Rotation.y -= rad * 10;		//角度を1°ずつ加算する
+		if (int_angle < NowRota) {			//現在の角度と、向きべき角度を比べる
+			if (Rota_Dif <= 180) {			//差分を比べる
+				if (Rota_Dif != 0) {		//差分が0になるまで
+					if (Rota_Dif > 10) {	//差分が10°以上あるとき
+						p_Rotation.y -= rad * 10;		//角度を10°ずつ加算する
 					}
 					else {
 						p_Rotation.y = int_angle * rad;		//角度を1°ずつ加算する
 					}
 				}
 			}
-			if (Rota_Dif > 180) {
-				if (Rota_Dif != 0) {	//向くべき方向と現在の回転値を比べる
-					if (Rota_Dif > 10) {
-						p_Rotation.y += rad * 10;		//角度を1°ずつ加算する
+			if (Rota_Dif > 180) {			//差分を比べる
+				if (Rota_Dif != 0) {		//差分が0になるまで
+					if (Rota_Dif > 10) {	//差分が10°以上あるとき
+						p_Rotation.y += rad * 10;		//角度を10°ずつ加算する
 					}
 					else {
 						p_Rotation.y = int_angle * rad;		//角度を1°ずつ加算する
@@ -235,10 +225,12 @@ void c_Player::f_update(bool Isfall) {
 		}
 	}
 
-	if (NowRota == 360 && Rota_Dif == 0 && int_angle == 360) {
+	//現在の角度が初期位置と同じなった時、値が超過しないように値を初期値にする
+	if (NowRota == 360 && Rota_Dif == 0 && int_angle == 360) {		
 		p_Rotation.y = 0.0f;
 	}
 
+	//かみそりの位置、角度をプレイヤーとの位置と角度に準拠させる
 	MV1SetPosition(model_KAMISORI, VGet(
 		sinf(p_Rotation.y) * -100 + p_Position.x,
 		p_Position.y,
@@ -273,7 +265,6 @@ void c_Player::f_draw() {
 	c_colision->CubeDraw();
 	// ３Ｄモデルの描画
 	MV1DrawModel(p_Model);
-	//MV1SetScale(model_KAMISORI,VGet(-20.0f,-20.0f,-20.0f));
 
 	MV1DrawModel(model_KAMISORI);
 }
