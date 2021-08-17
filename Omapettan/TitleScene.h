@@ -2,6 +2,7 @@
 
 #include "Dxlib.h"
 #include "Scene.h"
+#include "Controller.h"
 
 class c_Title : public c_Scene {
 public:
@@ -11,8 +12,10 @@ public:
 	virtual void f_output() const override;
 
 
+
 	void f_loadImage();
+	c_GamePad* c_Pad;
 
 private:
-	int BG;
+	int BG;			//”wŒi‰æ‘œ—p•Ï”
 };

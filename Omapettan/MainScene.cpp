@@ -24,7 +24,6 @@ c_Scene* c_Main::f_update() {
 		IsNextScene = true;
 	}
 
-
 	return this;
 }
 

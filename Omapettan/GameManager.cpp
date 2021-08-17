@@ -13,6 +13,7 @@ void c_GameManager::f_init()
 	// ３Ｄモデルに新しい座標をセット
 	//MV1SetPosition(model_Plane, VGet(0.0f,-100.0f,0.0f));
 	MV1SetPosition(model_Arm, VGet(0.0f, 0.0f, 0.0f));
+	MV1SetDifColorScale(model_Arm, GetColorF(0.8f, 0.6f, 0.4f, 1.0f));
 
 	MV1SetPosition(model_Sphere, VGet(0.0f, -850.0f, 0.0f));
 
@@ -32,6 +33,8 @@ void c_GameManager::f_init()
 	c_stage = new c_Stage(model_Arm);
 
 	c_hair = new c_Hair(model_Cylinder, image_Cylinder);
+
+	c_acne = new c_Acne(model_Acne, image_Acne);
 }
 
 // モデルの読み込み
@@ -44,12 +47,14 @@ void c_GameManager::f_RoadModel()
 	model_Cylinder = MV1LoadModel("models/cylinder.mv1");
 	model_Arm = MV1LoadModel("models/arm2.mv1");
 	model_SkyBox = MV1LoadModel("models/roomBox.mv1");
+	model_Acne = MV1LoadModel("models/dekimono.mv1");
 }
 
 void c_GameManager::f_RoadImage() 
 {
 	// 画像の読み込み
 	image_Cylinder = LoadGraph("images/hairtexture_brack.bmp");
+	image_Acne = LoadGraph("images/acne.bmp");
 }
 
 // ゲーム更新
@@ -87,8 +92,11 @@ void c_GameManager::f_update()
 
 	c_stage->f_update();
 	c_hair->stageXRotation = c_stage->f_GetXRotation();
+	c_acne->stageRotation = c_stage->f_GetXRotation();
 
 	c_hair->f_update();
+
+	c_acne->f_update();
 
 	//背景移動のアップデート
 	MV1SetRotationXYZ(model_SkyBox, VGet(c_hair->stageXRotation, DX_PI_F / 2, 0.0f));
@@ -102,6 +110,7 @@ void c_GameManager::f_output()
 	c_player->f_draw();
 	c_dispUI->f_draw();
 	c_hair->f_output();
+	c_acne->f_output();
 }
 
 // 背景の描画
