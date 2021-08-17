@@ -6,18 +6,22 @@
 c_Result::c_Result() {
 	f_loadImage();
 	IsNextScene = false;
+
+	c_pad = new c_GamePad();
 }
 
 c_Result::~c_Result() {
-
+	delete c_pad;
 }
 
 c_Scene* c_Result::f_update() {
-	if (CheckHitKey(KEY_INPUT_SPACE) == 1 && IsNextScene) {
+	c_pad->f_update();
+
+	if (c_pad->IsButton1 && IsNextScene) {
 		return new c_Title();
 	}
 
-	if (CheckHitKey(KEY_INPUT_SPACE) == 0 && !IsNextScene) {
+	if (!c_pad->IsButton1 && !IsNextScene) {
 		IsNextScene = true;
 	}
 
@@ -26,7 +30,7 @@ c_Scene* c_Result::f_update() {
 
 void c_Result::f_output() const {
 	DrawGraph(0, 0, BG, true);
-	DrawFormatString(250, 400, 0x000000, "SPACEキーでタイトルに戻る");
+	DrawFormatString(250, 400, 0x000000, "Aボタンでタイトルに戻る");
 }
 
 void c_Result::f_loadImage() {

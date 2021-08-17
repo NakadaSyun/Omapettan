@@ -1,6 +1,7 @@
 #pragma once
 #include "Dxlib.h"
 #include "Scene.h"
+#include "Controller.h"
 
 class c_Result : public c_Scene{
 public:
@@ -12,6 +13,7 @@ public:
 
 	void f_loadImage();
 
+	c_GamePad* c_pad;
 private:
 	int BG;
 };
