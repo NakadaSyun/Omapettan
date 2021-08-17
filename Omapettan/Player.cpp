@@ -23,9 +23,16 @@ c_Player::c_Player(const int Model) {
         p_Position.z + Kamisori_Position.z)*/
 
 	c_cameracon = new c_CameraCon;
+	c_pad = new c_GamePad();
 
 	model_Arm = MV1LoadModel("models/arm2.mv1");
 	model_KAMISORI = MV1LoadModel("models/KKAMISORI.mv1");
+}
+
+c_Player::~c_Player() {
+	delete c_cameracon;
+	delete c_colision;
+	delete c_pad;
 }
 
 void c_Player::f_init() {
@@ -39,6 +46,7 @@ void c_Player::f_init() {
 }
 
 void c_Player::f_update(bool Isfall) {
+	c_pad->f_update();
 
 	// ３Ｄモデルに新しい座標をセット
 	MV1SetPosition(p_Model, p_Position);
@@ -128,29 +136,54 @@ void c_Player::f_update(bool Isfall) {
 	static int Rota_Dif = 0;			//Rotate_Difference：：現在の回転値と向きたい方向の　時計廻り角度の差分格納変数
 	static int NowRota = 0;				//Now_Rotate：：現在の向いているラジアン角度
 
-	bool MoveKeyFlag = CheckHitKey(KEY_INPUT_W) ||		//移動キーが一つでも押されているかのフラグ
-		CheckHitKey(KEY_INPUT_A) ||
-		CheckHitKey(KEY_INPUT_S) ||
-		CheckHitKey(KEY_INPUT_D);
+	//bool MoveKeyFlag = CheckHitKey(KEY_INPUT_W) ||		//移動キーが一つでも押されているかのフラグ
+	//	CheckHitKey(KEY_INPUT_A) ||
+	//	CheckHitKey(KEY_INPUT_S) ||
+	//	CheckHitKey(KEY_INPUT_D);
+
+	bool MoveKeyFlag = false;	//移動キーが一つでも押されているかのフラグ
+	if (c_pad->LeftStick != 0) MoveKeyFlag = true;		//スティックがどこかに傾いていたらtrue
 
 
-	if (CheckHitKey(KEY_INPUT_W) == 1) {
+	//if (CheckHitKey(KEY_INPUT_W) == 1) {
+	//	MoveZ = p_Speed;
+	//	Rota_Vec = atan2(-MoveX, -MoveZ);			//プレイヤーの向く方向
+	//}
+	//if (CheckHitKey(KEY_INPUT_A) == 1) {
+	//	MoveX = -p_Speed;
+	//	Rota_Vec = atan2(-MoveX, -MoveZ);			//プレイヤーの向く方向
+	//}
+	//if (CheckHitKey(KEY_INPUT_S) == 1) {
+	//	MoveZ = -p_Speed;
+	//	Rota_Vec = atan2(-MoveX, -MoveZ);			//プレイヤーの向く方向
+	//}
+	//if (CheckHitKey(KEY_INPUT_D) == 1) {
+	//	MoveX = p_Speed;
+	//	Rota_Vec = atan2(-MoveX, -MoveZ);			//プレイヤーの向く方向
+	//}
+	/*****	コントローラーの入力	*****/
+	if (c_pad->LeftStick == UP||
+		c_pad->LeftStick == RIGHTUP ||
+		c_pad->LeftStick == LEFTUP ) {
 		MoveZ = p_Speed;
-		Rota_Vec = atan2(-MoveX, -MoveZ);			//プレイヤーの向く方向
 	}
-	if (CheckHitKey(KEY_INPUT_A) == 1) {
+	if (c_pad->LeftStick == LEFTUP ||
+		c_pad->LeftStick == LEFT ||
+		c_pad->LeftStick == LEFTDOWN) {
 		MoveX = -p_Speed;
-		Rota_Vec = atan2(-MoveX, -MoveZ);			//プレイヤーの向く方向
 	}
-	if (CheckHitKey(KEY_INPUT_S) == 1) {
+	if (c_pad->LeftStick == DOWN ||
+		c_pad->LeftStick == RIGHTDOWN ||
+		c_pad->LeftStick == LEFTDOWN) {
 		MoveZ = -p_Speed;
-		Rota_Vec = atan2(-MoveX, -MoveZ);			//プレイヤーの向く方向
 	}
-	if (CheckHitKey(KEY_INPUT_D) == 1) {
+	if (c_pad->LeftStick == RIGHTUP ||
+		c_pad->LeftStick == RIGHT ||
+		c_pad->LeftStick == RIGHTDOWN) {
 		MoveX = p_Speed;
-		Rota_Vec = atan2(-MoveX, -MoveZ);			//プレイヤーの向く方向
 	}
 
+	Rota_Vec = atan2(-MoveX, -MoveZ);			//プレイヤーの向く方向
 	if (Rota_Vec < 0) {								//プレイヤーの向くべき方向が-3.14など反時計廻りに回るときに-の値になった時
 		Rota_Vec = PI + (PI + Rota_Vec);			//2PIで一周換算した値にする
 	}

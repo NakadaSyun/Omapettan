@@ -11,6 +11,13 @@ c_Stage::c_Stage(const int Model) {
 
 	c_colision = new c_Collision(position, 2000.0f, -200.0f, 2000.0f);
 	Arm_XRotate = 0.0f;
+
+	c_pad = new c_GamePad();
+}
+
+c_Stage::~c_Stage() {
+	delete c_colision;
+	delete c_pad;
 }
 
 void c_Stage::f_init() {
@@ -21,14 +28,27 @@ void c_Stage::f_init() {
 }
 
 void c_Stage::f_update() {
-
+	c_pad->f_update();
 	
 
-	if (CheckHitKey(KEY_INPUT_A) == 1) {
+	/*if (CheckHitKey(KEY_INPUT_A) == 1) {
 		Arm_XRotate += 0.01f;
 	}
 
 	if (CheckHitKey(KEY_INPUT_D) == 1) {
+		Arm_XRotate -= 0.01f;
+	}*/
+	
+	///*******	コントローラーの入力	******/
+	if (c_pad->LeftStick == LEFT||
+		c_pad->LeftStick == LEFTUP || 
+		c_pad->LeftStick == LEFTDOWN) {
+		Arm_XRotate += 0.01f;
+	}
+
+	if (c_pad->LeftStick == RIGHT ||
+		c_pad->LeftStick == RIGHTUP ||
+		c_pad->LeftStick == RIGHTDOWN) {
 		Arm_XRotate -= 0.01f;
 	}
 
