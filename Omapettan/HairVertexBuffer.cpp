@@ -217,10 +217,12 @@ void c_Hair::f_setPosAndRot() {
 
 	// シード値設定
 	//SRand(GetDateTime(&date));
+	//float debug = GetRand(int(2 * float(DX_PI) * 100)) * 0.01f;
 
 	for (int i = 0; i < HAIR_NUM; i++) {
 		// 各毛の角度を設定
 		personalRotation[i] = GetRand(int(2 * float(DX_PI) * 100)) * 0.01f;
+		//personalRotation[i] = debug;
 
 		// 各毛のZ座標を設定
 		personalPosZ[i] = GetRand(ARM_LENGTH);
@@ -239,6 +241,7 @@ void c_Hair::f_MoveHairOffScreen(int num) {
 void c_Hair::f_hairCut(int num) {
 	if (hairStatus[num] == ROOTED_IS) {
 		hairStatus[num] = SHAVED;
+		printf("num=%d status=%d\n", num,hairStatus[num]);
 	}
 }
 
@@ -252,8 +255,10 @@ void c_Hair::f_flyShavedHair(int num) {
 
 	(this->*f_hairStatusFuncList[ROOTED_IS])(num);
 
-	if (personalRadius[num] >= 2000)
+	if (personalRadius[num] >= 2000) {
 		hairStatus[num] = OFF_SCREEN;
+		numflg = true;
+	}
 }
 
 // 何もしない
@@ -271,4 +276,36 @@ void c_Hair::f_hairUpdate() {
 	// 頂点バッファとインデックスバッファにデータを転送
 	SetVertexBufferData(0, vertex, vertexNum, vertexBufHandle);
 	SetIndexBufferData(0, index, indexNum, indexBufHandle);
+
+	//
+	if (numflg)
+	{
+		num = 0;
+		for (int i = 0; i < HAIR_NUM; i++)
+		{
+			if (hairStatus[i] == OFF_SCREEN) {
+				num++;
+			}
+		}
+		//printf("%d\n",num);
+		numflg = false;
+	}
+
+}
+
+//毛の状態を見る
+bool c_Hair::f_hairStatusSee() {
+	//毛の状態を見て剃られてない毛があったらfalseを返す
+	for (int i = 0; i < HAIR_NUM; i++)
+	{
+		if (hairStatus[i] == ROOTED_IS)
+		{
+			//printf("%d", hairStatus[0]);
+			return false;
+		}
+	}
+
+	//printf("gomi");
+	//全部剃られてたらtrueを返す
+	return true;
 }

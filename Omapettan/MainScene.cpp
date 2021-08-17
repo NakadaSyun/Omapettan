@@ -17,11 +17,16 @@ c_Main::~c_Main() {
 c_Scene* c_Main::f_update() {
 	c_gm->f_update();
 	if (CheckHitKey(KEY_INPUT_SPACE) == 1 && IsNextScene) {
-		return new c_Result();
+		//return new c_Result();
+	}
+	
+	if (CheckHitKey(KEY_INPUT_SPACE) == 0 && !IsNextScene) {
+		//IsNextScene = true;
 	}
 
-	if (CheckHitKey(KEY_INPUT_SPACE) == 0 && !IsNextScene) {
-		IsNextScene = true;
+	//–Ñ‚ª‘S•”’ä‚ç‚ê‚½ó‘Ô‚È‚çResultƒV[ƒ“‚Ö
+	if (c_gm->c_hair->f_hairStatusSee()) {
+		return new c_Result();
 	}
 
 	return this;
