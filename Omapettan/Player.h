@@ -4,11 +4,13 @@
 #include "DxLib.h"
 #include "Collision.h"
 #include "CameraCon.h"
+#include "Controller.h"
 
 
 class c_Player {
 public:
 	c_Player(const int Model);
+	~c_Player();
 	void f_init();
 	void f_update(bool Isfall);
 	void f_draw();
@@ -26,6 +28,8 @@ public:
 	c_Collision* c_colision;
 
 	c_CameraCon* c_cameracon;
+
+	c_GamePad* c_pad;
 
 private:
 	int p_Model;

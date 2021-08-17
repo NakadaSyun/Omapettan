@@ -42,41 +42,41 @@ void c_GamePad::f_update() {// 入力状態を取得
 	if (controler1.Y < 0
 		&& controler1.X >= -200
 		&& controler1.X <= 200) {
-		LeftStick = 1;		//上向き
+		LeftStick = UP;		//上向き
 	}
 	else if (controler1.X > 0
 		&& controler1.Y >= -200
 		&& controler1.Y <= 200) {
-		LeftStick = 3;		//右向き
+		LeftStick = RIGHT;		//右向き
 	}
 	else if (controler1.Y > 0
 		&& controler1.X >= -200
 		&& controler1.X <= 200) {
-		LeftStick = 5;		//下向き
+		LeftStick = DOWN;		//下向き
 	}
 	else if (controler1.X < 0
 		&& controler1.Y >= -200
 		&& controler1.Y <= 200) {
-		LeftStick = 7;		//左向き
+		LeftStick = LEFT;		//左向き
 	}
 	else if (controler1.Y < 0
 		&& controler1.X > 0) {
-		LeftStick = 2;		//右上向き
+		LeftStick = RIGHTUP;		//右上向き
 	}
 	else if (controler1.Y > 0
 		&& controler1.X > 0) {
-		LeftStick = 4;		//右下向き
+		LeftStick = RIGHTDOWN;		//右下向き
 	}
 	else if (controler1.X < 0
 		&& controler1.Y > 0) {
-		LeftStick = 6;		//左下向き
+		LeftStick = LEFTDOWN;		//左下向き
 	}
 	else if (controler1.X < 0
 		&& controler1.Y < 0) {
-		LeftStick = 8;		//左上向き
+		LeftStick = LEFTUP;		//左上向き
 	}
 	else {
-		LeftStick = 0;		//方向なし
+		LeftStick = NONE;		//方向なし
 	}
 
 	//デバック用

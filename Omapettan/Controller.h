@@ -2,6 +2,21 @@
 
 #include "DxLib.h"
 
+namespace {
+
+	enum stickDirection {
+		NONE,			//ñ≥ëÄçÏ
+		UP,				//è„
+		RIGHTUP,		//âEè„
+		RIGHT,			//âE
+		RIGHTDOWN,		// âEâ∫
+		DOWN,			//â∫
+		LEFTDOWN,		//ç∂â∫
+		LEFT,			//ç∂
+		LEFTUP,			//ç∂è„
+	};
+}
+
 class c_GamePad {
 public:
 	c_GamePad();
