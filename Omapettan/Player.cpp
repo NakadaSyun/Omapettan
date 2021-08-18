@@ -27,6 +27,7 @@ c_Player::c_Player(const int Model) {
 
 	model_Arm = MV1LoadModel("models/arm2.mv1");
 	model_KAMISORI = MV1LoadModel("models/KKAMISORI.mv1");
+	model_Acne = MV1LoadModel("models/dekimono.mv1");
 }
 
 c_Player::~c_Player() {
@@ -55,6 +56,7 @@ void c_Player::f_update(bool Isfall) {
 
 	c_cameracon->f_update();		//c_cameraconを呼んで値を更新
 
+	//プレイヤーの当たり判定の線分の開始位置と、終了位置
 	StartPos = p_Position;
 	EndPos = VGet(p_Position.x, p_Position.y + 250.0f, p_Position.z);
 
@@ -73,6 +75,8 @@ void c_Player::f_update(bool Isfall) {
 	MV1_COLL_RESULT_POLY HitPoly = MV1CollCheck_Line(model_Arm, -1, StartPos, EndPos);
 	//剃刀との当たり判定
 	MV1_COLL_RESULT_POLY KAMISORI_HitPoly = MV1CollCheck_Line(model_KAMISORI, -1, StartPos, EndPos);
+	//吹き出物との当たり判定
+	MV1_COLL_RESULT_POLY AcneHitPoly = MV1CollCheck_Line(model_Acne, -1, StartPos, EndPos);
 
 	//腕モデルとのヒットポリゴン*************************************************
 	VECTOR Pos0 = HitPoly.Position[0],
@@ -97,27 +101,31 @@ void c_Player::f_update(bool Isfall) {
 	DrawLine3D(KAMI_Pos2, KAMI_Pos0, KAMI_LineColor);
 	//*************************************************************************
 
+	//吹き出物モデルのヒットポリゴン*******************************************
+	VECTOR Acne_Pos0 = AcneHitPoly.Position[0],
+		Acne_Pos1 = AcneHitPoly.Position[1],
+		Acne_Pos2 = AcneHitPoly.Position[2];
+	int Acne_LineColor = GetColor(0, 255, 0);
+
+	DrawLine3D(Acne_Pos0, Acne_Pos1, Acne_LineColor);
+	DrawLine3D(Acne_Pos1, Acne_Pos2, Acne_LineColor);
+	DrawLine3D(Acne_Pos2, Acne_Pos0, Acne_LineColor);
+	//*************************************************************************
+
 	//ワールド軸確認
 	DrawLine3D(p_Position, VGet(p_Position.x + 200, p_Position.y, p_Position.z), GetColor(255, 0, 0));
 	DrawLine3D(p_Position, VGet(p_Position.x, p_Position.y + 200, p_Position.z), GetColor(0, 255, 0));
 	DrawLine3D(p_Position, VGet(p_Position.x, p_Position.y, p_Position.z + 200), GetColor(0, 0, 255));
-
-	//p_Rotation = HitPoly.Normal;		//法線のキャラの向きに代入
-
-	//if (HitPoly.HitFlag == 1) {
-	//	p_Rotation = VGet(HitPoly.Normal.x, p_Rotation.y, HitPoly.Normal.z); 		//法線のキャラの向きに代入
-	//}
 
 	//腕のモデルとのヒットしたポリゴンの三点座標を表示
 	DrawFormatString(0, 200, GetColor(255, 255, 255), "Pos0.x:%f", HitPoly.Position[0].x);
 	DrawFormatString(0, 220, GetColor(255, 255, 255), "Pos0.y:%f", HitPoly.Position[0].y);
 	DrawFormatString(0, 240, GetColor(255, 255, 255), "Pos0.z:%f", HitPoly.Position[0].z);
 
-
-	//剃刀のモデルとのヒットしたポリゴンの三点座標を表示
-	DrawFormatString(0, 260, GetColor(255, 255, 255), "KAMISORI_HitPoly.x:%f", KAMISORI_HitPoly.Position[0].x);
-	DrawFormatString(0, 280, GetColor(255, 255, 255), "KAMISORI_HitPoly.y:%f", KAMISORI_HitPoly.Position[0].y);
-	DrawFormatString(0, 300, GetColor(255, 255, 255), "KAMISORI_HitPoly.z:%f", KAMISORI_HitPoly.Position[0].z);
+	//吹き出物モデルとのヒットしたポリゴンの三点座標を表示
+	DrawFormatString(0, 260, GetColor(255, 255, 255), "AcneHitPoly.x:%f", AcneHitPoly.Position[0].x);
+	DrawFormatString(0, 280, GetColor(255, 255, 255), "AcneHitPoly.y:%f", AcneHitPoly.Position[0].y);
+	DrawFormatString(0, 300, GetColor(255, 255, 255), "AcneHitPoly.z:%f", AcneHitPoly.Position[0].z);
 
 
 	DrawLine3D(HitPoly.Position[0], HitPoly.Normal, GetColor(0, 0, 255));		//ポリゴンの法線描画
@@ -161,6 +169,7 @@ void c_Player::f_update(bool Isfall) {
 	//	MoveX = p_Speed;
 	//	Rota_Vec = atan2(-MoveX, -MoveZ);			//プレイヤーの向く方向
 	//}
+
 	/*****	コントローラーの入力	*****/
 	if (c_pad->LeftStick == UP||
 		c_pad->LeftStick == RIGHTUP ||
