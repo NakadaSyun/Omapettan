@@ -296,7 +296,9 @@ void c_Player::f_update(bool Isfall) {
 
 
 	if (HitPoly.HitFlag == 0)f_fall();		//d—Í
-	c_colision->f_update(p_Position);
+	c_colision->f_update(VGet(sinf(p_Rotation.y) * -100 + p_Position.x,
+		                      p_Position.y,
+		                      cosf(p_Rotation.y) * -100 + p_Position.z));
 }
 
 void c_Player::f_fall() {
@@ -315,3 +317,6 @@ VECTOR c_Player::f_GetPlayerPosition() {
 	return p_Position;
 }
 
+float c_Player::f_GetPlayerRotationY() {
+	return p_Rotation.y;
+}

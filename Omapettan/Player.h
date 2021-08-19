@@ -20,6 +20,8 @@ public:
 
 	VECTOR f_GetPlayerPosition();		//プレイヤーの座標を戻り値で返す
 
+	float f_GetPlayerRotationY();       // プレイヤーのY軸の回転値を戻り値で返す
+
 	//かみそりのプレイヤーからの加算座標格納変数
 	VECTOR Kamisori_Position = VGet(0,20, 0);
 

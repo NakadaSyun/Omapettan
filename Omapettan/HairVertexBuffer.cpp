@@ -9,7 +9,10 @@ c_Hair::c_Hair(const int Model, const int Image) {
 		HitHair[num] = true;
 		hairStatus[num] = ROOTED_IS;
 		personalRadius[num] = 0.0f;
-		personalRotX[num] = 0.0f;
+		hairFlyingRotX[num] = 0.0f;
+		hairFlyingRotZ[num] = 0.0f;
+		hairFlyingVec[num] = 0.0f;
+		playerRotY[num] = 0.0f;
 	}
 
 	// モデルの代入
@@ -54,7 +57,7 @@ void c_Hair::f_output() {
 // 更新
 void c_Hair::f_update() {
 	////ボックスコライダーの描画
-	//CubeDraw();
+	CubeDraw();
 
 	// 毛の移動
 	f_hairUpdate();
@@ -69,18 +72,17 @@ void c_Hair::f_modelDuplication() {
 	
 	for (int i = 0; i < HAIR_NUM; i++) {
 
-		MV1SetPosition(modelHandle, VGet(cosf(personalRotation[i]) * ARM_RADIUS,
-			                             sinf(personalRotation[i]) * ARM_RADIUS,
+		MV1SetPosition(modelHandle, VGet(sinf(personalRotation[i]) * ARM_RADIUS,
+			                             cosf(personalRotation[i]) * ARM_RADIUS,
 			                             personalPosZ[i] + ARM_ADJUST_POS));
 		//モデルの座標を当たり判定用の変数にコピー
-		CollisionPosition[i] = VGet(cosf(personalRotation[i]) * ARM_RADIUS,
-			                             sinf(personalRotation[i]) * ARM_RADIUS,
-			                             personalPosZ[i] + ARM_ADJUST_POS
-			                             /*4500.0f*/);
+		CollisionPosition[i] = VGet(sinf(personalRotation[i]) * ARM_RADIUS,
+			                        cosf(personalRotation[i]) * ARM_RADIUS,
+			                        personalPosZ[i] + ARM_ADJUST_POS);
 		c_colision[i] =
 			new c_Collision(CollisionPosition[i], hairSize.x, hairSize.y, hairSize.z);
 		// Y軸回転
-		MV1SetRotationXYZ(modelHandle, VGet(0.0f, 60.0f * DX_PI_F / 180.0f, 0.0f));
+		MV1SetRotationXYZ(modelHandle, VGet(0.0f, 0.0f, 0.0f));
 
 		// 参照用メッシュの作成
 		MV1SetupReferenceMesh(modelHandle, -1, TRUE);
@@ -165,8 +167,8 @@ void c_Hair::CubeDraw() {
 	{
 		/*Cube.f_create(CollisionPosition[num].x - (200 / 2), CollisionPosition[num].y,
 			CollisionPosition[num].z - (200 / 2),200, 600, 200);*/
-		Cube.f_create(CollisionPosition[num].x - (200 / 2), CollisionPosition[num].y,
-			CollisionPosition[num].z - (200 / 2), 200, 100, 200);
+		Cube.f_create(CollisionPosition[num].x - (hairSize.x / 2), CollisionPosition[num].y,
+			CollisionPosition[num].z - (hairSize.z / 2), hairSize.x, hairSize.y, hairSize.z);
 	}	
 }
 
@@ -177,18 +179,18 @@ void c_Hair::f_moveHair(int num) {
 	int pnum = 0;
 
 	//for (int i = 0; i < HAIR_NUM; i++) {
-		MV1SetPosition(modelHandle, VGet(cosf(personalRotation[num] - stageXRotation) * (ARM_RADIUS + personalRadius[num]),
-				                              sinf(personalRotation[num] - stageXRotation) * (ARM_RADIUS + personalRadius[num]),
-				                              personalPosZ[num] + ARM_ADJUST_POS));
-		//モデルの座標を当たり判定用の変数にコピー
-		CollisionPosition[num] = VGet(cosf(personalRotation[num] - stageXRotation) * ARM_RADIUS,
-			                        sinf(personalRotation[num] - stageXRotation) * ARM_RADIUS,
-			                        personalPosZ[num] + ARM_ADJUST_POS
-			                        /*4500.0f*/);
-		c_colision[num] =
-			new c_Collision(CollisionPosition[num], hairSize.x, hairSize.y, hairSize.z);
-		// Y軸回転
-		MV1SetRotationXYZ(modelHandle, VGet(personalRotX[num], personalRotation[num] + stageXRotation, 0.0f));
+	MV1SetPosition(modelHandle, VGet(sinf(personalRotation[num] + stageXRotation) * (ARM_RADIUS + personalRadius[num]) + hairFlyingVec[num],
+		                             cosf(personalRotation[num] + stageXRotation) * (ARM_RADIUS + personalRadius[num]),
+		                             personalPosZ[num] + ARM_ADJUST_POS));
+	//モデルの座標を当たり判定用の変数にコピー
+	CollisionPosition[num] = VGet(sinf(personalRotation[num] + stageXRotation) * ARM_RADIUS + hairFlyingVec[num],
+		                          cosf(personalRotation[num] + stageXRotation) * ARM_RADIUS,
+		                          personalPosZ[num] + ARM_ADJUST_POS
+	/*4500.0f*/);
+	c_colision[num] =
+		new c_Collision(CollisionPosition[num], hairSize.x, hairSize.y, hairSize.z);
+	// Y軸回転
+	MV1SetRotationXYZ(modelHandle, VGet(hairFlyingRotX[num], 0, hairFlyingRotZ[num] - personalRotation[num] - stageXRotation));
 
 		
 		// 参照用メッシュの更新
@@ -231,27 +233,32 @@ void c_Hair::f_setPosAndRot() {
 
 // 毛を画面外へ移動
 void c_Hair::f_MoveHairOffScreen(int num) {
-	
+	// 毛を画面に映らない位置へ移動
 	personalPosZ[num] = -5000.0f;
 
 	(this->*f_hairStatusFuncList[ROOTED_IS])(num);
+
+	hairStatus[num] = DO_NOT_ANYTHING;
 }
 
 // 毛の状態を変化(根付いている→剃られた)
 void c_Hair::f_hairCut(int num) {
 	if (hairStatus[num] == ROOTED_IS) {
 		hairStatus[num] = SHAVED;
-		printf("num=%d status=%d\n", num,hairStatus[num]);
+		//printf("num=%d status=%d\n", num,hairStatus[num]);
 	}
 }
 
 // 剃られた毛を飛ばす
 void c_Hair::f_flyShavedHair(int num) {
 
-	// 毛を上に飛ばす
-	personalRadius[num] += 10;
+	// 毛をプレイヤーの後ろ方向へ飛ばす
+	personalRadius[num] += 20;
+	hairFlyingVec[num] -= sinf(playerRotY[num]) * 15;
+	personalPosZ[num] -= cosf(playerRotY[num]) * 15;
 
-	personalRotX[num] += float(DX_PI) / 180;
+	hairFlyingRotX[num] -= cosf(playerRotY[num]) / 40;
+	hairFlyingRotZ[num] += sinf(playerRotY[num]) / 40;
 
 	(this->*f_hairStatusFuncList[ROOTED_IS])(num);
 
@@ -263,7 +270,7 @@ void c_Hair::f_flyShavedHair(int num) {
 
 // 何もしない
 void c_Hair::f_doNotAnything(int num) {
-
+	return;
 }
 
 // 毛の更新
@@ -308,4 +315,12 @@ bool c_Hair::f_hairStatusSee() {
 	//printf("gomi");
 	//全部剃られてたらtrueを返す
 	return true;
+}
+
+// プレイヤーのY軸の回転値を取得
+void c_Hair::f_getRotationY(int num, float rot) {
+	if (hairStatus[num] == ROOTED_IS) {
+		playerRotY[num] = rot;
+		playerRotY[num] -= DX_PI_F;
+	}
 }

@@ -9,6 +9,8 @@ void c_GameManager::f_init()
 	f_RoadModel();
 	f_RoadImage();
 
+	// カメラの描画距離をセット
+	SetCameraNearFar(100.0f, 50000.0f);
 
 	// ３Ｄモデルに新しい座標をセット
 	//MV1SetPosition(model_Plane, VGet(0.0f,-100.0f,0.0f));
@@ -69,6 +71,7 @@ void c_GameManager::f_update()
 	{
 		//c_hair->HitHair[num] = f_HitCheck(*c_player->c_colision, *c_hair->c_colision[num]);
 		if (f_HitCheck(*c_hair->c_colision[num], *c_player->c_colision) == false) {
+			c_hair->f_getRotationY(num, c_player->f_GetPlayerRotationY());
 			c_hair->f_hairCut(num);
 			c_pad->f_HairCutVibration();
 
