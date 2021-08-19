@@ -35,6 +35,7 @@ private:
 	int p_Model;
 	int model_Arm;
 	int model_KAMISORI;
+	int model_Acne;
 	float Arm_XRotate;
 	VECTOR p_Rotation;
 	VECTOR p_Position;

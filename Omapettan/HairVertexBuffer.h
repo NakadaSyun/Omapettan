@@ -62,7 +62,8 @@ public:
 	void f_hairCut(int num);
 	//// ’ä‚ç‚ê‚½–Ñ‚ğ”ò‚Î‚·
 	//void f_flyShavedHair(int num);
-
+	//–Ñ‚Ìó‘Ô‚ğŒ©‚é
+	bool f_hairStatusSee();
 
 private:
 	// ƒƒ‚ƒŠ‚ÌŠ„‚è“–‚Ä
@@ -84,7 +85,9 @@ private:
 	// ŠÖ”ƒ|ƒCƒ“ƒ^
 	void (c_Hair::* f_hairStatusFuncList[STATUS_MAX])(int num) = 
 	{ &c_Hair::f_moveHair, &c_Hair::f_flyShavedHair, &c_Hair::f_MoveHairOffScreen, &c_Hair::f_doNotAnything};
-
+	
+	bool numflg = false;
+	int num=0;
 	VERTEX3D* vertex;
 	DWORD* index;
 	int vertexBufHandle;

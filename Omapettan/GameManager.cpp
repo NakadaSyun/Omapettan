@@ -35,6 +35,8 @@ void c_GameManager::f_init()
 	c_hair = new c_Hair(model_Cylinder, image_Cylinder);
 
 	c_acne = new c_Acne(model_Acne, image_Acne);
+
+	c_pad = new c_GamePad();
 }
 
 // モデルの読み込み
@@ -68,9 +70,15 @@ void c_GameManager::f_update()
 		//c_hair->HitHair[num] = f_HitCheck(*c_player->c_colision, *c_hair->c_colision[num]);
 		if (f_HitCheck(*c_hair->c_colision[num], *c_player->c_colision) == false) {
 			c_hair->f_hairCut(num);
+			c_pad->f_HairCutVibration();
 
 			printf("%d\n", num);
 		}
+	}
+
+	if (f_HitCheck(*c_acne->c_collision, *c_player->c_colision) == false) {
+		c_pad->f_AcneCutVibration();
+
 	}
 
 	////毛の当たり判定用のデバッグ

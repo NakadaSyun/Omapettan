@@ -96,3 +96,18 @@ void c_GamePad::f_output() {
 
 }
 
+void c_GamePad::f_HairCutVibration() {
+	//U“®‚ğˆê’â~
+	StopJoypadVibration(DX_INPUT_PAD1,-1);
+
+	// U“®ŠJn
+	StartJoypadVibration(DX_INPUT_PAD1, 500, 200, -1);
+}
+
+void c_GamePad::f_AcneCutVibration() {
+	//U“®‚ğˆê’â~
+	StopJoypadVibration(DX_INPUT_PAD1, -1);
+	// U“®ŠJn
+	StartJoypadVibration(DX_INPUT_PAD1, 1000, 1000, -1);
+}
+

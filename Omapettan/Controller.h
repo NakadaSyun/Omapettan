@@ -23,6 +23,9 @@ public:
 	void f_update();
 	void f_output();
 
+	void f_HairCutVibration();
+	void f_AcneCutVibration();
+
 	bool IsButton1;
 	bool IsButton2;
 	bool IsButton3;

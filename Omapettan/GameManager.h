@@ -10,6 +10,7 @@
 #include "Collision.h"
 #include "HairVertexBuffer.h"
 #include "DrawAcne.h"
+#include "Controller.h"
 
 #include <iostream>
 
@@ -36,6 +37,8 @@ public:
 	c_Stage* c_stage;
 	c_Hair* c_hair;
 	c_Acne* c_acne;
+	c_GamePad* c_pad;
+
 private:
 	
 	// ƒ‚ƒfƒ‹
