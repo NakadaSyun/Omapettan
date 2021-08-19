@@ -12,6 +12,8 @@ public:
 	void f_update();
 
 	float stageRotation;
+
+	c_Collision* c_collision;
 private:
 	int modelacne;
 	int graphacne;

@@ -12,6 +12,14 @@ c_Acne::c_Acne(const int Acne_Model,const int Acne_Graph) {
 	MV1SetScale(modelacne, VGet(1.0f, 1.0f, 1.0f));
 	MV1SetPosition(modelacne, VGet(0.0f, 760.0f, 4500.0f));
 	MV1SetRotationXYZ(modelacne, VGet(0.0f, 0.0f, 0.0f));
+
+	VECTOR ColPos = VGet(cosf(0.0f - stageRotation) * 750,
+		sinf(0.0f - stageRotation) * 750,
+		4000.0f + 750);
+	c_collision =
+		new c_Collision(ColPos, 200.0f, 200.0f, 200.0f);
+
+	//c_collision = new c_Collision();
 }
 void c_Acne::f_init() {
 
@@ -24,4 +32,8 @@ void c_Acne::f_update() {
 	MV1SetPosition(modelacne, VGet(cosf(0.0f - stageRotation) * 750,
 								   sinf(0.0f - stageRotation) * 750,
 		                                4000.0f  + 750));
+
+	c_collision->f_update(VGet(cosf(0.0f - stageRotation) * 750,
+		sinf(0.0f - stageRotation) * 750,
+		4000.0f + 750));
 }
