@@ -15,13 +15,9 @@ c_Acne::c_Acne(const int Acne_Model,const int Acne_Graph) {
 		acnepersonalRotation[i] = GetRand(int(2 * float(DX_PI) * 100)) * 0.01f;
 		acnepersonalPosZ[i] = GetRand(ARM_LENGTH_ACNE);
 		printf("guys!%d\t%f\n",i, acnepersonalPosZ[i]);
-	}
 
-	VECTOR ColPos = VGet(cosf(0.0f - stageRotation) * 750,
-		sinf(0.0f - stageRotation) * 750,
-		4000.0f + 750);
-	c_collision =
-		new c_Collision(ColPos, 200.0f, 200.0f, 200.0f);
+		c_collision[i] = new c_Collision(position[i], 150.0f, 150.0f, 100.0f);
+	}
 
 	//c_collision = new c_Collision();
 }
@@ -39,7 +35,7 @@ void c_Acne::f_update() {
 								sinf(acnepersonalRotation[i] - stageRotation) * ARM_RADIUS_ACNE,
 									 acnepersonalPosZ[i] + ARM_ADJUST_POS_ACNE);
 
-		c_collision->f_update(position[i]);
+		c_collision[i]->f_update(position[i]);
 	}
 }
 

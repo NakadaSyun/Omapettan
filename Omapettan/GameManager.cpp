@@ -79,10 +79,13 @@ void c_GameManager::f_update()
 		}
 	}
 
-	if (f_HitCheck(*c_acne->c_collision, *c_player->c_colision) == false) {
-		c_pad->f_AcneCutVibration();
+	for (int i = 0; i < ACNE_NUM; i++) {
+		if (f_HitCheck(*c_acne->c_collision[i], *c_player->c_colision) == false) {
+			c_pad->f_AcneCutVibration();
 
+		}
 	}
+	
 
 	////毛の当たり判定用のデバッグ
 	//for (int num = 0; num < HAIR_NUM; num++)

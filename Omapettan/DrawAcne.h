@@ -26,7 +26,7 @@ public:
 
 	float stageRotation;
 
-	c_Collision* c_collision;
+	c_Collision* c_collision[ACNE_NUM];
 private:
 	VECTOR position[ACNE_NUM];
 
