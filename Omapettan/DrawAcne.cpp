@@ -33,21 +33,19 @@ void c_Acne::f_init() {
 	//}
 }
 
-void c_Acne::f_output() {
+void c_Acne::f_update() {
 	for (int i = 0; i < ACNE_NUM; i++) {
+		position[i] = VGet(cosf(acnepersonalRotation[i] - stageRotation) * ARM_RADIUS_ACNE,
+								sinf(acnepersonalRotation[i] - stageRotation) * ARM_RADIUS_ACNE,
+									 acnepersonalPosZ[i] + ARM_ADJUST_POS_ACNE);
 
-		MV1SetPosition(modelacne, VGet(cosf(acnepersonalRotation[i] - stageRotation) * ARM_RADIUS_ACNE,
-									   sinf(acnepersonalRotation[i] - stageRotation) * ARM_RADIUS_ACNE,
-									   acnepersonalPosZ[i] + ARM_ADJUST_POS_ACNE));
-		MV1DrawModel(modelacne);
+		c_collision->f_update(position[i]);
 	}
 }
-void c_Acne::f_update() {
-	//MV1SetPosition(modelacne, VGet(cosf(0.0f - stageRotation) * 750,
-	//							   sinf(0.0f - stageRotation) * 750,
-	//	                                4000.0f  + 750));
 
-	c_collision->f_update(VGet(cosf(0.0f - stageRotation) * 750,
-		sinf(0.0f - stageRotation) * 750,
-		4000.0f + 750));
+void c_Acne::f_output() {
+	for (int i = 0; i < ACNE_NUM; i++) {
+		MV1SetPosition(modelacne, position[i]);
+		MV1DrawModel(modelacne);
+	}
 }

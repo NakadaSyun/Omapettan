@@ -28,9 +28,10 @@ public:
 
 	c_Collision* c_collision;
 private:
+	VECTOR position[ACNE_NUM];
+
 	int modelacne;
 	int graphacne;
-	int acneStatus[ACNE_NUM];           // Še‚Å‚«‚à‚Ì‚Ìó‘Ô
 	float acnepersonalRotation[ACNE_NUM];   // Še‚Å‚«‚à‚Ì‚ÌŠp“x
 	float acnepersonalPosZ[ACNE_NUM];
 };
