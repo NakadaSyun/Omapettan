@@ -1,9 +1,10 @@
 #include "DxLib.h"
 #include "DrawAcne.h"
 
-c_Acne::c_Acne(const int Acne_Model,const int Acne_Graph) {
+c_Acne::c_Acne(const int Acne_Model,const int Acne_Graph, const int Bandage_Model) {
 	modelacne = Acne_Model;
 	graphacne = Acne_Graph;
+	modelBandage = Bandage_Model;
 
 	stageRotation = 0.0f;
 
@@ -15,6 +16,8 @@ c_Acne::c_Acne(const int Acne_Model,const int Acne_Graph) {
 		acnepersonalRotation[i] = GetRand(int(2 * float(DX_PI) * 100)) * 0.01f;
 		acnepersonalPosZ[i] = GetRand(ARM_LENGTH_ACNE);
 		printf("guys!%d\t%f\n",i, acnepersonalPosZ[i]);
+
+		status[i] = 0;
 
 		c_collision[i] = new c_Collision(position[i], 150.0f, 150.0f, 100.0f);
 	}
@@ -41,7 +44,14 @@ void c_Acne::f_update() {
 
 void c_Acne::f_output() {
 	for (int i = 0; i < ACNE_NUM; i++) {
-		MV1SetPosition(modelacne, position[i]);
-		MV1DrawModel(modelacne);
+
+		if (status[i] == 0) {
+			MV1SetPosition(modelacne, position[i]);
+			MV1DrawModel(modelacne);
+		}
+		else {
+			MV1SetPosition(modelBandage, position[i]);
+			MV1DrawModel(modelBandage);
+		}
 	}
 }

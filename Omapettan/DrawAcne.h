@@ -19,10 +19,12 @@ namespace {
 
 class c_Acne{
 public:
-	c_Acne(const int Acne_Model,const int Acne_Graph);
+	c_Acne(const int Acne_Model,const int Acne_Graph, const int Bandage_Model);
 	void f_init();
 	void f_output();
 	void f_update();
+
+	int status[ACNE_NUM];
 
 	float stageRotation;
 
@@ -31,6 +33,7 @@ private:
 	VECTOR position[ACNE_NUM];
 
 	int modelacne;
+	int modelBandage;
 	int graphacne;
 	float acnepersonalRotation[ACNE_NUM];   // Še‚Å‚«‚à‚Ì‚ÌŠp“x
 	float acnepersonalPosZ[ACNE_NUM];

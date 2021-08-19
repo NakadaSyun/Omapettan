@@ -36,7 +36,7 @@ void c_GameManager::f_init()
 
 	c_hair = new c_Hair(model_Cylinder, image_Cylinder);
 
-	c_acne = new c_Acne(model_Acne, image_Acne);
+	c_acne = new c_Acne(model_Acne, image_Acne, model_Bandage);
 
 	c_pad = new c_GamePad();
 }
@@ -52,6 +52,8 @@ void c_GameManager::f_RoadModel()
 	model_Arm = MV1LoadModel("models/arm2.mv1");
 	model_SkyBox = MV1LoadModel("models/roomBox.mv1");
 	model_Acne = MV1LoadModel("models/dekimono.mv1");
+	model_Bandage = MV1LoadModel("models/Bandage.mv1");
+	
 }
 
 void c_GameManager::f_RoadImage() 
@@ -80,8 +82,10 @@ void c_GameManager::f_update()
 	}
 
 	for (int i = 0; i < ACNE_NUM; i++) {
-		if (f_HitCheck(*c_acne->c_collision[i], *c_player->c_colision) == false) {
+		if (f_HitCheck(*c_acne->c_collision[i], *c_player->c_colision) == false && 
+			c_acne->status[i] == 0) {
 			c_pad->f_AcneCutVibration();
+			c_acne->status[i] = 1;
 
 		}
 	}

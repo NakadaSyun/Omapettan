@@ -49,6 +49,7 @@ private:
 	int model_Arm;
 	int model_SkyBox;
 	int model_Acne;
+	int model_Bandage;
 
 	// ‰æ‘œ
 	int image_Cylinder;
