@@ -8,10 +8,14 @@ c_Acne::c_Acne(const int Acne_Model,const int Acne_Graph) {
 	stageRotation = 0.0f;
 
 	MV1SetDifColorScale(modelacne, GetColorF(0.9f, 0.5f, 0.5f, 1.0f));
-	MV1SetTextureGraphHandle(modelacne,100,graphacne,FALSE);
 	MV1SetScale(modelacne, VGet(1.0f, 1.0f, 1.0f));
-	MV1SetPosition(modelacne, VGet(0.0f, 760.0f, 4500.0f));
 	MV1SetRotationXYZ(modelacne, VGet(0.0f, 0.0f, 0.0f));
+
+	for (int i = 0; i < ACNE_NUM; i++) {
+		acnepersonalRotation[i] = GetRand(int(2 * float(DX_PI) * 100)) * 0.01f;
+		acnepersonalPosZ[i] = GetRand(ARM_LENGTH_ACNE);
+		printf("guys!%d\t%f\n",i, acnepersonalPosZ[i]);
+	}
 
 	VECTOR ColPos = VGet(cosf(0.0f - stageRotation) * 750,
 		sinf(0.0f - stageRotation) * 750,
@@ -22,16 +26,26 @@ c_Acne::c_Acne(const int Acne_Model,const int Acne_Graph) {
 	//c_collision = new c_Collision();
 }
 void c_Acne::f_init() {
-
+	//for (int i = 0; i < ACNE_NUM; i++) {
+	//	acnepersonalRotation[i] = GetRand(int(2 * float(DX_PI) * 100)) * 0.01f;
+	//	acnepersonalPosZ[i] = GetRand(ARM_LENGTH_ACNE);
+	//	printf("guys!%f\n", acnepersonalPosZ[i]);
+	//}
 }
 
 void c_Acne::f_output() {
-	MV1DrawModel(modelacne);
+	for (int i = 0; i < ACNE_NUM; i++) {
+
+		MV1SetPosition(modelacne, VGet(cosf(acnepersonalRotation[i] - stageRotation) * ARM_RADIUS_ACNE,
+									   sinf(acnepersonalRotation[i] - stageRotation) * ARM_RADIUS_ACNE,
+									   acnepersonalPosZ[i] + ARM_ADJUST_POS_ACNE));
+		MV1DrawModel(modelacne);
+	}
 }
 void c_Acne::f_update() {
-	MV1SetPosition(modelacne, VGet(cosf(0.0f - stageRotation) * 750,
-								   sinf(0.0f - stageRotation) * 750,
-		                                4000.0f  + 750));
+	//MV1SetPosition(modelacne, VGet(cosf(0.0f - stageRotation) * 750,
+	//							   sinf(0.0f - stageRotation) * 750,
+	//	                                4000.0f  + 750));
 
 	c_collision->f_update(VGet(cosf(0.0f - stageRotation) * 750,
 		sinf(0.0f - stageRotation) * 750,
