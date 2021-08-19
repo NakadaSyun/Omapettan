@@ -9,6 +9,8 @@ void c_GameManager::f_init()
 	f_RoadModel();
 	f_RoadImage();
 
+	// カメラの描画距離をセット
+	SetCameraNearFar(100.0f, 50000.0f);
 
 	// ３Ｄモデルに新しい座標をセット
 	//MV1SetPosition(model_Plane, VGet(0.0f,-100.0f,0.0f));
