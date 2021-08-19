@@ -69,6 +69,7 @@ void c_GameManager::f_update()
 	{
 		//c_hair->HitHair[num] = f_HitCheck(*c_player->c_colision, *c_hair->c_colision[num]);
 		if (f_HitCheck(*c_hair->c_colision[num], *c_player->c_colision) == false) {
+			c_hair->f_getRotationY(num, c_player->f_GetPlayerRotationY());
 			c_hair->f_hairCut(num);
 			c_pad->f_HairCutVibration();
 

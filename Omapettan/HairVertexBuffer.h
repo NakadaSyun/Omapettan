@@ -64,6 +64,8 @@ public:
 	//void f_flyShavedHair(int num);
 	//毛の状態を見る
 	bool f_hairStatusSee();
+	// ｙ軸の回転値を取得
+	void f_getRotationY(int num, float rot);
 
 private:
 	// メモリの割り当て
@@ -96,12 +98,14 @@ private:
 	int graphHandle;
 	int indexNum = 0;
 	int vertexNum = 0;        
-	int hairStatus[HAIR_NUM];           // 各毛の状態
-	float personalRotation[HAIR_NUM];   // 各毛の角度
-	float personalPosZ[HAIR_NUM];       // 各毛のZ座標
-	float personalRadius[HAIR_NUM];     // 各毛の中心座標(x = 0, y = 0)からの半径
-	float personalRotX[HAIR_NUM];      // 各毛のX軸の回転値
-	float flyAngleHair[HAIR_NUM];       // 各毛が飛んでいく角度
+	int hairStatus[HAIR_NUM];            // 各毛の状態
+	float personalRotation[HAIR_NUM];    // 各毛の角度
+	float personalPosZ[HAIR_NUM];        // 各毛のZ座標
+	float personalRadius[HAIR_NUM];      // 各毛の中心座標(x = 0, y = 0)からの半径
+	float hairFlyingRotX[HAIR_NUM];      // 毛が飛びながら回転する値
+	float hairFlyingRotZ[HAIR_NUM];      // 毛が飛びながら回転する値
+	float hairFlyingVec[HAIR_NUM];       // 各毛が飛んでいくベクトル
+	float playerRotY[HAIR_NUM];          // プレイヤーのY軸の向き
 
 	LONGLONG Time1;
 	MV1_REF_POLYGONLIST RefMesh;
