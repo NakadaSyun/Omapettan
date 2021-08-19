@@ -12,4 +12,7 @@ public:
 	virtual void f_output() const override;
 
 	c_GameManager* c_gm;
+private:
+	int StageClearImage;	//ステージクリア画像
+	int StageClearTime = 0; //クリアカウント用
 };

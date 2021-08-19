@@ -8,6 +8,11 @@ c_Main::c_Main() {
 	// ゲームマネジャ初期化
 	c_gm->f_init();
 	IsNextScene = false;
+
+	//
+	//StageClearImage = LoadGraph("images/Result.png");
+	StageClearImage = LoadGraph("images/StageClear.png");
+	
 }
 
 c_Main::~c_Main() {
@@ -26,7 +31,15 @@ c_Scene* c_Main::f_update() {
 
 	//毛が全部剃られた状態ならResultシーンへ
 	if (c_gm->c_hair->f_hairStatusSee()) {
-		return new c_Result();
+		if (StageClearTime <240)
+		{
+			DrawGraph(0, 0, StageClearImage, true);
+			StageClearTime++;
+		}
+		else
+		{
+			return new c_Result();
+		}
 	}
 
 	return this;
