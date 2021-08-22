@@ -31,10 +31,24 @@ c_Scene* c_Main::f_update() {
 
 	//–Ñ‚ª‘S•”’ä‚ç‚ê‚½ó‘Ô‚È‚çResultƒV[ƒ“‚Ö
 	if (c_gm->c_hair->f_hairStatusSee()) {
-		if (StageClearTime <240)
+		/*if (StageClearTime <240)
 		{
 			DrawGraph(0, 0, StageClearImage, true);
 			StageClearTime++;
+		}
+		else
+		{
+			return new c_Result();
+		}*/
+
+		if (StageClearTime < 120)
+		{
+			StageClearTime++;
+		}
+		else if (StageClearTime < 240)
+		{
+			StageClearTime++;
+			DrawGraph(0, 0, StageClearImage, true);
 		}
 		else
 		{
