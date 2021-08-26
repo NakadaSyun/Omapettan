@@ -15,10 +15,10 @@ c_Player::c_Player(const int Model) {
 
 	IsAcneHit = false; 
 
-	c_colision = new c_Collision(VGet(sinf(p_Rotation.y) * -100 + p_Position.x,
+    c_colision = new c_Collision(VGet(sinf(p_Rotation.y) * -50 + p_Position.x,
 		                              p_Position.y,
-		                              cosf(p_Rotation.y) * -100 + p_Position.z),
-		                         100.0f, 40.0f, 100.0f);
+		                              cosf(p_Rotation.y) * -80 + p_Position.z),
+		                              120.0f, 40.0f, 60.0f);
 
 	/*  VGet(p_Position.x + Kamisori_Position.x,
         p_Position.y + Kamisori_Position.y,
@@ -298,9 +298,9 @@ void c_Player::f_update(bool Isfall) {
 
 
 	if (HitPoly.HitFlag == 0)f_fall();		//重力
-	c_colision->f_update(VGet(sinf(p_Rotation.y) * -100 + p_Position.x,
+	c_colision->f_update(VGet(sinf(p_Rotation.y) * -50 + p_Position.x,
 		                      p_Position.y,
-		                      cosf(p_Rotation.y) * -100 + p_Position.z));
+		                      cosf(p_Rotation.y) * -80 + p_Position.z));
 
 	if (IsAcneHit) {			//吹き出物と衝突していたら一フレーム前の座標に戻す
 		p_Position = p_OldPosition;
