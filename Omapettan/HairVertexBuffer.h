@@ -2,6 +2,7 @@
 
 #include "DxLib.h"
 #include "Collision.h"
+#include "DrawAcne.h"
 #include <iostream>
 #include <malloc.h>
 #include <math.h>
@@ -67,6 +68,7 @@ public:
 	// ｙ軸の回転値を取得
 	void f_getRotationY(int num, float rot);
 
+	void f_GetAcnePosZ(c_Acne *c_acne);
 private:
 	// メモリの割り当て
 	void f_allocateMemory();
@@ -106,6 +108,8 @@ private:
 	float hairFlyingRotZ[HAIR_NUM];      // 毛が飛びながら回転する値
 	float hairFlyingVec[HAIR_NUM];       // 各毛が飛んでいくベクトル
 	float playerRotY[HAIR_NUM];          // プレイヤーのY軸の向き
+
+	c_Acne *acnepersonalpos;
 
 	LONGLONG Time1;
 	MV1_REF_POLYGONLIST RefMesh;

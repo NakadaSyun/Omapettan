@@ -13,14 +13,16 @@ c_Acne::c_Acne(const int Acne_Model,const int Acne_Graph, const int Bandage_Mode
 	MV1SetRotationXYZ(modelacne, VGet(0.0f, 0.0f, 0.0f));
 
 	for (int i = 0; i < ACNE_NUM; i++) {
-		acnepersonalRotation[i] = GetRand(int(2 * float(DX_PI) * 100)) * 0.01f;
+		acnepersonalPosZ[i] = 0.0f;
 		acnepersonalPosZ[i] = GetRand(ARM_LENGTH_ACNE) + ARM_ADJUST_POS_ACNE;
-		if ((acnepersonalPosZ[i] > START_PLAYER_DISTANCE) || (acnepersonalPosZ[i] < END_PLAYER_DISTANCE)) {
+		if ((acnepersonalPosZ[i] > START_PLAYER_DISTANCE) || (acnepersonalPosZ[i] < END_PLAYER_DISTANCE) && (acnepersonalPosZ[i] + 100 > acnepersonalPosZ[i + 1]) || (acnepersonalPosZ[i] + 100 < acnepersonalPosZ[i + 1])){
 			for (acnepersonalPosZ[i];  START_PLAYER_DISTANCE< acnepersonalPosZ[i] < END_PLAYER_DISTANCE;) {
 				acnepersonalPosZ[i] = GetRand(ARM_LENGTH_ACNE) + ARM_ADJUST_POS_ACNE;
-				if ((acnepersonalPosZ[i] > START_PLAYER_DISTANCE) || (acnepersonalPosZ[i] < END_PLAYER_DISTANCE)) break;
+				if ((acnepersonalPosZ[i] > START_PLAYER_DISTANCE) || (acnepersonalPosZ[i] < END_PLAYER_DISTANCE) && (acnepersonalPosZ[i] + 100 > acnepersonalPosZ[i + 1]) || (acnepersonalPosZ[i] + 100 < acnepersonalPosZ[i + 1])) break;
 			}
 		}
+		acnepersonalRotation[i] = GetRand(int(2 * float(DX_PI) * 100)) * 0.01f;
+
 		printf("\n%d\t%f",i, acnepersonalPosZ[i]);
 
 		status[i] = 0;
@@ -29,6 +31,10 @@ c_Acne::c_Acne(const int Acne_Model,const int Acne_Graph, const int Bandage_Mode
 	}
 
 	//c_collision = new c_Collision();
+}
+
+c_Acne::c_Acne(){
+
 }
 void c_Acne::f_init() {
 	//for (int i = 0; i < ACNE_NUM; i++) {

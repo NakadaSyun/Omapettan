@@ -23,6 +23,7 @@ namespace {
 class c_Acne{
 public:
 	c_Acne(const int Acne_Model,const int Acne_Graph, const int Bandage_Model);
+	c_Acne();
 	void f_init();
 	void f_output();
 	void f_update();
@@ -30,6 +31,7 @@ public:
 	int status[ACNE_NUM];
 
 	float stageRotation;
+	float acnepersonalPosZ[ACNE_NUM];
 
 	c_Collision* c_collision[ACNE_NUM];
 private:
@@ -39,5 +41,4 @@ private:
 	int modelBandage;
 	int graphacne;
 	float acnepersonalRotation[ACNE_NUM];   // Še‚Å‚«‚à‚Ì‚ÌŠp“x
-	float acnepersonalPosZ[ACNE_NUM];
 };

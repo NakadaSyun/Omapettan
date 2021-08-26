@@ -1,4 +1,5 @@
 #include "HairVertexBuffer.h"
+#include "DrawAcne.h"
 
 c_Hair::c_Hair(const int Model, const int Image) {
 	//毛の当たり判定用の座標の初期化
@@ -14,6 +15,8 @@ c_Hair::c_Hair(const int Model, const int Image) {
 		hairFlyingVec[num] = 0.0f;
 		playerRotY[num] = 0.0f;
 	}
+
+	acnepersonalpos = new c_Acne();
 
 	// モデルの代入
 	modelHandle = Model;
@@ -38,7 +41,6 @@ c_Hair::c_Hair(const int Model, const int Image) {
 	/*(this->*f_hairStatusFuncList[3])(0) =
 	{ f_moveHair, f_flyShavedHair, f_MoveHairOffScreen };*/
 }
-
 
 void c_Hair::f_init() {
 
@@ -66,19 +68,19 @@ void c_Hair::f_update() {
 
 // モデルの複製
 void c_Hair::f_modelDuplication() {
-	int vnum = 0;	
+	int vnum = 0;
 	int pnum = 0;
 	VECTOR debug;
-	
+
 	for (int i = 0; i < HAIR_NUM; i++) {
 
 		MV1SetPosition(modelHandle, VGet(sinf(personalRotation[i]) * ARM_RADIUS,
-			                             cosf(personalRotation[i]) * ARM_RADIUS,
-			                             personalPosZ[i] + ARM_ADJUST_POS));
+			cosf(personalRotation[i]) * ARM_RADIUS,
+			personalPosZ[i] + ARM_ADJUST_POS));
 		//モデルの座標を当たり判定用の変数にコピー
 		CollisionPosition[i] = VGet(sinf(personalRotation[i]) * ARM_RADIUS,
-			                        cosf(personalRotation[i]) * ARM_RADIUS,
-			                        personalPosZ[i] + ARM_ADJUST_POS);
+			cosf(personalRotation[i]) * ARM_RADIUS,
+			personalPosZ[i] + ARM_ADJUST_POS);
 		c_colision[i] =
 			new c_Collision(CollisionPosition[i], hairSize.x, hairSize.y, hairSize.z);
 		// Y軸回転
@@ -115,7 +117,7 @@ void c_Hair::f_modelDuplication() {
 		pnum += RefMesh.PolygonNum * 3;
 
 	}
-	
+
 
 	// 頂点データとインデックスデータを格納する頂点バッファとインデックスバッファを作成
 	vertexBufHandle = CreateVertexBuffer(vertexNum, DX_VERTEX_TYPE_NORMAL_3D);
@@ -169,7 +171,7 @@ void c_Hair::CubeDraw() {
 			CollisionPosition[num].z - (200 / 2),200, 600, 200);*/
 		Cube.f_create(CollisionPosition[num].x - (hairSize.x / 2), CollisionPosition[num].y,
 			CollisionPosition[num].z - (hairSize.z / 2), hairSize.x, hairSize.y, hairSize.z);
-	}	
+	}
 }
 
 // 毛の移動
@@ -180,32 +182,32 @@ void c_Hair::f_moveHair(int num) {
 
 	//for (int i = 0; i < HAIR_NUM; i++) {
 	MV1SetPosition(modelHandle, VGet(sinf(personalRotation[num] + stageXRotation) * (ARM_RADIUS + personalRadius[num]) + hairFlyingVec[num],
-		                             cosf(personalRotation[num] + stageXRotation) * (ARM_RADIUS + personalRadius[num]),
-		                             personalPosZ[num] + ARM_ADJUST_POS));
+		cosf(personalRotation[num] + stageXRotation) * (ARM_RADIUS + personalRadius[num]),
+		personalPosZ[num] + ARM_ADJUST_POS));
 	//モデルの座標を当たり判定用の変数にコピー
 	CollisionPosition[num] = VGet(sinf(personalRotation[num] + stageXRotation) * ARM_RADIUS + hairFlyingVec[num],
-		                          cosf(personalRotation[num] + stageXRotation) * ARM_RADIUS,
-		                          personalPosZ[num] + ARM_ADJUST_POS
+		cosf(personalRotation[num] + stageXRotation) * ARM_RADIUS,
+		personalPosZ[num] + ARM_ADJUST_POS
 	/*4500.0f*/);
 	c_colision[num] =
 		new c_Collision(CollisionPosition[num], hairSize.x, hairSize.y, hairSize.z);
 	// Y軸回転
 	MV1SetRotationXYZ(modelHandle, VGet(hairFlyingRotX[num], 0, hairFlyingRotZ[num] - personalRotation[num] - stageXRotation));
 
-		
-		// 参照用メッシュの更新
-		MV1RefreshReferenceMesh(modelHandle, -1, TRUE);
 
-		vnum = num * RefMesh.VertexNum;
+	// 参照用メッシュの更新
+	MV1RefreshReferenceMesh(modelHandle, -1, TRUE);
 
-		// 頂点データをコピー
-		for (int j = 0; j < RefMesh.VertexNum; j++)
-		{
-			vertex[j + vnum].pos = RefMesh.Vertexs[j].Position;
-		}
+	vnum = num * RefMesh.VertexNum;
 
-		/*vnum += RefMesh.VertexNum;
-		pnum += RefMesh.PolygonNum * 3;*/
+	// 頂点データをコピー
+	for (int j = 0; j < RefMesh.VertexNum; j++)
+	{
+		vertex[j + vnum].pos = RefMesh.Vertexs[j].Position;
+	}
+
+	/*vnum += RefMesh.VertexNum;
+	pnum += RefMesh.PolygonNum * 3;*/
 	//}
 
 	//// 頂点バッファとインデックスバッファにデータを転送
@@ -228,6 +230,18 @@ void c_Hair::f_setPosAndRot() {
 
 		// 各毛のZ座標を設定
 		personalPosZ[i] = GetRand(ARM_LENGTH);
+	}
+	acnepersonalpos->acnepersonalPosZ[0];
+	for (int j = 0; j < ACNE_NUM; j++) {
+		for (int i = 0; i < HAIR_NUM; i++) {
+			if ((acnepersonalpos->acnepersonalPosZ[j] + 100< personalPosZ[i]) || (acnepersonalpos->acnepersonalPosZ[j] - 100> personalPosZ[i])) {
+				for (personalPosZ[i]; personalPosZ[i] > 0;) {
+					personalPosZ[i] = GetRand(ARM_LENGTH);
+					if ((acnepersonalpos->acnepersonalPosZ[j] + 100 < personalPosZ[i]) || (acnepersonalpos->acnepersonalPosZ[j] - 100 > personalPosZ[i])) break;
+				}
+			}
+			printf("\n%d\t%f", i, personalPosZ[i]);
+		}
 	}
 }
 
@@ -324,4 +338,8 @@ void c_Hair::f_getRotationY(int num, float rot) {
 		playerRotY[num] = rot;
 		playerRotY[num] -= DX_PI_F;
 	}
+}
+
+void c_Hair::f_GetAcnePosZ(c_Acne* c_acne) {
+	acnepersonalpos = c_acne;
 }

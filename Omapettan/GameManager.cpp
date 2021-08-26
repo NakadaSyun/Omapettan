@@ -34,13 +34,15 @@ void c_GameManager::f_init()
 
 	c_stage = new c_Stage(model_Arm);
 
-	c_hair = new c_Hair(model_Cylinder, image_Cylinder);
-
 	c_acne = new c_Acne(model_Acne, image_Acne, model_Bandage);
 
 	c_pad = new c_GamePad();
 
 	c_mainUI = new c_MainUI(image_Bansoko);
+
+	c_hair = new c_Hair(model_Cylinder, image_Cylinder);
+
+	c_hair->f_GetAcnePosZ(c_acne);
 }
 
 // ƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ
