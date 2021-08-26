@@ -12,7 +12,7 @@ c_CameraCon::c_CameraCon() {
 	HRotate = 0.0f;        //水平回転
 	TRotate = 0.0f;         //捻り回転
 
-	position = Cameradistance;	//カメラの座標
+	position = VAdd(Playerposition, Cameradistance);	//カメラの座標
 
 	rotation = VGet(VRotate, HRotate, TRotate);
 }

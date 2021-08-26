@@ -7,6 +7,9 @@
 
 #define PI 3.141592653589793
 
+extern Sound g_Snd;
+static int SoundFlg = 0;
+
 c_Player::c_Player(const int Model) {
 	p_Model = Model;
 	// ３Ｄモデルの座標を初期化
@@ -30,6 +33,9 @@ c_Player::c_Player(const int Model) {
 	model_Arm = MV1LoadModel("models/arm3.mv1");
 	model_KAMISORI = MV1LoadModel("models/KKAMISORI.mv1");
 	model_Acne = MV1LoadModel("models/dekimono.mv1");
+
+	SoundFlg = 0;		//最初の剃刀の音を鳴らすフラグ
+
 }
 
 c_Player::~c_Player() {
@@ -46,10 +52,17 @@ void c_Player::f_init() {
 
 	MV1SetPosition(model_KAMISORI, VGet(p_Position.x, p_Position.y, p_Position.z));
 
+
 }
 
 void c_Player::f_update(bool Isfall) {
 	c_pad->f_update();
+
+	if (SoundFlg == 0) {
+		PlaySoundMem(g_Snd.KAMISORI_Hold, DX_PLAYTYPE_BACK);
+		SoundFlg++;
+	}
+
 
 	// ３Ｄモデルに新しい座標をセット
 	MV1SetPosition(p_Model, p_Position);
@@ -221,7 +234,10 @@ void c_Player::f_update(bool Isfall) {
 	Rota_Dif = Rota_Dif % 360;				//差分が360°以上行かないようにする
 
 	if (MoveKeyFlag == TRUE) {				//移動キーが押されている時
-
+		if (CheckSoundMem(g_Snd.Player_footStep) == 0) {
+			PlaySoundMem(g_Snd.Player_footStep, DX_PLAYTYPE_BACK);
+		}
+		
 		//現在の角度から向きたい方向に向く処理
 		if (int_angle > NowRota) {			//現在の角度と、向きべき角度を比べる
 			if (Rota_Dif <= 180) {			//差分を比べる

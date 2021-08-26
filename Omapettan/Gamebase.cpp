@@ -3,6 +3,7 @@
 //********************************************
 #include"Gamebase.h"
 
+
 //publickなメンバ関数
 //初期化(DXライブラリと画面の基本設定)
 bool GameBase::f_init()
@@ -13,11 +14,17 @@ bool GameBase::f_init()
 	//Windowサイズの設定
 	SetGraphMode(640, 480, 16);
 
+
+
 	//Windowモード変更と初期化
 	ChangeWindowMode(TRUE);
 	if (DxLib_Init() != 0) {
 		return false;
 	}
+
+	//音の読み込み
+	if (f_LoadSound() == -1) return false;
+
 	//裏画面設定
 	SetDrawScreen(DX_SCREEN_BACK);
 

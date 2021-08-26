@@ -12,6 +12,7 @@
 #include "DrawAcne.h"
 #include "Controller.h"
 #include "MainUI.h"
+#include "LoadSound.h"
 
 #include <iostream>
 

@@ -1,5 +1,8 @@
 #include "HairVertexBuffer.h"
 #include "DrawAcne.h"
+#include "LoadSound.h"
+
+extern Sound g_Snd;
 
 c_Hair::c_Hair(const int Model, const int Image) {
 	//–Ñ‚Ì“–‚½‚è”»’è—p‚ÌÀ•W‚Ì‰Šú‰»
@@ -260,6 +263,7 @@ void c_Hair::f_hairCut(int num) {
 	if (hairStatus[num] == ROOTED_IS) {
 		hairStatus[num] = SHAVED;
 		HitHair[num] = false;
+		PlaySoundMem(g_Snd.HIGESORI_SE, DX_PLAYTYPE_BACK);
 		//printf("num=%d status=%d\n", num,hairStatus[num]);
 	}
 }

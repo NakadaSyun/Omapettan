@@ -1,6 +1,8 @@
 #include "DxLib.h"
 #include "GameManager.h"
 
+
+extern Sound g_Snd;
 VECTOR Playerposition;
 
 // ‰Šú‰»
@@ -66,6 +68,7 @@ void c_GameManager::f_RoadImage()
 	image_Cylinder = LoadGraph("images/hairtexture_brack.bmp");
 	image_Acne = LoadGraph("images/acne.bmp");
 	image_Bansoko = LoadGraph("images/Bansoko.png");
+
 }
 
 // ƒQ[ƒ€XV
@@ -81,7 +84,6 @@ void c_GameManager::f_update()
 			c_hair->f_getRotationY(num, c_player->f_GetPlayerRotationY());
 			c_hair->f_hairCut(num);
 			c_pad->f_HairCutVibration();
-
 			printf("%d\n", num);
 		}
 	}
@@ -91,6 +93,7 @@ void c_GameManager::f_update()
 			if (c_acne->status[i] == 0) {
 				c_pad->f_AcneCutVibration();
 				c_acne->status[i] = 1;
+				PlaySoundMem(g_Snd.Customer_Damage, DX_PLAYTYPE_BACK);
 			}
 			else {
 				c_player->IsAcneHit = true;

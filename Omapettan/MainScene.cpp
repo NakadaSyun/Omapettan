@@ -1,5 +1,8 @@
 #include "MainScene.h"
 #include "ResultScene.h"
+#include "LoadSound.h"
+
+extern Sound g_Snd;
 
 c_Main::c_Main() {
 	//ゲームマネージャー生成
@@ -22,11 +25,11 @@ c_Main::~c_Main() {
 c_Scene* c_Main::f_update() {
 	c_gm->f_update();
 	if (CheckHitKey(KEY_INPUT_SPACE) == 1 && IsNextScene) {
-		//return new c_Result();
+		return new c_Result();
 	}
 	
 	if (CheckHitKey(KEY_INPUT_SPACE) == 0 && !IsNextScene) {
-		//IsNextScene = true;
+		IsNextScene = true;
 	}
 
 	//毛が全部剃られた状態ならResultシーンへ
@@ -49,6 +52,10 @@ c_Scene* c_Main::f_update() {
 		{
 			StageClearTime++;
 			DrawGraph(0, 0, StageClearImage, true);
+			if (CheckSoundMem(g_Snd.StageClear) == 0) {
+				PlaySoundMem(g_Snd.StageClear, DX_PLAYTYPE_BACK);
+			}
+			
 		}
 		else
 		{
