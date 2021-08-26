@@ -13,7 +13,7 @@ c_Main::c_Main() {
 	IsNextScene = false;
 
 	//
-	//StageClearImage = LoadGraph("images/Result.png");
+	StageOverImage = LoadGraph("images/GameOver.png");
 	StageClearImage = LoadGraph("images/StageClear.png");
 	
 }
@@ -34,16 +34,7 @@ c_Scene* c_Main::f_update() {
 
 	//毛が全部剃られた状態ならResultシーンへ
 	if (c_gm->c_hair->f_hairStatusSee()) {
-		/*if (StageClearTime <240)
-		{
-			DrawGraph(0, 0, StageClearImage, true);
-			StageClearTime++;
-		}
-		else
-		{
-			return new c_Result();
-		}*/
-
+		
 		if (StageClearTime < 120)
 		{
 			StageClearTime++;
@@ -54,6 +45,28 @@ c_Scene* c_Main::f_update() {
 			DrawGraph(0, 0, StageClearImage, true);
 			if (CheckSoundMem(g_Snd.StageClear) == 0) {
 				PlaySoundMem(g_Snd.StageClear, DX_PLAYTYPE_BACK);
+			}
+			
+		}
+		else
+		{
+			return new c_Result();
+		}
+	}
+	
+	//吹き出物が全部剃られた状態ならResultシーンへ
+	if (c_gm->c_acne->AcneStatus()) {
+		
+		if (StageClearTime < 120)
+		{
+			StageClearTime++;
+		}
+		else if (StageClearTime < 240)
+		{
+			StageClearTime++;
+			DrawGraph(0, 0, StageOverImage, false);
+			if (CheckSoundMem(g_Snd.StageClear) == 0) {
+				//PlaySoundMem(g_Snd.StageClear, DX_PLAYTYPE_BACK);
 			}
 			
 		}

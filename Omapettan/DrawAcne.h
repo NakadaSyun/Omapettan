@@ -30,6 +30,8 @@ public:
 
 	int status[ACNE_NUM];
 
+	bool AcneStatus();
+
 	float stageRotation;
 	float acnepersonalPosZ[ACNE_NUM];
 

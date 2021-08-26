@@ -67,3 +67,12 @@ void c_Acne::f_output() {
 		}
 	}
 }
+
+
+bool c_Acne::AcneStatus() {
+	for (int i = 0; i < ACNE_NUM; i++) {
+		if (status[i] == 0) return false;
+	}
+
+	return true;		//‚·‚×‚ÄØ‚ç‚ê‚Ä‚¢‚½‚çtrue‚ð•Ô‚·
+}

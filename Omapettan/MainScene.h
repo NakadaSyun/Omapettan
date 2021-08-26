@@ -14,5 +14,6 @@ public:
 	c_GameManager* c_gm;
 private:
 	int StageClearImage;	//ステージクリア画像
+	int StageOverImage;	//ステージクリア画像
 	int StageClearTime = 0; //クリアカウント用
 };
