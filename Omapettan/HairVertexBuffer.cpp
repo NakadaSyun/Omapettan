@@ -236,10 +236,10 @@ void c_Hair::f_setPosAndRot() {
 	acnepersonalpos->acnepersonalPosZ[0];
 	for (int j = 0; j < ACNE_NUM; j++) {
 		for (int i = 0; i < HAIR_NUM; i++) {
-			if ((acnepersonalpos->acnepersonalPosZ[j] + 100< personalPosZ[i]) || (acnepersonalpos->acnepersonalPosZ[j] - 100> personalPosZ[i])) {
+			if ((acnepersonalpos->acnepersonalPosZ[j] + 200 < personalPosZ[i]) || (acnepersonalpos->acnepersonalPosZ[j] - 200> personalPosZ[i])) {
 				for (personalPosZ[i]; personalPosZ[i] > 0;) {
 					personalPosZ[i] = GetRand(ARM_LENGTH) + ARM_ADJUST_POS;
-					if ((acnepersonalpos->acnepersonalPosZ[j] + 100 < personalPosZ[i]) || (acnepersonalpos->acnepersonalPosZ[j] - 100 > personalPosZ[i]))
+					if ((acnepersonalpos->acnepersonalPosZ[j] + 200 < personalPosZ[i]) || (acnepersonalpos->acnepersonalPosZ[j] - 200 > personalPosZ[i]))
 						if (CheckingOverlapsWithPlayer(personalRotation[i], personalPosZ[i]) == false)break;
 				}
 			}

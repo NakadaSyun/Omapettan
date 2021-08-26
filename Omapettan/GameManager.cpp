@@ -114,19 +114,23 @@ void c_GameManager::f_update()
 	//	}
 	//}
 
-	c_player->f_update(Isfall);
+	// ˆêŽž’âŽ~—pƒtƒ‰ƒO
+	if (c_mainUI->pauseFlg == false) {
 
-	Playerposition = c_player->f_GetPlayerPosition();
+		c_player->f_update(Isfall);
 
-	c_camera->f_update();
+		Playerposition = c_player->f_GetPlayerPosition();
 
-	c_stage->f_update();
-	c_hair->stageXRotation = c_stage->f_GetXRotation();
-	c_acne->stageRotation = c_stage->f_GetXRotation();
+		c_camera->f_update();
 
-	c_hair->f_update();
+		c_stage->f_update();
+		c_hair->stageXRotation = c_stage->f_GetXRotation();
+		c_acne->stageRotation = c_stage->f_GetXRotation();
 
-	c_acne->f_update();
+		c_hair->f_update();
+
+		c_acne->f_update();
+	}
 
 	c_mainUI->f_update();
 	for (int i = 0; i < HAIR_NUM; i++) {
