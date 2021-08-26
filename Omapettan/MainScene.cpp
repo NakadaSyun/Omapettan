@@ -16,6 +16,10 @@ c_Main::c_Main() {
 	StageOverImage = LoadGraph("images/GameOver.png");
 	StageClearImage = LoadGraph("images/StageClear.png");
 	
+	//デバッグモードを非表示
+	DebugFlg = false;
+	//キーが押されてない状態に
+	KeyDownFlg = false;
 }
 
 c_Main::~c_Main() {
@@ -31,6 +35,26 @@ c_Scene* c_Main::f_update() {
 	if (CheckHitKey(KEY_INPUT_SPACE) == 0 && !IsNextScene) {
 		IsNextScene = true;
 	}
+
+	if (CheckHitKey(KEY_INPUT_RETURN) == 1) {
+		//デバッグモード表示
+		if (!DebugFlg && !KeyDownFlg)
+		{
+			DebugFlg = true;
+			KeyDownFlg = true;
+		}
+		//デバッグモード非表示
+		else if (DebugFlg && !KeyDownFlg)
+		{
+			DebugFlg = false;
+			KeyDownFlg = true;
+		}
+	}
+	if (CheckHitKey(KEY_INPUT_RETURN) == 0) {
+		KeyDownFlg = false;
+	}
+
+	f_debug(DebugFlg);
 
 	//毛が全部剃られた状態ならResultシーンへ
 	if (c_gm->c_hair->f_hairStatusSee()) {
@@ -84,3 +108,11 @@ void c_Main::f_output() const{
 	c_gm->f_output();
 }
 
+void c_Main::f_debug(bool flg) {
+	if (flg)
+	{
+		c_gm->c_hair->CubeDraw();
+
+		c_gm->c_player->c_colision->CubeDraw();
+	}
+}

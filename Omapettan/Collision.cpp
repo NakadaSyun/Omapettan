@@ -22,9 +22,9 @@ bool c_Collision::f_Hit() {
 void c_Collision::f_update(VECTOR position) {
 	pos = position;
 
-	CubeDraw();
+	//CubeDraw();
 }
 
 void c_Collision::CubeDraw() {
-	//Cube.f_create(pos.x - (wide / 2), pos.y, pos.z - (depth / 2), wide , hight, depth);
+	Cube.f_create(pos.x - (wide / 2), pos.y, pos.z - (depth / 2), wide , hight, depth);
 }
