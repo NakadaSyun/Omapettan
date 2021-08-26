@@ -245,6 +245,7 @@ void c_Hair::f_MoveHairOffScreen(int num) {
 void c_Hair::f_hairCut(int num) {
 	if (hairStatus[num] == ROOTED_IS) {
 		hairStatus[num] = SHAVED;
+		HitHair[num] = false;
 		//printf("num=%d status=%d\n", num,hairStatus[num]);
 	}
 }

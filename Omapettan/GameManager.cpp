@@ -39,6 +39,8 @@ void c_GameManager::f_init()
 	c_acne = new c_Acne(model_Acne, image_Acne, model_Bandage);
 
 	c_pad = new c_GamePad();
+
+	c_mainUI = new c_MainUI(image_Bansoko);
 }
 
 // ƒ‚ƒfƒ‹‚Ì“Ç‚Ýž‚Ý
@@ -61,6 +63,7 @@ void c_GameManager::f_RoadImage()
 	// ‰æ‘œ‚Ì“Ç‚Ýž‚Ý
 	image_Cylinder = LoadGraph("images/hairtexture_brack.bmp");
 	image_Acne = LoadGraph("images/acne.bmp");
+	image_Bansoko = LoadGraph("images/Bansoko.png");
 }
 
 // ƒQ[ƒ€XV
@@ -120,6 +123,14 @@ void c_GameManager::f_update()
 
 	c_acne->f_update();
 
+	c_mainUI->f_update();
+	for (int i = 0; i < HAIR_NUM; i++) {
+		c_mainUI->hairStateFlg[i] = c_hair->HitHair[i];
+	}
+	for (int i = 0; i < ACNE_NUM; i++) {
+		c_mainUI->acneStateFlg[i] = c_acne->status[i];
+	}
+
 	//”wŒiˆÚ“®‚ÌƒAƒbƒvƒf[ƒg
 	MV1SetRotationXYZ(model_SkyBox, VGet(c_hair->stageXRotation, DX_PI_F / 2, 0.0f));
 }
@@ -133,6 +144,7 @@ void c_GameManager::f_output()
 	c_dispUI->f_draw();
 	c_hair->f_output();
 	c_acne->f_output();
+	c_mainUI->f_draw();
 }
 
 // ”wŒi‚Ì•`‰æ
