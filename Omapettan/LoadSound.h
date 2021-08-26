@@ -13,6 +13,8 @@ public:
 	int Menu_Open;			//メニュー開くSE
 	int Menu_Cansel;		//メニュー内でのキャンセル
 	int Customer_Damage;	//フキデモの破壊
+	//sei_ge_garasu_ware03
+	int GameOver;
 
 
 };

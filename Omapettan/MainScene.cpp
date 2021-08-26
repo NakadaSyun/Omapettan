@@ -67,7 +67,7 @@ c_Scene* c_Main::f_update() {
 			StageClearTime++;
 			DrawGraph(0, 0, StageOverImage, false);
 			if (CheckSoundMem(g_Snd.StageClear) == 0) {
-				//PlaySoundMem(g_Snd.StageClear, DX_PLAYTYPE_BACK);
+				PlaySoundMem(g_Snd.GameOver, DX_PLAYTYPE_BACK);
 			}
 			
 		}

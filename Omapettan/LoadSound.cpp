@@ -15,8 +15,10 @@ int f_LoadSound(void) {		//音の読み込み
 	if ((g_Snd.Menu_Open = LoadSoundMem("Sound/決定、ボタン押下26.mp3")) == -1)return -1;					//剃刀を構えたときの音
 	if ((g_Snd.Menu_Cansel = LoadSoundMem("Sound/キャンセル2.mp3")) == -1)return -1;					//剃刀を構えたときの音
 	if ((g_Snd.Customer_Damage = LoadSoundMem("Sound/グサッ1.mp3")) == -1)return -1;					//剃刀を構えたときの音
+	if ((g_Snd.GameOver = LoadSoundMem("Sound/sei_ge_garasu_ware03.mp3")) == -1)return -1;					//剃刀を構えたときの音
 
 	ChangeVolumeSoundMem(100, g_Snd.Player_footStep);
+	ChangeVolumeSoundMem(100, g_Snd.GameOver);
 
 
 	return 0;
