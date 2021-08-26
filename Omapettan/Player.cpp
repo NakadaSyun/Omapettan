@@ -13,6 +13,8 @@ c_Player::c_Player(const int Model) {
 	p_Position = VGet(0.0f, 760.0f, 4500.0f);
 	p_Rotation = VGet(0.0f, 0.0f, 0.0f);
 
+	IsAcneHit = false; 
+
 	c_colision = new c_Collision(VGet(sinf(p_Rotation.y) * -100 + p_Position.x,
 		                              p_Position.y,
 		                              cosf(p_Rotation.y) * -100 + p_Position.z),
@@ -299,6 +301,14 @@ void c_Player::f_update(bool Isfall) {
 	c_colision->f_update(VGet(sinf(p_Rotation.y) * -100 + p_Position.x,
 		                      p_Position.y,
 		                      cosf(p_Rotation.y) * -100 + p_Position.z));
+
+	if (IsAcneHit) {			//吹き出物と衝突していたら一フレーム前の座標に戻す
+		p_Position = p_OldPosition;
+	}
+	else {
+		p_OldPosition = p_Position;
+	}
+	IsAcneHit = false;
 }
 
 void c_Player::f_fall() {

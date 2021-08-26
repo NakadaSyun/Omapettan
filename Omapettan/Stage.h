@@ -15,8 +15,12 @@ public:
 	c_Collision* c_colision;
 	float f_GetXRotation();
 	c_GamePad* c_pad;
+
+	bool IsAcneHit;
 private:
 	VECTOR position;
 	int sModel;
 	float Arm_XRotate = 0.0f;
+
+	float Arm_OldXRotate = 0.0f;
 };

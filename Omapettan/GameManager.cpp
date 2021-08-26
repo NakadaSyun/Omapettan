@@ -82,11 +82,15 @@ void c_GameManager::f_update()
 	}
 
 	for (int i = 0; i < ACNE_NUM; i++) {
-		if (f_HitCheck(*c_acne->c_collision[i], *c_player->c_colision) == false && 
-			c_acne->status[i] == 0) {
-			c_pad->f_AcneCutVibration();
-			c_acne->status[i] = 1;
-
+		if (f_HitCheck(*c_acne->c_collision[i], *c_player->c_colision) == false){
+			if (c_acne->status[i] == 0) {
+				c_pad->f_AcneCutVibration();
+				c_acne->status[i] = 1;
+			}
+			else {
+				c_player->IsAcneHit = true;
+				c_stage->IsAcneHit = true;
+			}
 		}
 	}
 	
