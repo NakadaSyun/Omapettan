@@ -267,13 +267,13 @@ void c_Hair::f_hairCut(int num) {
 // ’ä‚ç‚ê‚½–Ñ‚ð”ò‚Î‚·
 void c_Hair::f_flyShavedHair(int num) {
 	// –Ñ‚Ì‰ñ“]
-	hairFlyingRotX[num] -= cosf(playerRotY[num]) / 40;
-	hairFlyingRotZ[num] += sinf(playerRotY[num]) / 40;
+	hairFlyingRotX[num] -= cosf(playerRotY[num]) / 20;
+	hairFlyingRotZ[num] += sinf(playerRotY[num]) / 20;
 
 	// –Ñ‚ðƒvƒŒƒCƒ„[‚ÌŒã‚ë•ûŒü‚Ö”ò‚Î‚·
-	personalRadius[num] += 15;
-	hairFlyingVec[num] -= sinf(playerRotY[num]) * 18;
-	personalPosZ[num] -= cosf(playerRotY[num]) * 18;
+	personalRadius[num] += 9;
+	hairFlyingVec[num] -= sinf(playerRotY[num]) * 20;
+	personalPosZ[num] -= cosf(playerRotY[num]) * 20;
 
 	(this->*f_hairStatusFuncList[ROOTED_IS])(num);
 
