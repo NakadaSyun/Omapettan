@@ -56,6 +56,7 @@ c_Scene* c_Main::f_update() {
 	
 	//吹き出物が全部剃られた状態ならResultシーンへ
 	if (c_gm->c_acne->AcneStatus()) {
+		c_gm->c_player->IsMove = false;
 		
 		if (StageClearTime < 120)
 		{

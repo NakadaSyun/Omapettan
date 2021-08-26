@@ -17,6 +17,7 @@ c_Player::c_Player(const int Model) {
 	p_Rotation = VGet(0.0f, 0.0f, 0.0f);
 
 	IsAcneHit = false; 
+	IsMove = true;
 
     c_colision = new c_Collision(VGet(sinf(p_Rotation.y) * -50 + p_Position.x,
 		                              p_Position.y,
@@ -56,6 +57,7 @@ void c_Player::f_init() {
 }
 
 void c_Player::f_update(bool Isfall) {
+	if (!IsMove) return;
 	c_pad->f_update();
 
 	if (SoundFlg == 0) {

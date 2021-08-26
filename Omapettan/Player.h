@@ -23,6 +23,7 @@ public:
 	float f_GetPlayerRotationY();       // プレイヤーのY軸の回転値を戻り値で返す
 
 	bool IsAcneHit;						//できものとの衝突判定用変数
+	bool IsMove;				//移動の制限
 
 	//かみそりのプレイヤーからの加算座標格納変数
 	VECTOR Kamisori_Position = VGet(0,20, 0);
