@@ -11,6 +11,7 @@
 #include "HairVertexBuffer.h"
 #include "DrawAcne.h"
 #include "Controller.h"
+#include "MainUI.h"
 
 #include <iostream>
 
@@ -38,6 +39,7 @@ public:
 	c_Hair* c_hair;
 	c_Acne* c_acne;
 	c_GamePad* c_pad;
+	c_MainUI* c_mainUI;
 
 private:
 	
@@ -54,4 +56,5 @@ private:
 	// ‰æ‘œ
 	int image_Cylinder;
 	int image_Acne;
+	int image_Bansoko;
 };
