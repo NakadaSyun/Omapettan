@@ -12,7 +12,7 @@ using namespace std;
 
 namespace {
 	// 生成する毛の数
-	const int HAIR_NUM = 64;
+	const int HAIR_NUM = 255;
 
 	// ポリゴンに含まれる頂点の数
 	const int POLY = 3;
@@ -86,6 +86,9 @@ private:
 	void f_doNotAnything(int num);
 	// 毛の更新
 	void f_hairUpdate();
+	// プレイヤーとの重複の確認
+	bool CheckingOverlapsWithPlayer(float rot, float posZ);
+
 	// 関数ポインタ
 	void (c_Hair::* f_hairStatusFuncList[STATUS_MAX])(int num) = 
 	{ &c_Hair::f_moveHair, &c_Hair::f_flyShavedHair, &c_Hair::f_MoveHairOffScreen, &c_Hair::f_doNotAnything};

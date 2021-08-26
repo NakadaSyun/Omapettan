@@ -35,7 +35,7 @@ c_Hair::c_Hair(const int Model, const int Image) {
 
 	stageXRotation = 0.0f;
 
-	hairSize = VGet(50.0f, 50.0f, 50.0f);
+	hairSize = VGet(40.0f, 40.0f, 40.0f);
 
 	//f_funcList[ROOTED_IS] = f_moveHair();
 	/*(this->*f_hairStatusFuncList[3])(0) =
@@ -50,7 +50,7 @@ void c_Hair::f_init() {
 // 出力(描画)
 void c_Hair::f_output() {
 	// サイズの設定
-	MV1SetScale(modelHandle, VGet(0.3f, 2.0f, 0.3f));
+	MV1SetScale(modelHandle, VGet(0.2f, 0.6f, 0.2f));
 	// 頂点バッファで描画
 	DrawPolygonIndexed3D_UseVertexBuffer(vertexBufHandle, indexBufHandle, graphHandle, TRUE);
 }
@@ -76,11 +76,11 @@ void c_Hair::f_modelDuplication() {
 
 		MV1SetPosition(modelHandle, VGet(sinf(personalRotation[i]) * ARM_RADIUS,
 			cosf(personalRotation[i]) * ARM_RADIUS,
-			personalPosZ[i] + ARM_ADJUST_POS));
+			personalPosZ[i]));
 		//モデルの座標を当たり判定用の変数にコピー
 		CollisionPosition[i] = VGet(sinf(personalRotation[i]) * ARM_RADIUS,
 			cosf(personalRotation[i]) * ARM_RADIUS,
-			personalPosZ[i] + ARM_ADJUST_POS);
+			personalPosZ[i]);
 		c_colision[i] =
 			new c_Collision(CollisionPosition[i], hairSize.x, hairSize.y, hairSize.z);
 		// Y軸回転
@@ -183,12 +183,11 @@ void c_Hair::f_moveHair(int num) {
 	//for (int i = 0; i < HAIR_NUM; i++) {
 	MV1SetPosition(modelHandle, VGet(sinf(personalRotation[num] + stageXRotation) * (ARM_RADIUS + personalRadius[num]) + hairFlyingVec[num],
 		cosf(personalRotation[num] + stageXRotation) * (ARM_RADIUS + personalRadius[num]),
-		personalPosZ[num] + ARM_ADJUST_POS));
+		personalPosZ[num]));
 	//モデルの座標を当たり判定用の変数にコピー
 	CollisionPosition[num] = VGet(sinf(personalRotation[num] + stageXRotation) * ARM_RADIUS + hairFlyingVec[num],
 		cosf(personalRotation[num] + stageXRotation) * ARM_RADIUS,
-		personalPosZ[num] + ARM_ADJUST_POS
-	/*4500.0f*/);
+		personalPosZ[num]);
 	c_colision[num] =
 		new c_Collision(CollisionPosition[num], hairSize.x, hairSize.y, hairSize.z);
 	// Y軸回転
@@ -229,15 +228,16 @@ void c_Hair::f_setPosAndRot() {
 		//personalRotation[i] = debug;
 
 		// 各毛のZ座標を設定
-		personalPosZ[i] = GetRand(ARM_LENGTH);
+		personalPosZ[i] = GetRand(ARM_LENGTH) + ARM_ADJUST_POS;
 	}
 	acnepersonalpos->acnepersonalPosZ[0];
 	for (int j = 0; j < ACNE_NUM; j++) {
 		for (int i = 0; i < HAIR_NUM; i++) {
 			if ((acnepersonalpos->acnepersonalPosZ[j] + 100< personalPosZ[i]) || (acnepersonalpos->acnepersonalPosZ[j] - 100> personalPosZ[i])) {
 				for (personalPosZ[i]; personalPosZ[i] > 0;) {
-					personalPosZ[i] = GetRand(ARM_LENGTH);
-					if ((acnepersonalpos->acnepersonalPosZ[j] + 100 < personalPosZ[i]) || (acnepersonalpos->acnepersonalPosZ[j] - 100 > personalPosZ[i])) break;
+					personalPosZ[i] = GetRand(ARM_LENGTH) + ARM_ADJUST_POS;
+					if ((acnepersonalpos->acnepersonalPosZ[j] + 100 < personalPosZ[i]) || (acnepersonalpos->acnepersonalPosZ[j] - 100 > personalPosZ[i]))
+						if (CheckingOverlapsWithPlayer(personalRotation[i], personalPosZ[i]) == false)break;
 				}
 			}
 			printf("\n%d\t%f", i, personalPosZ[i]);
@@ -266,14 +266,14 @@ void c_Hair::f_hairCut(int num) {
 
 // 剃られた毛を飛ばす
 void c_Hair::f_flyShavedHair(int num) {
-
-	// 毛をプレイヤーの後ろ方向へ飛ばす
-	personalRadius[num] += 20;
-	hairFlyingVec[num] -= sinf(playerRotY[num]) * 15;
-	personalPosZ[num] -= cosf(playerRotY[num]) * 15;
-
+	// 毛の回転
 	hairFlyingRotX[num] -= cosf(playerRotY[num]) / 40;
 	hairFlyingRotZ[num] += sinf(playerRotY[num]) / 40;
+
+	// 毛をプレイヤーの後ろ方向へ飛ばす
+	personalRadius[num] += 15;
+	hairFlyingVec[num] -= sinf(playerRotY[num]) * 18;
+	personalPosZ[num] -= cosf(playerRotY[num]) * 18;
 
 	(this->*f_hairStatusFuncList[ROOTED_IS])(num);
 
@@ -342,4 +342,15 @@ void c_Hair::f_getRotationY(int num, float rot) {
 
 void c_Hair::f_GetAcnePosZ(c_Acne* c_acne) {
 	acnepersonalpos = c_acne;
+}
+
+// プレイヤーとの重複の確認
+bool c_Hair::CheckingOverlapsWithPlayer(float rot, float posZ) {
+	// プレイヤーと重なっている部分があればtrue
+	if (4100 < posZ && posZ < 4900)
+		if (rot < DX_PI / 180 * 20 || DX_PI / 180 * 340 < rot)
+			return true;
+
+	// 重なっていなければfalse
+	return false;
 }
