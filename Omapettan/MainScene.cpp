@@ -28,7 +28,14 @@ c_Main::~c_Main() {
 
 c_Scene* c_Main::f_update() {
 	c_gm->f_update();
+
+	//ステージBGM処理
+	if (CheckSoundMem(g_Snd.StageBGM) == 0) {
+		PlaySoundMem(g_Snd.StageBGM, DX_PLAYTYPE_LOOP);
+	}
+
 	if (CheckHitKey(KEY_INPUT_SPACE) == 1 && IsNextScene) {
+		StopSoundMem(g_Snd.StageBGM);
 		return new c_Result();
 	}
 	
@@ -74,6 +81,8 @@ c_Scene* c_Main::f_update() {
 		}
 		else
 		{
+
+			StopSoundMem(g_Snd.StageBGM);
 			return new c_Result();
 		}
 	}
@@ -97,6 +106,7 @@ c_Scene* c_Main::f_update() {
 		}
 		else
 		{
+			StopSoundMem(g_Snd.StageBGM);
 			return new c_Result();
 		}
 	}
