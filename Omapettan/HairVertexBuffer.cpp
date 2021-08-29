@@ -62,7 +62,7 @@ void c_Hair::f_output() {
 // 更新
 void c_Hair::f_update() {
 	////ボックスコライダーの描画
-	CubeDraw();
+	//CubeDraw();
 
 	// 毛の移動
 	f_hairUpdate();

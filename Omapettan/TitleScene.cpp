@@ -21,10 +21,14 @@ c_Title::~c_Title() {
 
 c_Scene* c_Title::f_update() {
 	c_Pad->f_update();
+	if (CheckSoundMem(g_Snd.TitleBGM) == 0) {
+		PlaySoundMem(g_Snd.TitleBGM, DX_PLAYTYPE_LOOP);
+	}
 
 	if (SelectcursorY == 400) {
 		if (c_Pad->IsButton1 && IsNextScene) {
 			PlaySoundMem(g_Snd.Menu_Select, DX_PLAYTYPE_BACK);
+			StopSoundMem(g_Snd.TitleBGM);
 			return new c_Main();
 		}
 
