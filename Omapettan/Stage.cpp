@@ -45,20 +45,32 @@ void c_Stage::f_update() {
 	
 	///*******	コントローラーの入力	******/
 	if (c_pad->LeftStick == LEFT) {
-		Arm_XRotate += 0.01f;
+		if (c_pad->IsButton2 == TRUE) Arm_XRotate += 0.01f * 2;
+		else {
+			Arm_XRotate += 0.01f;
+		}
 	}
 	if (c_pad->LeftStick == LEFTUP || 
 		c_pad->LeftStick == LEFTDOWN) {
-		Arm_XRotate += 0.01f * cos(PI/4);
+		if(c_pad->IsButton2 == TRUE) Arm_XRotate += 0.01f * cos(PI / 4) * 2;
+		else {
+			Arm_XRotate += 0.01f * cos(PI / 4);
+		}
 	}
 
 	if (c_pad->LeftStick == RIGHT) {
-		Arm_XRotate -= 0.01f;
+		if (c_pad->IsButton2 == TRUE) Arm_XRotate -= 0.01f * 2;
+		else {
+			Arm_XRotate -= 0.01f;
+		}
 	}
 	
 	if (c_pad->LeftStick == RIGHTUP ||
 		c_pad->LeftStick == RIGHTDOWN) {
-		Arm_XRotate -= 0.01f * cos(PI / 4);;
+		if (c_pad->IsButton2 == TRUE) Arm_XRotate -= 0.01f * cos(PI / 4) * 2;
+		else {
+			Arm_XRotate -= 0.01f * cos(PI / 4);
+		}
 	}
 
 	if (IsAcneHit) {		//吹き出物に衝突していたら一フレーム前の回転値に戻す

@@ -191,22 +191,35 @@ void c_Player::f_update(bool Isfall) {
 	if (c_pad->LeftStick == UP||
 		c_pad->LeftStick == RIGHTUP ||
 		c_pad->LeftStick == LEFTUP ) {
-		MoveZ = p_Speed;
+		if (c_pad->IsButton2 == TRUE) MoveZ = p_Speed * 2;
+		else {
+			MoveZ = p_Speed;
+		}
 	}
+
 	if (c_pad->LeftStick == LEFTUP ||
 		c_pad->LeftStick == LEFT ||
 		c_pad->LeftStick == LEFTDOWN) {
-		MoveX = -p_Speed;
+		if (c_pad->IsButton2 == TRUE) MoveX = -p_Speed * 2;
+		else {
+			MoveX = -p_Speed;
+		}
 	}
 	if (c_pad->LeftStick == DOWN ||
 		c_pad->LeftStick == RIGHTDOWN ||
 		c_pad->LeftStick == LEFTDOWN) {
-		MoveZ = -p_Speed;
+		if (c_pad->IsButton2 == TRUE) MoveZ = -p_Speed * 2;
+		else {
+			MoveZ = -p_Speed;
+		}
 	}
 	if (c_pad->LeftStick == RIGHTUP ||
 		c_pad->LeftStick == RIGHT ||
 		c_pad->LeftStick == RIGHTDOWN) {
-		MoveX = p_Speed;
+		if (c_pad->IsButton2 == TRUE) MoveX = p_Speed * 2;
+		else {
+			MoveX = p_Speed;
+		}
 	}
 
 	Rota_Vec = atan2(-MoveX, -MoveZ);			//ƒvƒŒƒCƒ„[‚ÌŒü‚­•ûŒü
