@@ -21,4 +21,5 @@ private:
 	bool KeyDownFlg;//キーが押されたどうかのフラグ
 
 	void f_debug(bool flg);
+	int DebugLoadTime;
 };

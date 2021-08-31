@@ -43,25 +43,36 @@ c_Scene* c_Main::f_update() {
 		IsNextScene = true;
 	}
 
-	if (CheckHitKey(KEY_INPUT_RETURN) == 1) {
-		//デバッグモード表示
-		if (!DebugFlg && !KeyDownFlg)
-		{
-			DebugFlg = true;
-			KeyDownFlg = true;
+	//デバッグモードの受付時間
+	if (DebugLoadTime > 120)
+	{
+		if (CheckHitKey(KEY_INPUT_RETURN) == 1) {
+			//デバッグモード表示
+			if (!DebugFlg && !KeyDownFlg)
+			{
+				DebugFlg = true;
+				KeyDownFlg = true;
+			}
+			//デバッグモード非表示
+			else if (DebugFlg && !KeyDownFlg)
+			{
+				DebugFlg = false;
+				KeyDownFlg = true;
+			}
 		}
-		//デバッグモード非表示
-		else if (DebugFlg && !KeyDownFlg)
-		{
-			DebugFlg = false;
-			KeyDownFlg = true;
+		if (CheckHitKey(KEY_INPUT_RETURN) == 0) {
+			KeyDownFlg = false;
 		}
 	}
-	if (CheckHitKey(KEY_INPUT_RETURN) == 0) {
-		KeyDownFlg = false;
+	else
+	{
+		//読み込み時間加算
+		DebugLoadTime++;
 	}
 
+	//デバッグモードを表示するかしないか
 	f_debug(DebugFlg);
+
 
 	//毛が全部剃られた状態ならResultシーンへ
 	if (c_gm->c_hair->f_hairStatusSee()) {
