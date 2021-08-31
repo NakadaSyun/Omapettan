@@ -347,7 +347,7 @@ void c_Player::f_fall() {
 }
 
 void c_Player::f_draw() {
-	c_colision->CubeDraw();
+	//c_colision->CubeDraw();
 	// ‚R‚cƒ‚ƒfƒ‹‚Ì•`‰æ
 	MV1DrawModel(p_Model);
 
