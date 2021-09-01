@@ -6,7 +6,7 @@
 
 class c_MainUI {
 public:
-	c_MainUI(int bansokoImg);
+	c_MainUI(int bansokoImg, int mainUIImg);
 	~c_MainUI();
 	void f_init();		// 初期化
 	void f_update();	// 更新
@@ -20,6 +20,8 @@ public:
 
 	c_GamePad* c_Pad;
 
+	bool isBackTitle;
+
 private:
 	void TimeCountUI();	// 時間カウント
 	void AchievementUI();// 達成率
@@ -31,12 +33,15 @@ private:
 	int minute;			// 分
 	int second;			// 秒
 
-	int rate;			// 率
+	float rate;			// 率
 
 	int maxLife;		// 最大ライフ
 	int life;			// ライフ
 
+	int menuNum;		// ポーズ時の選択している番号
+
 	int bansoko_Img;
+	int mainUI_Img;
 
 	int count;
 };

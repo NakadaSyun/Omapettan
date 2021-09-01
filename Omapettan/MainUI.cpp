@@ -1,8 +1,10 @@
 #include "MainUI.h"
+#include "TitleScene.h"
 
-c_MainUI::c_MainUI(int bansokoImg) {
+c_MainUI::c_MainUI(int bansokoImg, int mainUIImg) {
 	c_MainUI::f_init();
 	bansoko_Img = bansokoImg;
+	mainUI_Img = mainUIImg;
 
 	c_Pad = new c_GamePad();
 }
@@ -20,12 +22,16 @@ void c_MainUI::f_init() {
 	minute = 0;				// 分
 	second = 0;				// 秒
 
-	rate = 0;				// 率
+	rate = 0.0f;			// 率
 
 	maxLife = 3;			// 最大ライフ
 	life = maxLife;			// ライフ
 
+	menuNum = 0;
+
 	count = 0;
+
+	isBackTitle = false;
 }
 
 void c_MainUI::f_update() {
@@ -42,14 +48,28 @@ void c_MainUI::f_update() {
 }
 
 void c_MainUI::f_draw() {
+	DrawGraph(0, 0, mainUI_Img, TRUE);
+
+	// UIのテキスト部分全て
 	ChangeFontType(DX_FONTTYPE_ANTIALIASING_EDGE);
-	SetFontSize(24);
-	DrawFormatString(24, 5, 0x00ff00, "経過時間");
-	SetFontSize(48);
+
+	SetFontSize(48);// サイズ48
 	DrawFormatString(10, 30, 0xffffff, "%02d:%02d", minute, second);
 
-	DrawFormatString(530, 10, 0xffffff, "%03d%%", rate);
-	DrawFormatString(590, 80, 0xff0000, "%d", life);
+	//DrawFormatString(590, 80, 0xff0000, "%d", life);
+
+	DrawFormatString(480, 30, 0xffffff, "%03d.", (int)rate);
+	DrawFormatString(600, 28, 0xffffff, "%%");
+
+	SetFontSize(32);// サイズ32
+	DrawFormatString(575, 42, 0xffffff, "%d", int((rate - (int)rate) * 10.0f));
+
+	SetFontSize(24);// サイズ24
+	DrawFormatString(24, 5, 0x00ff00, "経過時間");
+	DrawFormatString(510, 5, 0x00ff00, "剃毛率");
+
+	SetFontSize(16);// サイズ16
+	DrawFormatString(5, 460, 0xffffff, "[START] ポーズ");
 
 	for (int i = 0; i < life; i++) {
 		DrawGraph(550, 100 + (50 * i), bansoko_Img, TRUE);
@@ -62,9 +82,25 @@ void c_MainUI::f_draw() {
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 		SetFontSize(32);
-		DrawFormatString(205, 150, 0xffffff, "ゲームを再開");
-		DrawFormatString(190, 200, 0xffffff, "タイトルへ戻る");
 		//DrawFormatString(222, 250, 0xffffff, "オプション");
+		switch (menuNum)
+		{
+		case 0:
+			// [ゲームを再開]選択
+			DrawFormatString(205, 150, 0xff0000, "ゲームを再開");
+			DrawFormatString(190, 200, 0xffffff, "タイトルへ戻る");
+			break;
+
+		case 1:
+			// [タイトルへ戻る]選択
+			DrawFormatString(205, 150, 0xffffff, "ゲームを再開");
+			DrawFormatString(190, 200, 0xff0000, "タイトルへ戻る");
+			break;
+
+		default:
+
+			break;
+		}
 	}
 
 	SetFontSize(16);
@@ -72,7 +108,7 @@ void c_MainUI::f_draw() {
 }
 
 void c_MainUI::MenuUI() {
-
+	// [START]で一時停止、もう一度押すと再開
 	if (c_Pad->IsButtonOption == true && count == 0) {
 		if (pauseFlg == false) {
 			pauseFlg = true;
@@ -86,6 +122,37 @@ void c_MainUI::MenuUI() {
 		count++;
 	}
 	if (c_Pad->IsButtonOption == false) count = 0;
+
+	// ポーズ中の操作
+	if (pauseFlg == true) {
+		// 上を押したとき
+		if (c_Pad->LeftStick == UP) {
+			menuNum = 0;
+		}
+		// 下を押したとき
+		if (c_Pad->LeftStick == DOWN) {
+			menuNum = 1;
+		}
+		// [A]を押したとき
+		if (c_Pad->IsButton1 == true) {
+			switch (menuNum){
+			case 0:
+				// [ゲームを再開]選択
+				time = time + ((GetNowCount() - time) - timer);
+				pauseFlg = false;
+				break;
+			case 1:
+				// [タイトルへ戻る]選択
+				isBackTitle = true;
+				break;
+			default:
+				break;
+			}
+		}
+	}
+	else {
+		menuNum = 0;
+	}
 
 }
 

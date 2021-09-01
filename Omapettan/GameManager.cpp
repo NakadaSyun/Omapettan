@@ -40,7 +40,7 @@ void c_GameManager::f_init()
 
 	c_pad = new c_GamePad();
 
-	c_mainUI = new c_MainUI(image_Bansoko);
+	c_mainUI = new c_MainUI(image_Bansoko, image_mainUI);
 
 	c_hair = new c_Hair(model_Cylinder, image_Cylinder);
 
@@ -68,6 +68,7 @@ void c_GameManager::f_RoadImage()
 	image_Cylinder = LoadGraph("images/hairtexture_brack.bmp");
 	image_Acne = LoadGraph("images/acne.bmp");
 	image_Bansoko = LoadGraph("images/Bansoko.png");
+	image_mainUI = LoadGraph("images/MainUI.png");
 
 }
 

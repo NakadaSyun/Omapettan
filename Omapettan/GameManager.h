@@ -58,4 +58,5 @@ private:
 	int image_Cylinder;
 	int image_Acne;
 	int image_Bansoko;
+	int image_mainUI;
 };

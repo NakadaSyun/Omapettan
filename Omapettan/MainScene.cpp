@@ -1,6 +1,7 @@
 #include "MainScene.h"
 #include "ResultScene.h"
 #include "LoadSound.h"
+#include "TitleScene.h"
 
 extern Sound g_Snd;
 
@@ -120,6 +121,10 @@ c_Scene* c_Main::f_update() {
 			StopSoundMem(g_Snd.StageBGM);
 			return new c_Result();
 		}
+	}
+
+	if (c_gm->c_mainUI->isBackTitle) {
+		return new c_Title();
 	}
 
 	return this;
