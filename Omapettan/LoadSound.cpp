@@ -15,7 +15,11 @@ int f_LoadSound(void) {		//音の読み込み
 	if ((g_Snd.Menu_Open = LoadSoundMem("Sound/決定、ボタン押下26.mp3")) == -1)return -1;					//剃刀を構えたときの音
 	if ((g_Snd.Menu_Cansel = LoadSoundMem("Sound/キャンセル2.mp3")) == -1)return -1;					//剃刀を構えたときの音
 	if ((g_Snd.Customer_Damage = LoadSoundMem("Sound/グサッ1.mp3")) == -1)return -1;					//剃刀を構えたときの音
-	if ((g_Snd.GameOver = LoadSoundMem("Sound/sei_ge_garasu_ware03.mp3")) == -1)return -1;					//剃刀を構えたときの音
+	if ((g_Snd.Customer_Cry[0] = LoadSoundMem("Sound/ダメージ音.wav")) == -1)return -1;					//剃刀を構えたときの音
+	if ((g_Snd.Customer_Cry[1] = LoadSoundMem("Sound/ダメージ音２.wav")) == -1)return -1;				//剃刀を構えたときの音
+	if ((g_Snd.Customer_Cry[2] = LoadSoundMem("Sound/ダメージ音３.mp3")) == -1)return -1;				//剃刀を構えたときの音
+	if ((g_Snd.Customer_Cry[3] = LoadSoundMem("Sound/ダメージ音４.wav")) == -1)return -1;				//剃刀を構えたときの音
+	if ((g_Snd.GameOver = LoadSoundMem("Sound/sei_ge_garasu_ware03.mp3")) == -1)return -1;				//剃刀を構えたときの音
 	if ((g_Snd.TitleBGM = LoadSoundMem("Sound/MusMus-BGM-128.mp3")) == -1)return -1;					//剃刀を構えたときの音
 	if ((g_Snd.StageBGM = LoadSoundMem("Sound/MusMus-BGM-087.mp3")) == -1)return -1;					//剃刀を構えたときの音
 

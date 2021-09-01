@@ -75,6 +75,7 @@ void c_GameManager::f_RoadImage()
 void c_GameManager::f_update()
 {
 	bool Isfall = f_HitCheck(*c_player->c_colision, *c_stage->c_colision);
+	int DamegeSound = GetRand(3);
 
 	// プレイヤーと各毛の当たり判定
 	for (int num = 0; num < HAIR_NUM; num++)
@@ -94,6 +95,7 @@ void c_GameManager::f_update()
 				c_pad->f_AcneCutVibration();
 				c_acne->status[i] = 1;
 				PlaySoundMem(g_Snd.Customer_Damage, DX_PLAYTYPE_BACK);
+				PlaySoundMem(g_Snd.Customer_Cry[DamegeSound], DX_PLAYTYPE_BACK);
 			}
 			else {
 				c_player->IsAcneHit = true;
