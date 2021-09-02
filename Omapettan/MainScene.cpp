@@ -21,6 +21,8 @@ c_Main::c_Main() {
 	DebugFlg = false;
 	//キーが押されてない状態に
 	KeyDownFlg = false;
+	//パッドのキーが押されているか
+	padKeyFlg = false;
 }
 
 c_Main::~c_Main() {
@@ -47,7 +49,7 @@ c_Scene* c_Main::f_update() {
 	//デバッグモードの受付時間
 	if (DebugLoadTime > 120)
 	{
-		if (CheckHitKey(KEY_INPUT_RETURN) == 1) {
+		if (c_gm->c_player->c_pad->crossKey == LEFT) {
 			//デバッグモード表示
 			if (!DebugFlg && !KeyDownFlg)
 			{
@@ -61,9 +63,26 @@ c_Scene* c_Main::f_update() {
 				KeyDownFlg = true;
 			}
 		}
-		if (CheckHitKey(KEY_INPUT_RETURN) == 0) {
+		if (c_gm->c_player->c_pad->crossKey == 0) {
 			KeyDownFlg = false;
 		}
+		//if (CheckHitKey(KEY_INPUT_RETURN) == 1) {
+		//	//デバッグモード表示
+		//	if (!DebugFlg && !KeyDownFlg)
+		//	{
+		//		DebugFlg = true;
+		//		KeyDownFlg = true;
+		//	}
+		//	//デバッグモード非表示
+		//	else if (DebugFlg && !KeyDownFlg)
+		//	{
+		//		DebugFlg = false;
+		//		KeyDownFlg = true;
+		//	}
+		//}
+		//if (CheckHitKey(KEY_INPUT_RETURN) == 0) {
+		//	KeyDownFlg = false;
+		//}
 	}
 	else
 	{
@@ -135,19 +154,38 @@ void c_Main::f_output() const{
 }
 
 void c_Main::f_debug(bool flg) {
+
 	if (flg)
 	{
+		//毛の当たり判定表示
 		c_gm->c_hair->CubeDraw();
-
+		//プレイヤー（剃刀）の当たり判定表示
 		c_gm->c_player->c_colision->CubeDraw();
 
-
-		for (int num = 0; num < c_gm->c_acne->DebugAcneNum; num++)
+		//吹き出物の当たり判定表示
+		for (int num = 0; num < ACNE_NUM; num++)
 		{
 			c_gm->c_acne->c_collision[num]->CubeDraw();
 		}
 
+		//十字キー下を押すと毛が縦に並ぶ
+		if (c_gm->c_player->c_pad->crossKey == DOWN && !padKeyFlg)
+		{
+			c_gm->c_hair->f_DebugHair(flg);
+			padKeyFlg = true;
+		}
+		else if (c_gm->c_player->c_pad->crossKey == 0 && padKeyFlg)
+		{
+			padKeyFlg = false;
+		}
+
+		//十字キー上を押すとリザルト画面へ移行
+		if (c_gm->c_player->c_pad->crossKey == UP)
+		{
+			
+		}
 	}
 
+	//プレイヤーのダッシュの倍率をあげる
 	c_gm->c_player->f_PlayerDebug(flg);
 }

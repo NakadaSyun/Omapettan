@@ -35,6 +35,8 @@ public:
 
 	int LeftStick;
 
+	int crossKey;
+
 private:
 	DINPUT_JOYSTATE controler1;
 

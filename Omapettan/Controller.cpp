@@ -11,6 +11,7 @@ c_GamePad::c_GamePad() {
 	IsButtonOption = false;
 
 	LeftStick = 0;
+	crossKey = 0;
 
 }
 
@@ -79,6 +80,35 @@ void c_GamePad::f_update() {// 入力状態を取得
 		LeftStick = NONE;		//方向なし
 	}
 
+	//プレイヤーの十字キー判定
+	if (controler1.POV[0] == 0) {
+		crossKey = UP;        //上向き
+	}
+	else if (controler1.POV[0] == 9000) {
+		crossKey = RIGHT;        //右向き
+	}
+	else if (controler1.POV[0] == 18000) {
+		crossKey = DOWN;        //下向き
+	}
+	else if (controler1.POV[0] == 27000) {
+		crossKey = LEFT;        //左向き
+	}
+	else if (controler1.POV[0] == 4500) {
+		crossKey = RIGHTUP;        //右上向き
+	}
+	else if (controler1.POV[0] == 13500) {
+		crossKey = RIGHTDOWN;        //右下向き
+	}
+	else if (controler1.POV[0] == 22500) {
+		crossKey = LEFTDOWN;        //左下向き
+	}
+	else if (controler1.POV[0] == 31500) {
+		crossKey = LEFTUP;        //左上向き
+	}
+	else {
+		crossKey = NONE;        //方向なし
+	}
+
 	//デバック用
 	//f_output();
 }
@@ -91,6 +121,8 @@ void c_GamePad::f_output() {
 	if (IsButton4) printf("ボタンY");
 	if (IsButtonOption) printf("オプション");
 
+	printf("%d", crossKey);
+	printf("\n");
 	printf("%d", LeftStick);
 	printf("\n\n\n\n");
 

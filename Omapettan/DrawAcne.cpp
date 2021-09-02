@@ -31,9 +31,6 @@ c_Acne::c_Acne(const int Acne_Model,const int Acne_Graph, const int Bandage_Mode
 	}
 
 	//c_collision = new c_Collision();
-
-	//‚«o•¨‚Ì”‚ğmain‚Å‚àg‚¦‚é‚æ‚¤‚É
-	DebugAcneNum = ACNE_NUM;
 }
 
 c_Acne::c_Acne(){

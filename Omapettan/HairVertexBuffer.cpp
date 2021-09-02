@@ -387,3 +387,21 @@ void c_Hair::f_Animupdate(int i) {
 	if (i == 0)printf("Now = %f\tpersonal = %f\n", NowAnimTime, personalAnimTime[i]);
 	MV1SetAttachAnimTime(modelHandle, 0, NowAnimTime);
 }
+
+void c_Hair::f_DebugHair(bool DebugFlg) {
+	if (DebugFlg)
+	{
+		float debug = GetRand(int(2 * float(DX_PI) * 100)) * 0.01f;
+
+		for (int i = 0; i < HAIR_NUM; i++)
+		{
+			if (hairStatus[i] == ROOTED_IS) {
+				// 各毛の角度を設定
+				personalRotation[i] = debug;
+
+				// 各毛のZ座標を設定
+				personalPosZ[i] = GetRand(ARM_LENGTH) + ARM_ADJUST_POS;
+			}
+		}
+	}
+}

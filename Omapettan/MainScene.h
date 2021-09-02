@@ -12,6 +12,7 @@ public:
 	virtual void f_output() const override;
 
 	c_GameManager* c_gm;
+	
 private:
 	int StageClearImage;	//ステージクリア画像
 	int StageOverImage;	//ステージクリア画像
@@ -22,4 +23,5 @@ private:
 
 	void f_debug(bool flg);
 	int DebugLoadTime;
+	bool padKeyFlg = false;
 };

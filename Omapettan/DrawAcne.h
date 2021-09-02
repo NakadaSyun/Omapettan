@@ -36,8 +36,6 @@ public:
 	float acnepersonalPosZ[ACNE_NUM];
 
 	c_Collision* c_collision[ACNE_NUM];
-
-	int DebugAcneNum;
 private:
 	VECTOR position[ACNE_NUM];
 
