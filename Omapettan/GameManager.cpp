@@ -82,11 +82,15 @@ void c_GameManager::f_update()
 	for (int num = 0; num < HAIR_NUM; num++)
 	{
 		//c_hair->HitHair[num] = f_HitCheck(*c_player->c_colision, *c_hair->c_colision[num]);
-		if (f_HitCheck(*c_hair->c_colision[num], *c_player->c_colision) == false) {
+		//if (f_HitCheck(*c_hair->c_colision[num], *c_player->c_colision) == false) {
+		if (c_hitCheck->f_playerAndObjects(*c_hair->c_colision[num], *c_player->c_colision) == true) {
 			c_hair->f_getRotationY(num, c_player->f_GetPlayerRotationY());
 			c_hair->f_hairCut(num);
 			c_pad->f_HairCutVibration();
-			printf("%d\n", num);
+			//printf("%d\n", num);
+
+			//printf("\npR = %f\n", c_player->f_GetPlayerRotationY());
+			//printf("\ncPx=%f, cPz=%f\n", c_player->c_colision->pos.x, c_player->c_colision->pos.z);
 		}
 	}
 
