@@ -13,6 +13,7 @@
 #include "Controller.h"
 #include "MainUI.h"
 #include "LoadSound.h"
+#include "HitCheck.h"
 
 #include <iostream>
 
@@ -41,6 +42,7 @@ public:
 	c_Acne* c_acne;
 	c_GamePad* c_pad;
 	c_MainUI* c_mainUI;
+	c_HitCheck* c_hitCheck;
 
 private:
 	
