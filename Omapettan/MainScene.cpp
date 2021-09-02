@@ -140,5 +140,11 @@ void c_Main::f_debug(bool flg) {
 		c_gm->c_hair->CubeDraw();
 
 		c_gm->c_player->c_colision->CubeDraw();
+
+
+		for (int num = 0; num < c_gm->c_acne->DebugAcneNum; num++)
+		{
+			c_gm->c_acne->c_collision[num]->CubeDraw();
+		}
 	}
 }
