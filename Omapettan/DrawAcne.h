@@ -21,9 +21,9 @@ namespace {
 
 	const float END_PLAYER_DISTANCE = 4800.0f;
 
-	const float ACNE_PERSONAL_AREA = 1500.0f;
+	const float ACNE_PERSONAL_AREA = 1250.0f;
 
-	const float ACNE_DISTANCE = 250.0f;
+	const float ACNE_DISTANCE = 200.0f;
 }
 
 class c_Acne{
@@ -40,6 +40,7 @@ public:
 
 	float stageRotation;
 	float acnepersonalPosZ[ACNE_NUM];
+	float AcnePos[ACNE_NUM];
 
 	c_Collision* c_collision[ACNE_NUM];
 private:
