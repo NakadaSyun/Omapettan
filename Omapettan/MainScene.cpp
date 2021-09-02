@@ -171,7 +171,7 @@ void c_Main::f_debug(bool flg) {
 		//十字キー下を押すと毛が縦に並ぶ
 		if (c_gm->c_player->c_pad->crossKey == DOWN && !padKeyFlg)
 		{
-			c_gm->c_hair->f_DebugHair(flg);
+			c_gm->c_hair->f_DebugHair(flg,false);
 			padKeyFlg = true;
 		}
 		else if (c_gm->c_player->c_pad->crossKey == 0 && padKeyFlg)
@@ -179,13 +179,27 @@ void c_Main::f_debug(bool flg) {
 			padKeyFlg = false;
 		}
 
-		//十字キー上を押すとリザルト画面へ移行
-		if (c_gm->c_player->c_pad->crossKey == UP)
+		//十字キー上を押すと毛を全て消す
+		if (c_gm->c_player->c_pad->crossKey == UP && !padKeyFlg)
 		{
-			
+			c_gm->c_hair->f_DebugHair(flg, true);
+			padKeyFlg = true;
+		}
+		else if (c_gm->c_player->c_pad->crossKey == 0 && padKeyFlg)
+		{
+			padKeyFlg = false;
 		}
 	}
 
-	//プレイヤーのダッシュの倍率をあげる
-	c_gm->c_player->f_PlayerDebug(flg);
+	if (c_gm->c_player->c_pad->crossKey == RIGHT && !padKeyFlg)
+	{
+		//プレイヤーのダッシュの倍率をあげる
+		playerDebug = c_gm->c_player->f_PlayerDebug(padKeyFlg, playerDebug);
+		padKeyFlg = true;
+	}
+	else if (c_gm->c_player->c_pad->crossKey == 0 && padKeyFlg)
+	{
+		padKeyFlg = false;
+	}
+	
 }

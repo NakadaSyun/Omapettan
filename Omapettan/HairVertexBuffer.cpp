@@ -388,19 +388,31 @@ void c_Hair::f_Animupdate(int i) {
 	MV1SetAttachAnimTime(modelHandle, 0, NowAnimTime);
 }
 
-void c_Hair::f_DebugHair(bool DebugFlg) {
+void c_Hair::f_DebugHair(bool DebugFlg,bool HairShaved) {
 	if (DebugFlg)
 	{
 		float debug = GetRand(int(2 * float(DX_PI) * 100)) * 0.01f;
+		if (!HairShaved) {
+			for (int i = 0; i < HAIR_NUM; i++)
+			{
+				if (hairStatus[i] == ROOTED_IS) {
+					// 各毛の角度を設定
+					personalRotation[i] = debug;
 
-		for (int i = 0; i < HAIR_NUM; i++)
+					// 各毛のZ座標を設定
+					personalPosZ[i] = GetRand(ARM_LENGTH) + ARM_ADJUST_POS;
+				}
+			}
+		}
+
+		//毛を全て消す
+		if (HairShaved)
 		{
-			if (hairStatus[i] == ROOTED_IS) {
-				// 各毛の角度を設定
-				personalRotation[i] = debug;
-
-				// 各毛のZ座標を設定
-				personalPosZ[i] = GetRand(ARM_LENGTH) + ARM_ADJUST_POS;
+			for (int num = 0; num < HAIR_NUM; num++)
+			{
+				if (hairStatus[num] == ROOTED_IS) {
+					hairStatus[num] = SHAVED;
+				}
 			}
 		}
 	}

@@ -15,7 +15,7 @@ public:
 	void f_update(bool Isfall);
 	void f_draw();
 	void f_fall();
-	void f_PlayerDebug(bool DebugFlg);//プレイヤーのデバッグ用の関数
+	bool f_PlayerDebug(bool DebugFlg,bool speedFlg);//プレイヤーのデバッグ用の関数
 
 	float PlayerAngle_H = 0.0f;
 

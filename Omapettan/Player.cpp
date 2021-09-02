@@ -362,12 +362,23 @@ float c_Player::f_GetPlayerRotationY() {
 	return p_Rotation.y;
 }
 
-void c_Player::f_PlayerDebug(bool DebugFlg) {
-	if (DebugFlg)
+bool c_Player::f_PlayerDebug(bool DebugFlg,bool speedFlg) {
+	/*if (DebugFlg)
 	{
 		p_SpeedMagnification = 5;
+		return true;
 	}
 	else {
 		p_SpeedMagnification = 2;
+		return false;
+	}*/
+	if (!speedFlg)
+	{
+		p_SpeedMagnification = 5;
+		return true;
+	}
+	else {
+		p_SpeedMagnification = 2;
+		return false;
 	}
 }

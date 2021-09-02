@@ -70,7 +70,8 @@ public:
 
 	void f_GetAcnePosZ(c_Acne *c_acne);
 	//デバッグ用関数
-	void f_DebugHair(bool DebugFlg);
+	void f_DebugHair(bool DebugFlg,bool HairShaved);
+
 private:
 	// メモリの割り当て
 	void f_allocateMemory();

@@ -24,4 +24,5 @@ private:
 	void f_debug(bool flg);
 	int DebugLoadTime;
 	bool padKeyFlg = false;
+	bool playerDebug = false;
 };
