@@ -89,6 +89,9 @@ private:
 	// プレイヤーとの重複の確認
 	bool CheckingOverlapsWithPlayer(float rot, float posZ);
 
+	//アニメーションの更新
+	void f_Animupdate(int i);
+
 	// 関数ポインタ
 	void (c_Hair::* f_hairStatusFuncList[STATUS_MAX])(int num) = 
 	{ &c_Hair::f_moveHair, &c_Hair::f_flyShavedHair, &c_Hair::f_MoveHairOffScreen, &c_Hair::f_doNotAnything};
@@ -111,6 +114,7 @@ private:
 	float hairFlyingRotZ[HAIR_NUM];      // 毛が飛びながら回転する値
 	float hairFlyingVec[HAIR_NUM];       // 各毛が飛んでいくベクトル
 	float playerRotY[HAIR_NUM];          // プレイヤーのY軸の向き
+	float personalAnimTime[HAIR_NUM];          // プレイヤーのY軸の向き
 
 	c_Acne *acnepersonalpos;
 
@@ -118,5 +122,8 @@ private:
 	MV1_REF_POLYGONLIST RefMesh;
     DATEDATA date;                      // 現在時刻
 	VECTOR hairSize;                    // 当たり判定用の毛の大きさ
+
+	float AnimTotalTime;			//アニメーションの総時間
+	float AnimNowTime;				//アニメーションの再生時間
 };
 
