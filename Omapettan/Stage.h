@@ -20,6 +20,8 @@ public:
 private:
 	VECTOR position;
 	int sModel;
+
+	int image_armTexture;
 	float Arm_XRotate = 0.0f;
 
 	float Arm_OldXRotate = 0.0f;

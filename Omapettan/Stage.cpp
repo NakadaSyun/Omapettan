@@ -17,6 +17,14 @@ c_Stage::c_Stage(const int Model) {
 	IsAcneHit = false;
 
 	c_pad = new c_GamePad();
+
+
+	image_armTexture = LoadGraph("images/ArmTexture.004a.png");
+
+	// マテリアルで使用されているテクスチャの番号を取得
+	//int TexIndex = MV1GetMaterialDifMapTexture(sModel, 2);
+
+
 }
 
 c_Stage::~c_Stage() {
@@ -85,6 +93,16 @@ void c_Stage::f_update() {
 }
 
 void c_Stage::f_output() {
+
+	//マテリアルで使用されているテクスチャの番号を取得
+	int Skin1 = MV1GetMaterialDifMapTexture(sModel, 0);
+	//マテリアルで使用されているテクスチャの番号を取得
+	int Skin2 = MV1GetMaterialDifMapTexture(sModel, 2);
+
+	// テクスチャで使用するグラフィックハンドルを変更する
+	MV1SetTextureGraphHandle(sModel, Skin1, image_armTexture, FALSE);
+	// テクスチャで使用するグラフィックハンドルを変更する
+	MV1SetTextureGraphHandle(sModel, Skin2, image_armTexture, FALSE);
 
 	//床の生成
 	MV1DrawModel(sModel);
