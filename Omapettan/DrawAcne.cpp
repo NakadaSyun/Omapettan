@@ -14,16 +14,13 @@ c_Acne::c_Acne(const int Acne_Model,const int Acne_Graph, const int Bandage_Mode
 
 	for (int i = 0; i < ACNE_NUM; i++) {
 		acnepersonalPosZ[i] = 0.0f;
-		acnepersonalPosZ[i] = GetRand(ARM_LENGTH_ACNE) + ARM_ADJUST_POS_ACNE;
-		if ((acnepersonalPosZ[i] > START_PLAYER_DISTANCE) || (acnepersonalPosZ[i] < END_PLAYER_DISTANCE) && (acnepersonalPosZ[i] + 200 > acnepersonalPosZ[i + 1]) || (acnepersonalPosZ[i] - 200 < acnepersonalPosZ[i + 1])){
-			for (acnepersonalPosZ[i];  START_PLAYER_DISTANCE< acnepersonalPosZ[i] < END_PLAYER_DISTANCE;) {
-				acnepersonalPosZ[i] = GetRand(ARM_LENGTH_ACNE) + ARM_ADJUST_POS_ACNE;
-				if ((acnepersonalPosZ[i] > START_PLAYER_DISTANCE) || (acnepersonalPosZ[i] < END_PLAYER_DISTANCE) && (acnepersonalPosZ[i] + 200 > acnepersonalPosZ[i + 1]) || (acnepersonalPosZ[i] - 200 < acnepersonalPosZ[i + 1])) break;
-			}
-		}
+		acnepersonalPosZ[i] = ARM_ADJUST_POS_ACNE + (ACNE_PERSONAL_AREA * i) + ((i + 1) * ACNE_DISTANCE) + GetRand(ACNE_PERSONAL_AREA);
+		if ((acnepersonalPosZ[i] > START_PLAYER_DISTANCE) && (acnepersonalPosZ[i] < PLAYER_POSITION)) acnepersonalPosZ[i] - 300.0f;
+		if ((acnepersonalPosZ[i] < END_PLAYER_DISTANCE) && (acnepersonalPosZ[i] > PLAYER_POSITION)) acnepersonalPosZ[i] + 300.0f;
+
 		acnepersonalRotation[i] = GetRand(int(2 * float(DX_PI) * 100)) * 0.01f;
 
-		printf("\n%d\t%f",i, acnepersonalPosZ[i]);
+		printf("\n%d\t%f", i, acnepersonalPosZ[i]);
 
 		status[i] = 0;
 

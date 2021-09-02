@@ -15,9 +15,15 @@ namespace {
 
 	const float ARM_ADJUST_POS_ACNE = 1000.0f;
 
+	const float PLAYER_POSITION = 4500.0f;
+
 	const float START_PLAYER_DISTANCE = 4200.0f;
 
 	const float END_PLAYER_DISTANCE = 4800.0f;
+
+	const float ACNE_PERSONAL_AREA = 1500.0f;
+
+	const float ACNE_DISTANCE = 250.0f;
 }
 
 class c_Acne{
