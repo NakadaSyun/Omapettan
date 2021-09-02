@@ -37,6 +37,8 @@ private:
 
 	int maxLife;		// 最大ライフ
 	int life;			// ライフ
+	float animSpeed;		// ライフのアニメーションスピード
+	int damageAnim;		// ダメージ
 
 	int menuNum;		// ポーズ時の選択している番号
 

@@ -1,5 +1,8 @@
 #include "MainUI.h"
 #include "TitleScene.h"
+#include "LoadSound.h"
+
+extern Sound g_Snd;
 
 c_MainUI::c_MainUI(int bansokoImg, int mainUIImg) {
 	c_MainUI::f_init();
@@ -24,8 +27,10 @@ void c_MainUI::f_init() {
 
 	rate = 0.0f;			// 率
 
-	maxLife = 3;			// 最大ライフ
+	maxLife = ACNE_NUM - 1;	// 最大ライフ
 	life = maxLife;			// ライフ
+	animSpeed = 0.0f;
+	damageAnim = 0;
 
 	menuNum = 0;
 
@@ -48,6 +53,7 @@ void c_MainUI::f_update() {
 }
 
 void c_MainUI::f_draw() {
+
 	DrawGraph(0, 0, mainUI_Img, TRUE);
 
 	// UIのテキスト部分全て
@@ -71,9 +77,33 @@ void c_MainUI::f_draw() {
 	SetFontSize(16);// サイズ16
 	DrawFormatString(5, 460, 0xffffff, "[START] ポーズ");
 
-	for (int i = 0; i < life; i++) {
-		DrawGraph(550, 100 + (50 * i), bansoko_Img, TRUE);
+	for (int i = 0; i < ACNE_NUM - 1; i++) {
+
+		if (i < life) {
+			DrawGraph(550, 100 + (50 * i), bansoko_Img, TRUE);
+		}
+		//else {
+		//	SetDrawBright(0,0,0);
+		//	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
+		//	DrawGraph(550, 100 + (50 * i), bansoko_Img, TRUE);
+		//	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		//	SetDrawBright(255, 255, 255);
+		//}
+
+		if (i == life - 1) {
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - animSpeed * 25);
+			DrawModiGraph(550 - animSpeed, 100 + (50 * i) - animSpeed,
+				650 + animSpeed, 100 + (50 * i) - animSpeed,
+				650 + animSpeed, 200 + (50 * i) + animSpeed,
+				550 - animSpeed, 200 + (50 * i) + animSpeed,
+				bansoko_Img, TRUE);
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		}
 	}
+
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, damageAnim);
+	DrawBox(0, 0, 640, 480, 0xff0000, TRUE);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 	// 一時停止時の表示UI
 	if (pauseFlg == true) {
@@ -81,8 +111,10 @@ void c_MainUI::f_draw() {
 		DrawBox(0, 0, 640, 480, 0x000000, TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
+		SetFontSize(48);// サイズ48
+		DrawFormatString(185, 10, 0xffffff, "- ポーズ -");
 		SetFontSize(32);
-		//DrawFormatString(222, 250, 0xffffff, "オプション");
+		//DrawFormatString(222, 250, 0xffffff, "サウンド");
 		switch (menuNum)
 		{
 		case 0:
@@ -111,9 +143,11 @@ void c_MainUI::MenuUI() {
 	// [START]で一時停止、もう一度押すと再開
 	if (c_Pad->IsButtonOption == true && count == 0) {
 		if (pauseFlg == false) {
+			PlaySoundMem(g_Snd.Menu_Open, DX_PLAYTYPE_BACK);
 			pauseFlg = true;
 		}
 		else {
+			PlaySoundMem(g_Snd.Menu_Cansel, DX_PLAYTYPE_BACK);
 			// 時間 = 時間 + ((起動時間 - 時間) - 経過時間)
 			time = time + ((GetNowCount() - time) - timer);
 			pauseFlg = false;
@@ -126,15 +160,19 @@ void c_MainUI::MenuUI() {
 	// ポーズ中の操作
 	if (pauseFlg == true) {
 		// 上を押したとき
-		if (c_Pad->LeftStick == UP) {
+		if (c_Pad->LeftStick == UP && menuNum == 1) {
 			menuNum = 0;
+			PlaySoundMem(g_Snd.Menumove, DX_PLAYTYPE_BACK);
 		}
 		// 下を押したとき
-		if (c_Pad->LeftStick == DOWN) {
+		if (c_Pad->LeftStick == DOWN && menuNum == 0) {
+			PlaySoundMem(g_Snd.Menumove, DX_PLAYTYPE_BACK);
 			menuNum = 1;
 		}
 		// [A]を押したとき
 		if (c_Pad->IsButton1 == true) {
+			PlaySoundMem(g_Snd.Menu_Select, DX_PLAYTYPE_BACK);
+
 			switch (menuNum){
 			case 0:
 				// [ゲームを再開]選択
@@ -188,4 +226,15 @@ void c_MainUI::LifeUI() {
 		}
 		life = num - 1;
 	}
+
+	if (life < maxLife) {
+		if (damageAnim < 120) damageAnim += 15;
+		else {
+			damageAnim = 0;
+			maxLife = life;
+		}
+	}
+
+	if (animSpeed > 10.0f * life) animSpeed = 0.0f;
+	else animSpeed += 0.5f;
 }
