@@ -1,6 +1,9 @@
 #include "DxLib.h"
 #include "DrawAcne.h"
 
+
+#define PI 3.141592653589793
+
 c_Acne::c_Acne(const int Acne_Model,const int Acne_Graph, const int Bandage_Model) {
 	modelacne = Acne_Model;
 	graphacne = Acne_Graph;
@@ -19,6 +22,7 @@ c_Acne::c_Acne(const int Acne_Model,const int Acne_Graph, const int Bandage_Mode
 		if ((acnepersonalPosZ[i] < END_PLAYER_DISTANCE) && (acnepersonalPosZ[i] > PLAYER_POSITION)) acnepersonalPosZ[i] + 300.0f;
 
 		acnepersonalRotation[i] = GetRand(int(2 * float(DX_PI) * 100)) * 0.01f;
+
 
 		printf("\n%d\t%f", i, acnepersonalPosZ[i]);
 
@@ -56,10 +60,12 @@ void c_Acne::f_output() {
 
 		if (status[i] == 0) {
 			MV1SetPosition(modelacne, position[i]);
+			MV1SetRotationXYZ(modelacne, VGet(0.0f, 0.0f, acnepersonalRotation[i] - stageRotation - PI/2));
 			MV1DrawModel(modelacne);
 		}
 		else {
 			MV1SetPosition(modelBandage, position[i]);
+			MV1SetRotationXYZ(modelBandage, VGet(0.0f, 0.0f, acnepersonalRotation[i] - stageRotation - PI / 2));
 			MV1DrawModel(modelBandage);
 		}
 	}
