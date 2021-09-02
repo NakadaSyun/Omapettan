@@ -31,7 +31,7 @@ c_Player::c_Player(const int Model) {
 	c_cameracon = new c_CameraCon;
 	c_pad = new c_GamePad();
 
-	model_Arm = MV1LoadModel("models/arm3.mv1");
+	model_Arm = MV1LoadModel("models/arm4.mv1");
 	model_KAMISORI = MV1LoadModel("models/KKAMISORI.mv1");
 	model_Acne = MV1LoadModel("models/dekimono.mv1");
 

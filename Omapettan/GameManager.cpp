@@ -55,7 +55,7 @@ void c_GameManager::f_RoadModel()
 	model_Plane = MV1LoadModel("models/Plane.mv1");
 	model_Sphere = MV1LoadModel("models/TestSphere.mv1");
 	model_Cylinder = MV1LoadModel("models/cylinderV4.mv1");
-	model_Arm = MV1LoadModel("models/arm3.mv1");
+	model_Arm = MV1LoadModel("models/arm4.mv1");
 	model_SkyBox = MV1LoadModel("models/roomBox.mv1");
 	model_Acne = MV1LoadModel("models/dekimono.mv1");
 	model_Bandage = MV1LoadModel("models/Bandage.mv1");
