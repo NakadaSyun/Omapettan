@@ -146,5 +146,8 @@ void c_Main::f_debug(bool flg) {
 		{
 			c_gm->c_acne->c_collision[num]->CubeDraw();
 		}
+
 	}
+
+	c_gm->c_player->f_PlayerDebug(flg);
 }
