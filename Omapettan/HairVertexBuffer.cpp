@@ -17,6 +17,7 @@ c_Hair::c_Hair(const int Model, const int Image) {
 		hairFlyingRotZ[num] = 0.0f;
 		hairFlyingVec[num] = 0.0f;
 		playerRotY[num] = 0.0f;
+		personalAnimTime[num] = 0.0f;
 	}
 
 	acnepersonalpos = new c_Acne();
@@ -32,6 +33,11 @@ c_Hair::c_Hair(const int Model, const int Image) {
 
 	// 毛の座標と角度を設定
 	f_setPosAndRot();
+
+	//毛のアニメーションを設定
+	MV1AttachAnim(modelHandle, 0);
+	AnimTotalTime = MV1GetAttachAnimTotalTime(modelHandle, 0);
+	AnimNowTime = 0;
 
 	// モデルの複製
 	f_modelDuplication();
@@ -184,6 +190,9 @@ void c_Hair::f_moveHair(int num) {
 	int pnum = 0;
 
 	//for (int i = 0; i < HAIR_NUM; i++) {
+
+		//アニメーションの更新
+	f_Animupdate(num);
 	MV1SetPosition(modelHandle, VGet(sinf(personalRotation[num] + stageXRotation) * (ARM_RADIUS + personalRadius[num]) + hairFlyingVec[num],
 		cosf(personalRotation[num] + stageXRotation) * (ARM_RADIUS + personalRadius[num]),
 		personalPosZ[num]));
@@ -243,6 +252,7 @@ void c_Hair::f_setPosAndRot() {
 						if (CheckingOverlapsWithPlayer(personalRotation[i], personalPosZ[i]) == false)break;
 				}
 			}
+			personalAnimTime[i] = 148.0f - (148.0f * (personalPosZ[i] / 7000.0f));
 			printf("\n%d\t%f", i, personalPosZ[i]);
 		}
 	}
@@ -357,4 +367,23 @@ bool c_Hair::CheckingOverlapsWithPlayer(float rot, float posZ) {
 
 	// 重なっていなければfalse
 	return false;
+}
+
+void c_Hair::f_Animupdate(int i) {
+	personalAnimTime[i] += 1.0f * 2.0f;
+
+	// アニメーション再生時間がアニメーションの総時間を越えていたらループさせる
+	if (personalAnimTime[i] >= AnimTotalTime * (3.0f / 4.0f) * 2)
+	{
+		// 新しいアニメーション再生時間は、アニメーション再生時間からアニメーション総時間を引いたもの
+		personalAnimTime[i] = 0;
+	}
+
+	float NowAnimTime = personalAnimTime[i];
+	if (personalAnimTime[i] > AnimTotalTime* (3.0f / 4.0f)) {
+		NowAnimTime = (AnimTotalTime * (3.0f / 4.0f)) - (personalAnimTime[i] - (AnimTotalTime * (3.0f / 4.0f)));
+	}
+
+	if (i == 0)printf("Now = %f\tpersonal = %f\n", NowAnimTime, personalAnimTime[i]);
+	MV1SetAttachAnimTime(modelHandle, 0, NowAnimTime);
 }

@@ -2,10 +2,6 @@
 
 #include "DrawCube.h"
 
-//c_DrawCube::c_DrawCube() {
-//
-//}
-
  void c_DrawCube::f_create(float x, float y, float z, float w, float h, float d) {
 	 //VERTEX3D Cubevertex[8];        //四角形の頂点8
 	 //WORD Index[36];		//床のポリゴン12この頂点座標

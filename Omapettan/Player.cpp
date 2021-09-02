@@ -191,7 +191,7 @@ void c_Player::f_update(bool Isfall) {
 	if (c_pad->LeftStick == UP||
 		c_pad->LeftStick == RIGHTUP ||
 		c_pad->LeftStick == LEFTUP ) {
-		if (c_pad->IsButton2 == TRUE) MoveZ = p_Speed * 2;
+		if (c_pad->IsButton2 == TRUE) MoveZ = p_Speed * p_SpeedMagnification;
 		else {
 			MoveZ = p_Speed;
 		}
@@ -200,7 +200,7 @@ void c_Player::f_update(bool Isfall) {
 	if (c_pad->LeftStick == LEFTUP ||
 		c_pad->LeftStick == LEFT ||
 		c_pad->LeftStick == LEFTDOWN) {
-		if (c_pad->IsButton2 == TRUE) MoveX = -p_Speed * 2;
+		if (c_pad->IsButton2 == TRUE) MoveX = -p_Speed * p_SpeedMagnification;
 		else {
 			MoveX = -p_Speed;
 		}
@@ -208,7 +208,7 @@ void c_Player::f_update(bool Isfall) {
 	if (c_pad->LeftStick == DOWN ||
 		c_pad->LeftStick == RIGHTDOWN ||
 		c_pad->LeftStick == LEFTDOWN) {
-		if (c_pad->IsButton2 == TRUE) MoveZ = -p_Speed * 2;
+		if (c_pad->IsButton2 == TRUE) MoveZ = -p_Speed * p_SpeedMagnification;
 		else {
 			MoveZ = -p_Speed;
 		}
@@ -216,7 +216,7 @@ void c_Player::f_update(bool Isfall) {
 	if (c_pad->LeftStick == RIGHTUP ||
 		c_pad->LeftStick == RIGHT ||
 		c_pad->LeftStick == RIGHTDOWN) {
-		if (c_pad->IsButton2 == TRUE) MoveX = p_Speed * 2;
+		if (c_pad->IsButton2 == TRUE) MoveX = p_Speed * p_SpeedMagnification;
 		else {
 			MoveX = p_Speed;
 		}
@@ -360,4 +360,14 @@ VECTOR c_Player::f_GetPlayerPosition() {
 
 float c_Player::f_GetPlayerRotationY() {
 	return p_Rotation.y;
+}
+
+void c_Player::f_PlayerDebug(bool DebugFlg) {
+	if (DebugFlg)
+	{
+		p_SpeedMagnification = 5;
+	}
+	else {
+		p_SpeedMagnification = 2;
+	}
 }

@@ -15,6 +15,7 @@ public:
 	void f_update(bool Isfall);
 	void f_draw();
 	void f_fall();
+	void f_PlayerDebug(bool DebugFlg);//プレイヤーのデバッグ用の関数
 
 	float PlayerAngle_H = 0.0f;
 
@@ -47,5 +48,6 @@ private:
 	VECTOR p_OldPosition;
 
 	const float p_Speed = 10.0f;		//プレイヤーの移動量
+	int p_SpeedMagnification = 2; //プレイヤーのダッシュの倍率
 
 };
