@@ -47,25 +47,25 @@ c_Scene* c_Main::f_update() {
 	}
 
 	//デバッグモードの受付時間
-	if (DebugLoadTime > 120)
+	//if (DebugLoadTime > 120)
 	{
-		if (c_gm->c_player->c_pad->crossKey == LEFT) {
-			//デバッグモード表示
-			if (!DebugFlg && !KeyDownFlg)
-			{
-				DebugFlg = true;
-				KeyDownFlg = true;
-			}
-			//デバッグモード非表示
-			else if (DebugFlg && !KeyDownFlg)
-			{
-				DebugFlg = false;
-				KeyDownFlg = true;
-			}
-		}
-		if (c_gm->c_player->c_pad->crossKey == 0) {
-			KeyDownFlg = false;
-		}
+		//if (c_gm->c_player->c_pad->crossKey == LEFT) {
+		//	//デバッグモード表示
+		//	if (!DebugFlg && !KeyDownFlg)
+		//	{
+		//		DebugFlg = true;
+		//		KeyDownFlg = true;
+		//	}
+		//	//デバッグモード非表示
+		//	else if (DebugFlg && !KeyDownFlg)
+		//	{
+		//		DebugFlg = false;
+		//		KeyDownFlg = true;
+		//	}
+		//}
+		//if (c_gm->c_player->c_pad->crossKey == 0) {
+		//	KeyDownFlg = false;
+		//}
 		//if (CheckHitKey(KEY_INPUT_RETURN) == 1) {
 		//	//デバッグモード表示
 		//	if (!DebugFlg && !KeyDownFlg)
@@ -84,10 +84,10 @@ c_Scene* c_Main::f_update() {
 		//	KeyDownFlg = false;
 		//}
 	}
-	else
+	//else
 	{
 		//読み込み時間加算
-		DebugLoadTime++;
+		//DebugLoadTime++;
 	}
 
 	//デバッグモードを表示するかしないか
@@ -155,42 +155,68 @@ void c_Main::f_output() const{
 
 void c_Main::f_debug(bool flg) {
 
-	if (flg)
 	{
-		//毛の当たり判定表示
-		c_gm->c_hair->CubeDraw();
-		//プレイヤー（剃刀）の当たり判定表示
-		c_gm->c_player->c_colision->CubeDraw();
-
-		//吹き出物の当たり判定表示
-		for (int num = 0; num < ACNE_NUM; num++)
-		{
-			c_gm->c_acne->c_collision[num]->CubeDraw();
-		}
-
 		//十字キー下を押すと毛が縦に並ぶ
-		if (c_gm->c_player->c_pad->crossKey == DOWN && !padKeyFlg)
+		if (c_gm->c_player->c_pad->crossKey == LEFT && !padKeyFlg && !DebugFlg)
 		{
-			c_gm->c_hair->f_DebugHair(flg,false);
+			DebugFlg = true;
 			padKeyFlg = true;
 		}
-		else if (c_gm->c_player->c_pad->crossKey == 0 && padKeyFlg)
+		else if (c_gm->c_player->c_pad->crossKey == LEFT && !padKeyFlg && DebugFlg)
 		{
-			padKeyFlg = false;
+			DebugFlg = false;
+			padKeyFlg = true;
 		}
 
-		//十字キー上を押すと毛を全て消す
-		if (c_gm->c_player->c_pad->crossKey == UP && !padKeyFlg)
-		{
-			c_gm->c_hair->f_DebugHair(flg, true);
-			padKeyFlg = true;
-		}
-		else if (c_gm->c_player->c_pad->crossKey == 0 && padKeyFlg)
+		if (c_gm->c_player->c_pad->crossKey == 0 && padKeyFlg)
 		{
 			padKeyFlg = false;
+			//DebugFlg = false;
+		}
+
+		if (DebugFlg)
+		{
+			//毛の当たり判定表示
+			c_gm->c_hair->CubeDraw();
+			//プレイヤー（剃刀）の当たり判定表示
+			c_gm->c_player->c_colision->CubeDraw();
+
+			//吹き出物の当たり判定表示
+			for (int num = 0; num < ACNE_NUM; num++)
+			{
+				c_gm->c_acne->c_collision[num]->CubeDraw();
+			}
+
+			//padKeyFlg = true;
+
 		}
 	}
 
+
+	//十字キー下を押すと毛が縦に並ぶ
+	if (c_gm->c_player->c_pad->crossKey == DOWN && !padKeyFlg)
+	{
+		padKeyFlg = true;
+		c_gm->c_hair->f_DebugHair(padKeyFlg, false);
+	}
+	else if (c_gm->c_player->c_pad->crossKey == 0 && padKeyFlg)
+	{
+		padKeyFlg = false;
+	}
+
+	//十字キー上を押すと毛を全て消す
+	if (c_gm->c_player->c_pad->crossKey == UP && !padKeyFlg)
+	{
+		padKeyFlg = true;
+		c_gm->c_hair->f_DebugHair(padKeyFlg, true);
+	}
+	else if (c_gm->c_player->c_pad->crossKey == 0 && padKeyFlg)
+	{
+		padKeyFlg = false;
+	}
+
+
+	//十字キー右を押すとプレイヤーのダッシュの倍率を切り替えできる
 	if (c_gm->c_player->c_pad->crossKey == RIGHT && !padKeyFlg)
 	{
 		//プレイヤーのダッシュの倍率をあげる
@@ -201,5 +227,5 @@ void c_Main::f_debug(bool flg) {
 	{
 		padKeyFlg = false;
 	}
-	
+
 }
