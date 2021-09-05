@@ -25,4 +25,5 @@ private:
 	float Arm_XRotate = 0.0f;
 
 	float Arm_OldXRotate = 0.0f;
+	int  Arm_RotateSpeed = 2; //ステージ回転速度（プレイヤーのダッシュ倍率と同じにする）
 };

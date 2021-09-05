@@ -53,21 +53,21 @@ void c_Stage::f_update() {
 	
 	///*******	コントローラーの入力	******/
 	if (c_pad->LeftStick == LEFT) {
-		if (c_pad->IsButton2 == TRUE) Arm_XRotate += 0.01f * 2;
+		if (c_pad->IsButton2 == TRUE) Arm_XRotate += 0.015f * Arm_RotateSpeed;
 		else {
 			Arm_XRotate += 0.01f;
 		}
 	}
 	if (c_pad->LeftStick == LEFTUP || 
 		c_pad->LeftStick == LEFTDOWN) {
-		if(c_pad->IsButton2 == TRUE) Arm_XRotate += 0.01f * cos(PI / 4) * 2;
+		if(c_pad->IsButton2 == TRUE) Arm_XRotate += 0.015f * cos(PI / 4) * Arm_RotateSpeed;
 		else {
 			Arm_XRotate += 0.01f * cos(PI / 4);
 		}
 	}
 
 	if (c_pad->LeftStick == RIGHT) {
-		if (c_pad->IsButton2 == TRUE) Arm_XRotate -= 0.01f * 2;
+		if (c_pad->IsButton2 == TRUE) Arm_XRotate -= 0.015f * Arm_RotateSpeed;
 		else {
 			Arm_XRotate -= 0.01f;
 		}
@@ -75,7 +75,7 @@ void c_Stage::f_update() {
 	
 	if (c_pad->LeftStick == RIGHTUP ||
 		c_pad->LeftStick == RIGHTDOWN) {
-		if (c_pad->IsButton2 == TRUE) Arm_XRotate -= 0.01f * cos(PI / 4) * 2;
+		if (c_pad->IsButton2 == TRUE) Arm_XRotate -= 0.015f * cos(PI / 4) * Arm_RotateSpeed;
 		else {
 			Arm_XRotate -= 0.01f * cos(PI / 4);
 		}

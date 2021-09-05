@@ -47,7 +47,7 @@ private:
 	VECTOR p_Position;
 	VECTOR p_OldPosition;
 
-	const float p_Speed = 10.0f;		//プレイヤーの移動量
+	const float p_Speed = 15.0f;		//プレイヤーの移動量
 	int p_SpeedMagnification = 2; //プレイヤーのダッシュの倍率
 
 };
