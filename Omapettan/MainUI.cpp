@@ -19,11 +19,12 @@ void c_MainUI::f_init() {
 
 	pauseFlg = false;		// 一時停止フラグ
 
-	timeLimit = 0;			// 制限時間
+	timeLimit = 600;			// 制限時間
 	time = GetNowCount();	// 時間
 	timer = 0;				// 時間カウント
-	minute = 0;				// 分
-	second = 0;				// 秒
+	minute = timeLimit / 60;			// 分
+	second = timeLimit - (60 * minute);	// 秒
+	animCount = 0.0f;
 
 	rate = 0.0f;			// 率
 
@@ -34,9 +35,10 @@ void c_MainUI::f_init() {
 
 	menuNum = 0;
 
-	count = 0;
+	menuCount = 0;
 
 	isBackTitle = false;
+	isNextResult = false;
 }
 
 void c_MainUI::f_update() {
@@ -59,81 +61,10 @@ void c_MainUI::f_draw() {
 	// UIのテキスト部分全て
 	ChangeFontType(DX_FONTTYPE_ANTIALIASING_EDGE);
 
-	SetFontSize(48);// サイズ48
-	DrawFormatString(10, 30, 0xffffff, "%02d:%02d", minute, second);
-
-	//DrawFormatString(590, 80, 0xff0000, "%d", life);
-
-	DrawFormatString(480, 30, 0xffffff, "%03d.", (int)rate);
-	DrawFormatString(600, 28, 0xffffff, "%%");
-
-	SetFontSize(32);// サイズ32
-	DrawFormatString(575, 42, 0xffffff, "%d", int((rate - (int)rate) * 10.0f));
-
-	SetFontSize(24);// サイズ24
-	DrawFormatString(24, 5, 0x00ff00, "経過時間");
-	DrawFormatString(510, 5, 0x00ff00, "剃毛率");
-
-	SetFontSize(16);// サイズ16
-	DrawFormatString(5, 460, 0xffffff, "[START] ポーズ");
-
-	for (int i = 0; i < ACNE_NUM - 1; i++) {
-
-		if (i < life) {
-			DrawGraph(550, 100 + (50 * i), bansoko_Img, TRUE);
-		}
-		//else {
-		//	SetDrawBright(0,0,0);
-		//	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
-		//	DrawGraph(550, 100 + (50 * i), bansoko_Img, TRUE);
-		//	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-		//	SetDrawBright(255, 255, 255);
-		//}
-
-		if (i == life - 1) {
-			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - animSpeed * 25);
-			DrawModiGraph(550 - animSpeed, 100 + (50 * i) - animSpeed,
-				650 + animSpeed, 100 + (50 * i) - animSpeed,
-				650 + animSpeed, 200 + (50 * i) + animSpeed,
-				550 - animSpeed, 200 + (50 * i) + animSpeed,
-				bansoko_Img, TRUE);
-			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-		}
-	}
-
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, damageAnim);
-	DrawBox(0, 0, 640, 480, 0xff0000, TRUE);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-
-	// 一時停止時の表示UI
-	if (pauseFlg == true) {
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
-		DrawBox(0, 0, 640, 480, 0x000000, TRUE);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-
-		SetFontSize(48);// サイズ48
-		DrawFormatString(185, 10, 0xffffff, "- ポーズ -");
-		SetFontSize(32);
-		//DrawFormatString(222, 250, 0xffffff, "サウンド");
-		switch (menuNum)
-		{
-		case 0:
-			// [ゲームを再開]選択
-			DrawFormatString(205, 150, 0xff0000, "ゲームを再開");
-			DrawFormatString(190, 200, 0xffffff, "タイトルへ戻る");
-			break;
-
-		case 1:
-			// [タイトルへ戻る]選択
-			DrawFormatString(205, 150, 0xffffff, "ゲームを再開");
-			DrawFormatString(190, 200, 0xff0000, "タイトルへ戻る");
-			break;
-
-		default:
-
-			break;
-		}
-	}
+	c_MainUI::TimeCount_Draw();
+	c_MainUI::Achivement_Draw();
+	c_MainUI::Life_Draw();
+	c_MainUI::Menu_Draw();
 
 	SetFontSize(16);
 	ChangeFontType(DX_FONTTYPE_NORMAL);
@@ -141,7 +72,7 @@ void c_MainUI::f_draw() {
 
 void c_MainUI::MenuUI() {
 	// [START]で一時停止、もう一度押すと再開
-	if (c_Pad->IsButtonOption == true && count == 0) {
+	if (c_Pad->IsButtonOption == true && menuCount == 0) {
 		if (pauseFlg == false) {
 			PlaySoundMem(g_Snd.Menu_Open, DX_PLAYTYPE_BACK);
 			pauseFlg = true;
@@ -153,9 +84,9 @@ void c_MainUI::MenuUI() {
 			pauseFlg = false;
 		}
 
-		count++;
+		menuCount++;
 	}
-	if (c_Pad->IsButtonOption == false) count = 0;
+	if (c_Pad->IsButtonOption == false) menuCount = 0;
 
 	// ポーズ中の操作
 	if (pauseFlg == true) {
@@ -195,16 +126,29 @@ void c_MainUI::MenuUI() {
 }
 
 void c_MainUI::TimeCountUI() {
-	// 時間更新 進捗100%でストップ
-	if(rate != 100){
+	int count = 0;
+
+	// 時間更新 (進捗100%・ゲームオーバーでストップ)
+	if(rate != 100 && life > -1){
 		timer = GetNowCount() - time;
 	}
-	
+	count = timeLimit - (timer / 1000);
+
 	// カウントの上限
-	if (minute != 99 || second != 59) {
-		minute = timer / 60000;
-		second = (timer / 1000) - (minute * 60);
+	if (count >= 0) {
+		minute = count / 60;
+		second = count - (minute * 60);
 	}
+	else {
+		// リザルトシーンへ
+		isNextResult = true;
+	}
+
+	//// カウントの上限
+	//if (minute != 99 || second != 59) {
+	//	//minute = timer / 60000;
+	//	//second = (timer / 1000) - (minute * 60);
+	//}
 
 }
 
@@ -237,4 +181,89 @@ void c_MainUI::LifeUI() {
 
 	if (animSpeed > 10.0f * life) animSpeed = 0.0f;
 	else animSpeed += 0.5f;
+}
+
+void c_MainUI::Menu_Draw() {
+	SetFontSize(16);// サイズ16
+	DrawFormatString(5, 460, 0xffffff, "[START] ポーズ");
+
+	// 一時停止時の表示UI
+	if (pauseFlg == true) {
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
+		DrawBox(0, 0, 640, 480, 0x000000, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+		SetFontSize(48);// サイズ48
+		DrawFormatString(185, 10, 0xffffff, "- ポーズ -");
+		SetFontSize(32);
+		//DrawFormatString(222, 250, 0xffffff, "サウンド");
+		switch (menuNum)
+		{
+		case 0:
+			// [ゲームを再開]選択
+			DrawFormatString(205, 150, 0xff0000, "ゲームを再開");
+			DrawFormatString(190, 200, 0xffffff, "タイトルへ戻る");
+			break;
+
+		case 1:
+			// [タイトルへ戻る]選択
+			DrawFormatString(205, 150, 0xffffff, "ゲームを再開");
+			DrawFormatString(190, 200, 0xff0000, "タイトルへ戻る");
+			break;
+
+		default:
+
+			break;
+		}
+	}
+
+}
+
+void c_MainUI::TimeCount_Draw() {
+	SetFontSize(48);// サイズ48
+	DrawFormatString(10, 30, 0xffffff, "%02d:%02d", minute, second);
+
+	SetFontSize(24);// サイズ24
+	DrawFormatString(24, 5, 0x00ff00, "残り時間");
+}
+
+void c_MainUI::Achivement_Draw() {
+	SetFontSize(48);// サイズ48
+	DrawFormatString(480, 30, 0xffffff, "%03d.", (int)rate);
+	DrawFormatString(600, 28, 0xffffff, "%%");
+
+	SetFontSize(32);// サイズ32
+	DrawFormatString(575, 42, 0xffffff, "%d", int((rate - (int)rate) * 10.0f));
+
+	SetFontSize(24);// サイズ24
+	DrawFormatString(510, 5, 0x00ff00, "剃毛率");
+}
+
+void c_MainUI::Life_Draw() {
+	for (int i = 0; i < ACNE_NUM - 1; i++) {
+		if (i < life) {
+			DrawGraph(550, 100 + (50 * i), bansoko_Img, TRUE);
+		}
+		//else {
+		//	SetDrawBright(0,0,0);
+		//	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
+		//	DrawGraph(550, 100 + (50 * i), bansoko_Img, TRUE);
+		//	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		//	SetDrawBright(255, 255, 255);
+		//}
+
+		if (i == life - 1) {
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - animSpeed * 25);
+			DrawModiGraph(550 - animSpeed, 100 + (50 * i) - animSpeed,
+				650 + animSpeed, 100 + (50 * i) - animSpeed,
+				650 + animSpeed, 200 + (50 * i) + animSpeed,
+				550 - animSpeed, 200 + (50 * i) + animSpeed,
+				bansoko_Img, TRUE);
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		}
+	}
+
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, damageAnim);
+	DrawBox(0, 0, 640, 480, 0xff0000, TRUE);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }

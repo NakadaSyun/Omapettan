@@ -25,4 +25,6 @@ private:
 	int DebugLoadTime;
 	bool padKeyFlg = false;
 	bool playerDebug = false;
+
+	bool isClearFlg = false;
 };

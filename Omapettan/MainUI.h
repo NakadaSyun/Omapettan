@@ -21,17 +21,24 @@ public:
 	c_GamePad* c_Pad;
 
 	bool isBackTitle;
+	bool isNextResult;
 
 private:
 	void TimeCountUI();	// 時間カウント
 	void AchievementUI();// 達成率
 	void LifeUI();		// ライフ
 
+	void Menu_Draw();
+	void TimeCount_Draw();
+	void Achivement_Draw();
+	void Life_Draw();
+
 	int timeLimit;		// 制限時間
 	int time;			// 現在の時間
 	int timer;			// 時間カウント
 	int minute;			// 分
 	int second;			// 秒
+	float animCount;
 
 	float rate;			// 率
 
@@ -45,5 +52,5 @@ private:
 	int bansoko_Img;
 	int mainUI_Img;
 
-	int count;
+	int menuCount;
 };

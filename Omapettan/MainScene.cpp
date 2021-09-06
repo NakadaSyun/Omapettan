@@ -96,7 +96,8 @@ c_Scene* c_Main::f_update() {
 
 	//毛が全部剃られた状態ならResultシーンへ
 	if (c_gm->c_hair->f_hairStatusSee()) {
-		
+		isClearFlg = true;
+
 		if (StageClearTime < 120)
 		{
 			StageClearTime++;
@@ -119,7 +120,7 @@ c_Scene* c_Main::f_update() {
 	}
 	
 	//吹き出物が全部剃られた状態ならResultシーンへ
-	if (c_gm->c_acne->AcneStatus()) {
+	if (c_gm->c_acne->AcneStatus() && isClearFlg == false) {
 		c_gm->c_player->IsMove = false;
 		
 		if (StageClearTime < 120)
@@ -142,8 +143,15 @@ c_Scene* c_Main::f_update() {
 		}
 	}
 
+	// ポーズメニューからタイトルへ
 	if (c_gm->c_mainUI->isBackTitle) {
+		StopSoundMem(g_Snd.StageBGM);
 		return new c_Title();
+	}
+	// タイムオーバーでリザルトへ
+	if (c_gm->c_mainUI->isNextResult) {
+		StopSoundMem(g_Snd.StageBGM);
+		return new c_Result();
 	}
 
 	return this;
