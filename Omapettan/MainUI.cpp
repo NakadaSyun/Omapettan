@@ -19,7 +19,7 @@ void c_MainUI::f_init() {
 
 	pauseFlg = false;		// 一時停止フラグ
 
-	timeLimit = 600;			// 制限時間
+	timeLimit = 60;			// 制限時間
 	time = GetNowCount();	// 時間
 	timer = 0;				// 時間カウント
 	minute = timeLimit / 60;			// 分
