@@ -13,6 +13,13 @@ c_Title::c_Title() {
 	IsNextScene = false;
 
 	c_Pad = new c_GamePad();
+
+	if (CheckSoundMem(g_Snd.GameOver) == 1) {
+		StopSoundMem(g_Snd.GameOver);
+	}
+	if (CheckSoundMem(g_Snd.StageBGM) == 1) {
+		StopSoundMem(g_Snd.StageBGM);
+	}
 }
 
 c_Title::~c_Title() {

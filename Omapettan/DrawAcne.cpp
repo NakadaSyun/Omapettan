@@ -15,6 +15,16 @@ c_Acne::c_Acne(const int Acne_Model,const int Acne_Graph, const int Bandage_Mode
 	MV1SetScale(modelacne, VGet(1.0f, 1.0f, 1.0f));
 	MV1SetRotationXYZ(modelacne, VGet(0.0f, 0.0f, 0.0f));
 
+	image_Bandage_Tex = LoadGraph("images/Bandage_Tex01.png");
+	//マテリアルで使用されているテクスチャの番号を取得
+	int Band1 = MV1GetMaterialDifMapTexture(modelBandage, 0);
+	//マテリアルで使用されているテクスチャの番号を取得
+	int Band2 = MV1GetMaterialDifMapTexture(modelBandage, 1);
+	// テクスチャで使用するグラフィックハンドルを変更する
+	MV1SetTextureGraphHandle(modelBandage, Band1, image_Bandage_Tex, FALSE);
+	// テクスチャで使用するグラフィックハンドルを変更する
+	MV1SetTextureGraphHandle(modelBandage, Band2, image_Bandage_Tex, FALSE);
+
 	for (int i = 0; i < ACNE_NUM; i++) {
 		acnepersonalPosZ[i] = 0.0f;
 		acnepersonalPosZ[i] = ARM_ADJUST_POS_ACNE + (ACNE_PERSONAL_AREA * i) + ((i + 1) * ACNE_DISTANCE) + GetRand(ACNE_PERSONAL_AREA);
@@ -63,7 +73,7 @@ void c_Acne::f_output() {
 			MV1DrawModel(modelacne);
 		}
 		else {
-			MV1SetPosition(modelBandage, position[i]);
+			MV1SetPosition(modelBandage,position[i]);
 			MV1SetRotationXYZ(modelBandage, VGet(0.0f, 0.0f, acnepersonalRotation[i] - stageRotation - PI / 2));
 			MV1DrawModel(modelBandage);
 		}

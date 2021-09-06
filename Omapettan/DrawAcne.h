@@ -48,6 +48,7 @@ private:
 
 	int modelacne;
 	int modelBandage;
+	int image_Bandage_Tex;
 	int graphacne;
 	float acnepersonalRotation[ACNE_NUM];   // Še‚Å‚«‚à‚Ì‚ÌŠp“x
 };

@@ -136,6 +136,7 @@ void c_GameManager::f_update()
 		c_hair->f_update();
 
 		c_acne->f_update();
+
 	}
 
 	c_mainUI->f_update();
