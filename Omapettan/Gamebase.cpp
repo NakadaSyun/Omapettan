@@ -9,7 +9,7 @@
 bool GameBase::f_init()
 {
 	//タイトル
-	SetMainWindowText("Window");
+	SetMainWindowText("こびとサロン");
 
 	//Windowサイズの設定
 	SetGraphMode(640, 480, 16);

@@ -15,6 +15,7 @@ c_Player::c_Player(const int Model) {
 	// ‚R‚cƒ‚ƒfƒ‹‚ÌÀ•W‚ğ‰Šú‰»
 	p_Position = VGet(0.0f, 760.0f, 4500.0f);
 	p_Rotation = VGet(0.0f, 0.0f, 0.0f);
+	p_OldPosition = p_Position;
 
 	IsAcneHit = false; 
 	IsMove = true;

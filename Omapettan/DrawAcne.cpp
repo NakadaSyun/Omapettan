@@ -23,11 +23,11 @@ c_Acne::c_Acne(const int Acne_Model,const int Acne_Graph, const int Bandage_Mode
 
 		acnepersonalRotation[i] = GetRand(int(2 * float(DX_PI) * 100)) * 0.01f;
 
-		printf("\n%d\t%f", i, acnepersonalPosZ[i]);
+		//printf("\n%d\t%f", i, acnepersonalPosZ[i]);
 
 		status[i] = 0;
 
-		c_collision[i] = new c_Collision(position[i], 150.0f, 150.0f, 100.0f);
+		c_collision[i] = new c_Collision(position[i], 120.0f, 120.0f, 80.0f);
 	}
 
 	//c_collision = new c_Collision();

@@ -253,7 +253,7 @@ void c_Hair::f_setPosAndRot() {
 				}
 			}
 			personalAnimTime[i] = 148.0f - (148.0f * (personalPosZ[i] / 7000.0f));
-			printf("\n%d\t%f", i, personalPosZ[i]);
+			//printf("\n%d\t%f", i, personalPosZ[i]);
 		}
 	}
 }
@@ -384,7 +384,7 @@ void c_Hair::f_Animupdate(int i) {
 		NowAnimTime = (AnimTotalTime * (3.0f / 4.0f)) - (personalAnimTime[i] - (AnimTotalTime * (3.0f / 4.0f)));
 	}
 
-	if (i == 0)printf("Now = %f\tpersonal = %f\n", NowAnimTime, personalAnimTime[i]);
+	//if (i == 0)printf("Now = %f\tpersonal = %f\n", NowAnimTime, personalAnimTime[i]);
 	MV1SetAttachAnimTime(modelHandle, 0, NowAnimTime);
 }
 
