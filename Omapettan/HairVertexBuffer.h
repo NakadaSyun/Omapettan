@@ -26,6 +26,8 @@ namespace {
 	// ˜r‚ÌÀ•W‡‚í‚¹
 	const float ARM_ADJUST_POS = 1000.0f;
 
+	const float HAIR_ADJUST_POS_ACNE = 250.0f;
+
 	enum hair_status {
 		ROOTED_IS,        // ª•t‚¢‚Ä‚¢‚é
 		SHAVED,           // ’ä‚ç‚ê‚½
