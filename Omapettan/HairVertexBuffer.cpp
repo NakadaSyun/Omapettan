@@ -31,9 +31,6 @@ c_Hair::c_Hair(const int Model, const int Image) {
 	// メモリの割り当て
 	f_allocateMemory();
 
-	// 毛の座標と角度を設定
-	f_setPosAndRot();
-
 	//毛のアニメーションを設定
 	MV1AttachAnim(modelHandle, 0);
 	AnimTotalTime = MV1GetAttachAnimTotalTime(modelHandle, 0);
@@ -242,18 +239,21 @@ void c_Hair::f_setPosAndRot() {
 		// 各毛のZ座標を設定
 		personalPosZ[i] = GetRand(ARM_LENGTH) + ARM_ADJUST_POS;
 	}
-	acnepersonalpos->acnepersonalPosZ[0];
-	for (int j = 0; j < ACNE_NUM; j++) {
-		for (int i = 0; i < HAIR_NUM; i++) {
-			if ((acnepersonalpos->acnepersonalPosZ[j] + 200 < personalPosZ[i]) || (acnepersonalpos->acnepersonalPosZ[j] - 200> personalPosZ[i])) {
-				for (personalPosZ[i]; personalPosZ[i] > 0;) {
-					personalPosZ[i] = GetRand(ARM_LENGTH) + ARM_ADJUST_POS;
-					if ((acnepersonalpos->acnepersonalPosZ[j] + 200 < personalPosZ[i]) || (acnepersonalpos->acnepersonalPosZ[j] - 200 > personalPosZ[i]))
-						if (CheckingOverlapsWithPlayer(personalRotation[i], personalPosZ[i]) == false)break;
-				}
+	for(int i = 0; i < HAIR_NUM; i++){
+		if((acnepersonalpos->acnepersonalPosZ[0] + HAIR_ADJUST_POS_ACNE < personalPosZ[i]) && (acnepersonalpos->acnepersonalPosZ[0] - HAIR_ADJUST_POS_ACNE > personalPosZ[i])
+			|| (acnepersonalpos->acnepersonalPosZ[1] + HAIR_ADJUST_POS_ACNE < personalPosZ[i]) && (acnepersonalpos->acnepersonalPosZ[1] - HAIR_ADJUST_POS_ACNE > personalPosZ[i])
+			|| (acnepersonalpos->acnepersonalPosZ[2] + HAIR_ADJUST_POS_ACNE < personalPosZ[i]) && (acnepersonalpos->acnepersonalPosZ[2] - HAIR_ADJUST_POS_ACNE > personalPosZ[i])
+			|| (acnepersonalpos->acnepersonalPosZ[3] + HAIR_ADJUST_POS_ACNE < personalPosZ[i]) && (acnepersonalpos->acnepersonalPosZ[3] - HAIR_ADJUST_POS_ACNE > personalPosZ[i])
+			&& (CheckingOverlapsWithPlayer(personalRotation[i],personalPosZ[i]) == false)){
+			for (int j = 1; j > 0;) {
+				personalPosZ[i] = GetRand(ARM_LENGTH) + ARM_ADJUST_POS;
+				if ((acnepersonalpos->acnepersonalPosZ[0] + HAIR_ADJUST_POS_ACNE < personalPosZ[i]) && (acnepersonalpos->acnepersonalPosZ[0] - HAIR_ADJUST_POS_ACNE > personalPosZ[i])
+					|| (acnepersonalpos->acnepersonalPosZ[1] + HAIR_ADJUST_POS_ACNE < personalPosZ[i]) && (acnepersonalpos->acnepersonalPosZ[1] - HAIR_ADJUST_POS_ACNE > personalPosZ[i])
+					|| (acnepersonalpos->acnepersonalPosZ[2] + HAIR_ADJUST_POS_ACNE < personalPosZ[i]) && (acnepersonalpos->acnepersonalPosZ[2] - HAIR_ADJUST_POS_ACNE > personalPosZ[i])
+					|| (acnepersonalpos->acnepersonalPosZ[3] + HAIR_ADJUST_POS_ACNE < personalPosZ[i]) && (acnepersonalpos->acnepersonalPosZ[3] - HAIR_ADJUST_POS_ACNE > personalPosZ[i])
+					&& (CheckingOverlapsWithPlayer(personalRotation[i], personalPosZ[i]) == false)) break;
 			}
 			personalAnimTime[i] = 148.0f - (148.0f * (personalPosZ[i] / 7000.0f));
-			//printf("\n%d\t%f", i, personalPosZ[i]);
 		}
 	}
 }
@@ -356,6 +356,8 @@ void c_Hair::f_getRotationY(int num, float rot) {
 
 void c_Hair::f_GetAcnePosZ(c_Acne* c_acne) {
 	acnepersonalpos = c_acne;
+	// 毛の座標と角度を設定
+	f_setPosAndRot();
 }
 
 // プレイヤーとの重複の確認

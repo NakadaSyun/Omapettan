@@ -40,7 +40,7 @@ public:
 
 	float stageRotation;
 	float acnepersonalPosZ[ACNE_NUM];
-	float AcnePos[ACNE_NUM];
+	//float AcnePos[ACNE_NUM];
 
 	c_Collision* c_collision[ACNE_NUM];
 private:
