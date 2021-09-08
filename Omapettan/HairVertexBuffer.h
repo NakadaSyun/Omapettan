@@ -28,6 +28,9 @@ namespace {
 
 	const float HAIR_ADJUST_POS_ACNE = 250.0f;
 
+	// –Ñ‚ÌŠp“x’²®—p
+	float HAIR_ANGLE_ADJUST = DX_PI / 180 * 0.9f;
+
 	enum hair_status {
 		ROOTED_IS,        // ª•t‚¢‚Ä‚¢‚é
 		SHAVED,           // ’ä‚ç‚ê‚½

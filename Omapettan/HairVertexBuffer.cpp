@@ -89,7 +89,7 @@ void c_Hair::f_modelDuplication() {
 			                        personalPosZ[i]);
 		c_colision[i] =
 			new c_Collision(CollisionPosition[i], hairSize.x, hairSize.y, hairSize.z);
-		// Y軸回転
+		// モデル回転
 		MV1SetRotationXYZ(modelHandle, VGet(0.0f, 0.0f, 0.0f));
 
 		// 参照用メッシュの作成
@@ -175,8 +175,10 @@ void c_Hair::CubeDraw() {
 	{
 		/*Cube.f_create(CollisionPosition[num].x - (200 / 2), CollisionPosition[num].y,
 			CollisionPosition[num].z - (200 / 2),200, 600, 200);*/
-		Cube.f_create(CollisionPosition[num].x - (hairSize.x / 2), CollisionPosition[num].y,
-			CollisionPosition[num].z - (hairSize.z / 2), hairSize.x, hairSize.y, hairSize.z);
+		Cube.f_create(CollisionPosition[num].x - (hairSize.x / 2), 
+			          CollisionPosition[num].y,
+			          CollisionPosition[num].z - (hairSize.z / 2), 
+			          hairSize.x, hairSize.y, hairSize.z);
 	}
 }
 
@@ -189,19 +191,22 @@ void c_Hair::f_moveHair(int num) {
 
 	//アニメーションの更新
 	f_Animupdate(num);
-	MV1SetPosition(modelHandle, VGet(sinf(personalRotation[num] + stageXRotation) * (ARM_RADIUS + personalRadius[num]) + hairFlyingVec[num],
-		cosf(personalRotation[num] + stageXRotation) * (ARM_RADIUS + personalRadius[num]),
-		personalPosZ[num]));
+	MV1SetPosition(modelHandle, VGet(sinf(personalRotation[num] + stageXRotation) * (ARM_RADIUS + personalRadius[num]),
+		                             cosf(personalRotation[num] + stageXRotation) * (ARM_RADIUS + personalRadius[num]),
+		                             personalPosZ[num]));
 	//モデルの座標を当たり判定用の変数にコピー
-	CollisionPosition[num] = VGet(sinf(personalRotation[num] + stageXRotation) * ARM_RADIUS + hairFlyingVec[num],
-		                          cosf(personalRotation[num] + stageXRotation) * ARM_RADIUS,
+	CollisionPosition[num] = VGet(sinf(personalRotation[num] + stageXRotation - HAIR_ANGLE_ADJUST) * ARM_RADIUS + hairFlyingVec[num],
+		                          cosf(personalRotation[num] + stageXRotation - HAIR_ANGLE_ADJUST) * ARM_RADIUS,
 		                          personalPosZ[num]);
 
 	delete c_colision[num];
 	c_colision[num] =
-		new c_Collision(CollisionPosition[num], hairSize.x, hairSize.y, hairSize.z);
+		new c_Collision(VGet(CollisionPosition[num].x,
+			                 CollisionPosition[num].y,
+			                 CollisionPosition[num].z),
+			            hairSize.x, hairSize.y, hairSize.z);
 	
-	// Y軸回転
+	// モデル回転
 	MV1SetRotationXYZ(modelHandle, VGet(hairFlyingRotX[num], 0, hairFlyingRotZ[num] - personalRotation[num] - stageXRotation));
 
 
