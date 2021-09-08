@@ -31,12 +31,12 @@ c_Scene* c_Result::f_update() {
 
 void c_Result::f_output() const {
 	DrawGraph(0, 0, BG, true);
-	if (rateData >= 75) DrawGraph(300, 300, God, true);
-	else if ((rateData < 75) || (rateData >= 50)) DrawGraph(300, 300, Expert, true);
-	else if ((rateData < 50) || (rateData >= 25)) DrawGraph(300, 300, Common, true);
-	else DrawGraph(300, 300, Beginner, true);
+	if (rateData >= 75) DrawGraph(500, 380, God, true);
+	else if ((rateData < 75) && (rateData >= 50)) DrawGraph(500, 380, Expert, true);
+	else if ((rateData < 50) && (rateData >= 25)) DrawGraph(500, 380, Common, true);
+	else DrawGraph(500, 380, Beginner, true);
 	DrawFormatString(250, 400, 0x000000, "Aボタンでタイトルに戻る");
-	//DrawFormatString(480, 30, 0x000000, "%03d%%", (int)rateData);
+	DrawFormatString(480, 30, 0x000000, "%03d%%", (int)rateData);
 }
 
 void c_Result::f_loadImage() {
