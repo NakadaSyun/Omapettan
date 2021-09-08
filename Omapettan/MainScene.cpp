@@ -187,12 +187,13 @@ void c_Main::f_debug(bool flg) {
 			//毛の当たり判定表示
 			c_gm->c_hair->CubeDraw();
 			//プレイヤー（剃刀）の当たり判定表示
-			c_gm->c_player->c_colision->CubeDraw();
+			c_gm->c_player->c_colision->f_PolyDraw(c_gm->c_player->f_GetPlayerRotationY());
 
 			//吹き出物の当たり判定表示
 			for (int num = 0; num < ACNE_NUM; num++)
 			{
-				c_gm->c_acne->c_collision[num]->CubeDraw();
+				// 吹き出物の当たり判定表示
+				c_gm->c_acne->c_collision[num]->f_CubeDraw();
 			}
 
 			//padKeyFlg = true;

@@ -6,6 +6,10 @@
 #include "CameraCon.h"
 #include "Controller.h"
 
+namespace {
+	// “–‚½‚è”»’è‚Ü‚Å‚Ì‹——£
+	float DISTANCE_TO_COLLISION_DETECTION = 100.0f;
+}
 
 class c_Player {
 public:

@@ -82,7 +82,7 @@ void c_GameManager::f_update()
 	for (int num = 0; num < HAIR_NUM; num++)
 	{
 		//c_hair->HitHair[num] = f_HitCheck(*c_player->c_colision, *c_hair->c_colision[num]);
-		if (c_hitCheck->f_playerAndObjects(*c_hair->c_colision[num], *c_player->c_colision) == true) {
+		if (c_hitCheck->f_playerAndObjects(*c_hair->c_colision[num], *c_player->c_colision, c_player->f_GetPlayerRotationY()) == true) {
 			c_hair->f_getRotationY(num, c_player->f_GetPlayerRotationY());
 			c_hair->f_hairCut(num);
 			c_pad->f_HairCutVibration();
@@ -94,7 +94,7 @@ void c_GameManager::f_update()
 	}
 
 	for (int i = 0; i < ACNE_NUM; i++) {
-		if (c_hitCheck->f_playerAndObjects(*c_acne->c_collision[i], *c_player->c_colision) == true) {
+		if (c_hitCheck->f_playerAndObjects(*c_acne->c_collision[i], *c_player->c_colision, c_player->f_GetPlayerRotationY()) == true) {
 			if (c_acne->status[i] == 0) {
 				c_pad->f_AcneCutVibration();
 				c_acne->status[i] = 1;
