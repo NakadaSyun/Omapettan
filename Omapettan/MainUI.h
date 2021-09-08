@@ -26,6 +26,8 @@ public:
 	int timeLimit;		// 制限時間
 	float rate;			// 率
 
+	int f_getTimer(); //timerの値を取得
+
 private:
 	void TimeCountUI();	// 時間カウント
 	void AchievementUI();// 達成率
