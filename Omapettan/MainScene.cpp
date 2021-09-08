@@ -246,5 +246,6 @@ void c_Main::f_debug(bool flg) {
 }
 
 void c_Main::f_debugUI() {
-	c_gm->c_mainUI->timeLimit = 0;
+	int timeLimit = 2;
+	c_gm->c_mainUI->timeLimit = timeLimit + (c_gm->c_mainUI->f_getTimer() / 1000);
 }

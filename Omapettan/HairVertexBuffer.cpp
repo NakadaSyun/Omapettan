@@ -85,8 +85,8 @@ void c_Hair::f_modelDuplication() {
 			personalPosZ[i]));
 		//モデルの座標を当たり判定用の変数にコピー
 		CollisionPosition[i] = VGet(sinf(personalRotation[i]) * ARM_RADIUS,
-			cosf(personalRotation[i]) * ARM_RADIUS,
-			personalPosZ[i]);
+			                        cosf(personalRotation[i]) * ARM_RADIUS,
+			                        personalPosZ[i]);
 		c_colision[i] =
 			new c_Collision(CollisionPosition[i], hairSize.x, hairSize.y, hairSize.z);
 		// Y軸回転
@@ -186,19 +186,21 @@ void c_Hair::f_moveHair(int num) {
 	int vnum = 0;
 	int pnum = 0;
 
-	//for (int i = 0; i < HAIR_NUM; i++) {
 
-		//アニメーションの更新
+	//アニメーションの更新
 	f_Animupdate(num);
 	MV1SetPosition(modelHandle, VGet(sinf(personalRotation[num] + stageXRotation) * (ARM_RADIUS + personalRadius[num]) + hairFlyingVec[num],
 		cosf(personalRotation[num] + stageXRotation) * (ARM_RADIUS + personalRadius[num]),
 		personalPosZ[num]));
 	//モデルの座標を当たり判定用の変数にコピー
 	CollisionPosition[num] = VGet(sinf(personalRotation[num] + stageXRotation) * ARM_RADIUS + hairFlyingVec[num],
-		cosf(personalRotation[num] + stageXRotation) * ARM_RADIUS,
-		personalPosZ[num]);
+		                          cosf(personalRotation[num] + stageXRotation) * ARM_RADIUS,
+		                          personalPosZ[num]);
+
+	delete c_colision[num];
 	c_colision[num] =
 		new c_Collision(CollisionPosition[num], hairSize.x, hairSize.y, hairSize.z);
+	
 	// Y軸回転
 	MV1SetRotationXYZ(modelHandle, VGet(hairFlyingRotX[num], 0, hairFlyingRotZ[num] - personalRotation[num] - stageXRotation));
 
@@ -216,7 +218,6 @@ void c_Hair::f_moveHair(int num) {
 
 	/*vnum += RefMesh.VertexNum;
 	pnum += RefMesh.PolygonNum * 3;*/
-	//}
 
 	//// 頂点バッファとインデックスバッファにデータを転送
 	//SetVertexBufferData(0, vertex, vertexNum, vertexBufHandle);
