@@ -237,4 +237,14 @@ void c_Main::f_debug(bool flg) {
 		padKeyFlg = false;
 	}
 
+	//Yƒ{ƒ^ƒ“‚ð‰Ÿ‚·‚ÆŽžŠÔ‚ª‚O‚É‚È‚é
+	if (c_gm->c_player->c_pad->IsButton4)
+	{
+		f_debugUI();
+	}
+
+}
+
+void c_Main::f_debugUI() {
+	c_gm->c_mainUI->timeLimit = 0;
 }

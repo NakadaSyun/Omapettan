@@ -27,4 +27,6 @@ private:
 	bool playerDebug = false;
 
 	bool isClearFlg = false;
+
+	void f_debugUI();
 };
