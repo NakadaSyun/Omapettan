@@ -16,6 +16,10 @@ public:
 	c_GamePad* c_pad;
 private:
 	int BG;
+	int Beginner;
+	int Common;
+	int Expert;
+	int God;
 
 	float rateData;
 };
