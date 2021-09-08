@@ -4,6 +4,14 @@
 #include "TitleScene.h"
 
 extern Sound g_Snd;
+//DATEDATA Date;
+//
+//static int yeah;
+//static int mon;
+//static int day;
+//static int hour;
+//static int minute;
+//static int sec;
 
 c_Main::c_Main() {
 	//ゲームマネージャー生成
@@ -23,6 +31,19 @@ c_Main::c_Main() {
 	KeyDownFlg = false;
 	//パッドのキーが押されているか
 	padKeyFlg = false;
+
+	//GetDateTime(&Date);
+	//yeah = Date.Year;
+	//mon = Date.Mon;
+	//day = Date.Day;
+	//hour = Date.Hour;
+	//minute = Date.Min;
+	//sec = Date.Sec;
+
+
+
+	
+
 }
 
 c_Main::~c_Main() {
@@ -31,6 +52,17 @@ c_Main::~c_Main() {
 
 c_Scene* c_Main::f_update() {
 	c_gm->f_update();
+
+	const char data[] = __DATE__;
+	const char time[] = __TIME__;
+	DrawFormatString(500, 420, 0x0000ff, "%c%c%c%c %c%c%c %c%c\n %s",
+		data[7], data[8], data[9], data[10],
+		data[0], data[1], data[2],
+		data[4], data[5],
+		time);
+	
+
+	//DrawFormatString(300, 460, 0x0000ff, "ビルド作成日時%d年%d月%d日%d時%d分%d秒\n", yeah, mon, day, hour, minute, sec);
 
 	//ステージBGM処理
 	if (CheckSoundMem(g_Snd.StageBGM) == 0) {

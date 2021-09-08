@@ -136,14 +136,14 @@ void c_Player::f_update(bool Isfall) {
 	DrawLine3D(p_Position, VGet(p_Position.x, p_Position.y, p_Position.z + 200), GetColor(0, 0, 255));
 
 	//腕のモデルとのヒットしたポリゴンの三点座標を表示
-	DrawFormatString(0, 200, GetColor(255, 255, 255), "Pos0.x:%f", HitPoly.Position[0].x);
-	DrawFormatString(0, 220, GetColor(255, 255, 255), "Pos0.y:%f", HitPoly.Position[0].y);
-	DrawFormatString(0, 240, GetColor(255, 255, 255), "Pos0.z:%f", HitPoly.Position[0].z);
+	//DrawFormatString(0, 200, GetColor(255, 255, 255), "Pos0.x:%f", HitPoly.Position[0].x);
+	//DrawFormatString(0, 220, GetColor(255, 255, 255), "Pos0.y:%f", HitPoly.Position[0].y);
+	//DrawFormatString(0, 240, GetColor(255, 255, 255), "Pos0.z:%f", HitPoly.Position[0].z);
 
 	//吹き出物モデルとのヒットしたポリゴンの三点座標を表示
-	DrawFormatString(0, 260, GetColor(255, 255, 255), "AcneHitPoly.x:%f", AcneHitPoly.Position[0].x);
-	DrawFormatString(0, 280, GetColor(255, 255, 255), "AcneHitPoly.y:%f", AcneHitPoly.Position[0].y);
-	DrawFormatString(0, 300, GetColor(255, 255, 255), "AcneHitPoly.z:%f", AcneHitPoly.Position[0].z);
+	//DrawFormatString(0, 260, GetColor(255, 255, 255), "AcneHitPoly.x:%f", AcneHitPoly.Position[0].x);
+	//DrawFormatString(0, 280, GetColor(255, 255, 255), "AcneHitPoly.y:%f", AcneHitPoly.Position[0].y);
+	//DrawFormatString(0, 300, GetColor(255, 255, 255), "AcneHitPoly.z:%f", AcneHitPoly.Position[0].z);
 
 
 	DrawLine3D(HitPoly.Position[0], HitPoly.Normal, GetColor(0, 0, 255));		//ポリゴンの法線描画
@@ -228,7 +228,7 @@ void c_Player::f_update(bool Isfall) {
 		Rota_Vec = PI + (PI + Rota_Vec);			//2PIで一周換算した値にする
 	}
 
-	DrawFormatString(0, 100, 0x00ffff, "Rota_Vec %f", Rota_Vec);
+	//DrawFormatString(0, 100, 0x00ffff, "Rota_Vec %f", Rota_Vec);
 
 	int_angle = Rota_Vec / rad;						//向くべき方向をラジアン角度に変換
 
@@ -323,10 +323,10 @@ void c_Player::f_update(bool Isfall) {
 		p_Position.z = 1000;
 	}
 
-	DrawFormatString(0, 120, 0x00ffff, "p_Rotation.y %f", p_Rotation.y);
-	DrawFormatString(0, 140, 0x00ffff, "Rota_Dif %d", Rota_Dif);
-	DrawFormatString(0, 160, 0x00ffff, "NowRota %d", NowRota);
-	DrawFormatString(0, 180, 0x00ffff, "int_angle %d", int_angle);
+	//DrawFormatString(0, 120, 0x00ffff, "p_Rotation.y %f", p_Rotation.y);
+	//DrawFormatString(0, 140, 0x00ffff, "Rota_Dif %d", Rota_Dif);
+	//DrawFormatString(0, 160, 0x00ffff, "NowRota %d", NowRota);
+	//DrawFormatString(0, 180, 0x00ffff, "int_angle %d", int_angle);
 
 
 	if (HitPoly.HitFlag == 0)f_fall();		//重力
