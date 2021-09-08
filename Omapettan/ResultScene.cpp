@@ -3,9 +3,10 @@
 #include "TitleScene.h"
 
 
-c_Result::c_Result() {
+c_Result::c_Result(float rate) {
 	f_loadImage();
 	IsNextScene = false;
+	rateData = rate;
 
 	c_pad = new c_GamePad();
 }
@@ -31,6 +32,7 @@ c_Scene* c_Result::f_update() {
 void c_Result::f_output() const {
 	DrawGraph(0, 0, BG, true);
 	DrawFormatString(250, 400, 0x000000, "Aボタンでタイトルに戻る");
+	DrawFormatString(480, 30, 0x000000, "%03d%%", (int)rateData);
 }
 
 void c_Result::f_loadImage() {

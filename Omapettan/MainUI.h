@@ -23,6 +23,9 @@ public:
 	bool isBackTitle;
 	bool isNextResult;
 
+	int timeLimit;		// 制限時間
+	float rate;			// 率
+
 private:
 	void TimeCountUI();	// 時間カウント
 	void AchievementUI();// 達成率
@@ -33,14 +36,11 @@ private:
 	void Achivement_Draw();
 	void Life_Draw();
 
-	int timeLimit;		// 制限時間
 	int time;			// 現在の時間
 	int timer;			// 時間カウント
 	int minute;			// 分
 	int second;			// 秒
 	float animCount;
-
-	float rate;			// 率
 
 	int maxLife;		// 最大ライフ
 	int life;			// ライフ
