@@ -20,7 +20,7 @@ public:
 	void f_draw();
 	void f_fall();
 	bool f_PlayerDebug(bool DebugFlg,bool speedFlg);//プレイヤーのデバッグ用の関数
-
+	void AnimSet();
 	float PlayerAngle_H = 0.0f;
 
 	VECTOR f_GetPlayerPosition();		//プレイヤーの座標を戻り値で返す
@@ -50,6 +50,9 @@ private:
 	VECTOR p_Rotation;
 	VECTOR p_Position;
 	VECTOR p_OldPosition;
+
+	int image_PTexture;
+	float TotalAnimTime;
 
 	const float p_Speed = 10.0f;		//プレイヤーの移動量
 	int p_SpeedMagnification = 2; //プレイヤーのダッシュの倍率

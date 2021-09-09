@@ -51,7 +51,7 @@ void c_GameManager::f_init()
 void c_GameManager::f_RoadModel()
 {
 	// ‚R‚cƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ
-	model_impostor = MV1LoadModel("models/among us.mv1");
+	model_impostor = MV1LoadModel("models/Running.mv1");
 	model_Plane = MV1LoadModel("models/Plane.mv1");
 	model_Sphere = MV1LoadModel("models/TestSphere.mv1");
 	model_Cylinder = MV1LoadModel("models/cylinderV4.mv1");

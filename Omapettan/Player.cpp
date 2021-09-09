@@ -37,7 +37,9 @@ c_Player::c_Player(const int Model) {
 	model_Acne = MV1LoadModel("models/dekimono.mv1");
 
 	SoundFlg = 0;		//最初の剃刀の音を鳴らすフラグ
-
+	MV1AttachAnim(p_Model, 1);
+	TotalAnimTime = MV1GetAttachAnimTotalTime(p_Model, 0);
+	image_PTexture = LoadGraph("images/Ch18_1001_Diffuse.png");
 }
 
 c_Player::~c_Player() {
@@ -65,6 +67,8 @@ void c_Player::f_update(bool Isfall) {
 		PlaySoundMem(g_Snd.KAMISORI_Hold, DX_PLAYTYPE_BACK);
 		SoundFlg++;
 	}
+
+	AnimSet();
 
 
 	// ３Ｄモデルに新しい座標をセット
@@ -348,7 +352,17 @@ void c_Player::f_fall() {
 }
 
 void c_Player::f_draw() {
-	//c_colision->CubeDraw();
+
+	//c_colision->CubeDraw();//マテリアルで使用されているテクスチャの番号を取得
+	int Skin1 = MV1GetMaterialDifMapTexture(p_Model, 0);
+	//マテリアルで使用されているテクスチャの番号を取得
+	int Skin2 = MV1GetMaterialDifMapTexture(p_Model, 2);
+
+	// テクスチャで使用するグラフィックハンドルを変更する
+	MV1SetTextureGraphHandle(p_Model, Skin1, image_PTexture, FALSE);
+	// テクスチャで使用するグラフィックハンドルを変更する
+	MV1SetTextureGraphHandle(p_Model, Skin2, image_PTexture, FALSE);
+
 	// ３Ｄモデルの描画
 	MV1DrawModel(p_Model);
 
@@ -382,4 +396,18 @@ bool c_Player::f_PlayerDebug(bool DebugFlg,bool speedFlg) {
 		p_SpeedMagnification = 2;
 		return false;
 	}
+}
+
+void c_Player::AnimSet() {
+
+	static float NowAnimTime = 0.0f;
+	if (c_pad->LeftStick != NONE && IsMove) {
+		if (c_pad->IsButton2 == TRUE) NowAnimTime += 1.0f * p_SpeedMagnification;
+		else  NowAnimTime += 1.0f;
+	}
+	if (NowAnimTime > TotalAnimTime) {
+		NowAnimTime = 0.0f;
+	}
+	printf("%d\n", p_SpeedMagnification);
+	MV1SetAttachAnimTime(p_Model, 0, NowAnimTime);
 }
