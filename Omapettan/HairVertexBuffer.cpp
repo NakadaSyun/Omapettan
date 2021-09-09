@@ -41,7 +41,7 @@ c_Hair::c_Hair(const int Model, const int Image) {
 
 	stageXRotation = 0.0f;
 
-	hairSize = VGet(40.0f, 40.0f, 40.0f);
+	hairSize = VGet(50.0f, 50.0f, 50.0f);
 
 	//f_funcList[ROOTED_IS] = f_moveHair();
 	/*(this->*f_hairStatusFuncList[3])(0) =
