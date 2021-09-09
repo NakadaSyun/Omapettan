@@ -182,8 +182,20 @@ c_Scene* c_Main::f_update() {
 	}
 	// タイムオーバーでリザルトへ
 	if (c_gm->c_mainUI->isNextResult) {
+		c_gm->c_player->IsMove = false;
 		StopSoundMem(g_Snd.StageBGM);
-		return new c_Result(c_gm->c_mainUI->rate);
+
+		if (StageClearTime < 180)
+		{
+			StageClearTime++;
+			SetFontSize(64);// サイズ64
+			DrawFormatString(190, 220, 0x00ff00, "TIME UP!");
+			SetFontSize(16);// サイズ16
+		}
+		else
+		{
+			return new c_Result(c_gm->c_mainUI->rate);
+		}
 	}
 
 	return this;
