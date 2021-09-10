@@ -31,7 +31,7 @@ c_Player::c_Player(const int Model) {
 	c_pad = new c_GamePad();
 
 	model_Arm = MV1LoadModel("models/arm4.mv1");
-	model_KAMISORI = MV1LoadModel("models/KKAMISORI.mv1");
+	model_KAMISORI = MV1LoadModel("models/KKAMISORI_02.mv1");
 	model_Acne = MV1LoadModel("models/dekimono.mv1");
 
 	SoundFlg = 0;		//最初の剃刀の音を鳴らすフラグ
@@ -78,7 +78,7 @@ void c_Player::f_update(bool Isfall) {
 
 
 	//剃刀のモデルに座標、回転値、コリジョンの設定
-	MV1SetRotationXYZ(model_KAMISORI, VGet(p_Rotation.x, p_Rotation.y, p_Rotation.z));
+	MV1SetRotationXYZ(model_KAMISORI, VGet(p_Rotation.x, p_Rotation.y + PI, p_Rotation.z));
 
 
 	/**************************************
@@ -217,9 +217,9 @@ void c_Player::f_update(bool Isfall) {
 
 	//かみそりの位置、角度をプレイヤーとの位置と角度に準拠させる
 	MV1SetPosition(model_KAMISORI, VGet(
-		sinf(p_Rotation.y) * -100 + p_Position.x,
+		sinf(p_Rotation.y) * +100 + p_Position.x,
 		p_Position.y,
-		cosf(p_Rotation.y) * -100 + p_Position.z
+		cosf(p_Rotation.y) * +100 + p_Position.z
 	));
 
 	p_Position = VAdd(p_Position, VGet(0, 0, MoveZ));	//プレイヤーの座標加減算処理
@@ -228,13 +228,13 @@ void c_Player::f_update(bool Isfall) {
 	if (p_Position.z > 8000) {						//キャラが腕ステージ内での移動制限//腕の手首より上には行けない
 		p_Position.z = 8000;
 	}
-	if (p_Position.z < 1000) {						//キャラが腕ステージ内での移動制限//肘手前より下には行けない
-		p_Position.z = 1000;
+	if (p_Position.z < 4500) {						//キャラが腕ステージ内での移動制限//肘手前より下には行けない
+		p_Position.z = 4500;
 	}
 
-	c_colision->f_update(VGet(sinf(p_Rotation.y) * -DISTANCE_TO_COLLISION_DETECTION + p_Position.x,
+	c_colision->f_update(VGet(sinf(p_Rotation.y) * +DISTANCE_TO_COLLISION_DETECTION + p_Position.x,
 		                      p_Position.y,
-		                      cosf(p_Rotation.y) * -DISTANCE_TO_COLLISION_DETECTION + p_Position.z));
+		                      cosf(p_Rotation.y) * +DISTANCE_TO_COLLISION_DETECTION + p_Position.z));
 
 	if (IsAcneHit) {			//吹き出物と衝突していたら一フレーム前の座標に戻す
 		p_Position = p_OldPosition;
