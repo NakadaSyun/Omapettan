@@ -23,7 +23,7 @@ c_Player::c_Player(const int Model) {
     c_colision = new c_Collision(VGet(sinf(p_Rotation.y) * -DISTANCE_TO_COLLISION_DETECTION + p_Position.x,
 		                              p_Position.y,
 		                              cosf(p_Rotation.y) * -DISTANCE_TO_COLLISION_DETECTION + p_Position.z),
-		                              120.0f, 40.0f, 80.0f);
+		                              KAMISORI_SIZE.x, KAMISORI_SIZE.y, KAMISORI_SIZE.z);
 
 	/*  VGet(p_Position.x + Kamisori_Position.x,
         p_Position.y + Kamisori_Position.y,

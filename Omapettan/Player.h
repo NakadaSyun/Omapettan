@@ -8,7 +8,8 @@
 
 namespace {
 	// 当たり判定までの距離
-	float DISTANCE_TO_COLLISION_DETECTION = 100.0f;
+	float DISTANCE_TO_COLLISION_DETECTION = 60.0f;
+	VECTOR KAMISORI_SIZE = VGet(120.0f, 40.0f, 110.0f);
 }
 
 class c_Player {
@@ -28,7 +29,7 @@ public:
 	float f_GetPlayerRotationY();       // プレイヤーのY軸の回転値を戻り値で返す
 
 	bool IsAcneHit;						//できものとの衝突判定用変数
-	bool IsMove;				//移動の制限
+	bool IsMove;				        //移動の制限
 
 	//かみそりのプレイヤーからの加算座標格納変数
 	VECTOR Kamisori_Position = VGet(0,20, 0);
