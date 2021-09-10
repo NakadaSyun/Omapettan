@@ -69,16 +69,19 @@ void c_Player::f_update(bool Isfall) {
 	AnimSet();
 
 
-	// ３Ｄモデルに新しい座標をセット
+	// キャラに新しい座標をセット
 	MV1SetPosition(p_Model, p_Position);
-	// ３Ｄモデルに新しい回転値をセット
+	// キャラに新しい回転値をセット
 	MV1SetRotationXYZ(p_Model, p_Rotation);
-
-	c_cameracon->f_update();		//c_cameraconを呼んで値を更新
-
 
 	//剃刀のモデルに座標、回転値、コリジョンの設定
 	MV1SetRotationXYZ(model_KAMISORI, VGet(p_Rotation.x, p_Rotation.y + PI, p_Rotation.z));
+
+	static float cameraAdd_X = 0.0;
+	static float cameraAdd_Z = 0.0;
+
+	// カメラの位置と回転値をセット、カメラの位置は原点
+	//SetCameraPositionAndTarget_UpVecY(VGet(0.0, sinf(cameraAdd_X++),cosf(0.0)), Playerposition);
 
 
 	/**************************************
