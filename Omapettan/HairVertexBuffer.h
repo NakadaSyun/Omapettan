@@ -21,10 +21,10 @@ namespace {
 	const float ARM_RADIUS = 755.0f - 10.0f;
 
 	// ステージ(腕)の長さ
-	const float ARM_LENGTH = 7000.0f;
+	const float ARM_LENGTH = 3500.0f;
 
 	// 腕の座標合わせ
-	const float ARM_ADJUST_POS = 1000.0f;
+	const float ARM_ADJUST_POS = 4500.0f;
 
 	const float HAIR_ADJUST_POS_ACNE = 250.0f;
 
