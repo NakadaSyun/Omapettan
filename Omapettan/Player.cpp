@@ -25,9 +25,7 @@ c_Player::c_Player(const int Model) {
 		                              cosf(p_Rotation.y) * -DISTANCE_TO_COLLISION_DETECTION + p_Position.z),
 		                              KAMISORI_SIZE.x, KAMISORI_SIZE.y, KAMISORI_SIZE.z);
 
-	/*  VGet(p_Position.x + Kamisori_Position.x,
-        p_Position.y + Kamisori_Position.y,
-        p_Position.z + Kamisori_Position.z)*/
+
 
 	c_cameracon = new c_CameraCon;
 	c_pad = new c_GamePad();
@@ -78,79 +76,10 @@ void c_Player::f_update(bool Isfall) {
 
 	c_cameracon->f_update();		//c_cameraconを呼んで値を更新
 
-	//プレイヤーの当たり判定の線分の開始位置と、終了位置
-	StartPos = p_Position;
-	EndPos = VGet(p_Position.x, p_Position.y + 250.0f, p_Position.z);
-
-	//腕のモデルに座標、回転値、コリジョンの設定
-	MV1SetPosition(model_Arm, VGet(0.0f, 0.0f, 0.0f));
-	MV1SetRotationXYZ(model_Arm, VGet(0.0f, PI / 2, 0.0f));
-	MV1SetupCollInfo(model_Arm, -1, 8, 8, 8);		//モデル全体のフレームにコリジョンを準備
 
 	//剃刀のモデルに座標、回転値、コリジョンの設定
 	MV1SetRotationXYZ(model_KAMISORI, VGet(p_Rotation.x, p_Rotation.y, p_Rotation.z));
-	MV1SetupCollInfo(model_KAMISORI, -1, 8, 8, 8);		//モデル全体のフレームにコリジョンを準備
 
-	DrawLine3D(StartPos, EndPos, GetColor(255, 0, 0));		//キャラの当たり判定の線分
-
-	//腕との当たり判定
-	MV1_COLL_RESULT_POLY HitPoly = MV1CollCheck_Line(model_Arm, -1, StartPos, EndPos);
-	//剃刀との当たり判定
-	MV1_COLL_RESULT_POLY KAMISORI_HitPoly = MV1CollCheck_Line(model_KAMISORI, -1, StartPos, EndPos);
-	//吹き出物との当たり判定
-	MV1_COLL_RESULT_POLY AcneHitPoly = MV1CollCheck_Line(model_Acne, -1, StartPos, EndPos);
-
-	//腕モデルとのヒットポリゴン*************************************************
-	VECTOR Pos0 = HitPoly.Position[0],
-		Pos1 = HitPoly.Position[1],
-		Pos2 = HitPoly.Position[2];
-	int LineColor = GetColor(255, 0, 0);
-
-	DrawLine3D(Pos0, Pos1, LineColor);
-	DrawLine3D(Pos1, Pos2, LineColor);
-	DrawLine3D(Pos2, Pos0, LineColor);
-	//*************************************************************************
-
-
-	//かみそりモデルのヒットポリゴン*******************************************
-	VECTOR KAMI_Pos0 = KAMISORI_HitPoly.Position[0],
-		KAMI_Pos1 = KAMISORI_HitPoly.Position[1],
-		KAMI_Pos2 = KAMISORI_HitPoly.Position[2];
-	int KAMI_LineColor = GetColor(0, 255, 0);
-
-	DrawLine3D(KAMI_Pos0, KAMI_Pos1, KAMI_LineColor);
-	DrawLine3D(KAMI_Pos1, KAMI_Pos2, KAMI_LineColor);
-	DrawLine3D(KAMI_Pos2, KAMI_Pos0, KAMI_LineColor);
-	//*************************************************************************
-
-	//吹き出物モデルのヒットポリゴン*******************************************
-	VECTOR Acne_Pos0 = AcneHitPoly.Position[0],
-		Acne_Pos1 = AcneHitPoly.Position[1],
-		Acne_Pos2 = AcneHitPoly.Position[2];
-	int Acne_LineColor = GetColor(0, 255, 0);
-
-	DrawLine3D(Acne_Pos0, Acne_Pos1, Acne_LineColor);
-	DrawLine3D(Acne_Pos1, Acne_Pos2, Acne_LineColor);
-	DrawLine3D(Acne_Pos2, Acne_Pos0, Acne_LineColor);
-	//*************************************************************************
-
-	//ワールド軸確認
-	DrawLine3D(p_Position, VGet(p_Position.x + 200, p_Position.y, p_Position.z), GetColor(255, 0, 0));
-	DrawLine3D(p_Position, VGet(p_Position.x, p_Position.y + 200, p_Position.z), GetColor(0, 255, 0));
-	DrawLine3D(p_Position, VGet(p_Position.x, p_Position.y, p_Position.z + 200), GetColor(0, 0, 255));
-
-	//腕のモデルとのヒットしたポリゴンの三点座標を表示
-	//DrawFormatString(0, 200, GetColor(255, 255, 255), "Pos0.x:%f", HitPoly.Position[0].x);
-	//DrawFormatString(0, 220, GetColor(255, 255, 255), "Pos0.y:%f", HitPoly.Position[0].y);
-	//DrawFormatString(0, 240, GetColor(255, 255, 255), "Pos0.z:%f", HitPoly.Position[0].z);
-
-	//吹き出物モデルとのヒットしたポリゴンの三点座標を表示
-	//DrawFormatString(0, 260, GetColor(255, 255, 255), "AcneHitPoly.x:%f", AcneHitPoly.Position[0].x);
-	//DrawFormatString(0, 280, GetColor(255, 255, 255), "AcneHitPoly.y:%f", AcneHitPoly.Position[0].y);
-	//DrawFormatString(0, 300, GetColor(255, 255, 255), "AcneHitPoly.z:%f", AcneHitPoly.Position[0].z);
-
-
-	DrawLine3D(HitPoly.Position[0], HitPoly.Normal, GetColor(0, 0, 255));		//ポリゴンの法線描画
 
 	/**************************************
 	*プレイヤーの移動処理
@@ -166,31 +95,9 @@ void c_Player::f_update(bool Isfall) {
 	static int Rota_Dif = 0;			//Rotate_Difference：：現在の回転値と向きたい方向の　時計廻り角度の差分格納変数
 	static int NowRota = 0;				//Now_Rotate：：現在の向いているラジアン角度
 
-	//bool MoveKeyFlag = CheckHitKey(KEY_INPUT_W) ||		//移動キーが一つでも押されているかのフラグ
-	//	CheckHitKey(KEY_INPUT_A) ||
-	//	CheckHitKey(KEY_INPUT_S) ||
-	//	CheckHitKey(KEY_INPUT_D);
-
 	bool MoveKeyFlag = false;	//移動キーが一つでも押されているかのフラグ
 	if (c_pad->LeftStick != 0) MoveKeyFlag = true;		//スティックがどこかに傾いていたらtrue
 
-
-	//if (CheckHitKey(KEY_INPUT_W) == 1) {
-	//	MoveZ = p_Speed;
-	//	Rota_Vec = atan2(-MoveX, -MoveZ);			//プレイヤーの向く方向
-	//}
-	//if (CheckHitKey(KEY_INPUT_A) == 1) {
-	//	MoveX = -p_Speed;
-	//	Rota_Vec = atan2(-MoveX, -MoveZ);			//プレイヤーの向く方向
-	//}
-	//if (CheckHitKey(KEY_INPUT_S) == 1) {
-	//	MoveZ = -p_Speed;
-	//	Rota_Vec = atan2(-MoveX, -MoveZ);			//プレイヤーの向く方向
-	//}
-	//if (CheckHitKey(KEY_INPUT_D) == 1) {
-	//	MoveX = p_Speed;
-	//	Rota_Vec = atan2(-MoveX, -MoveZ);			//プレイヤーの向く方向
-	//}
 
 	/*****	コントローラーの入力	*****/
 	if (c_pad->LeftStick == UP||
@@ -231,8 +138,6 @@ void c_Player::f_update(bool Isfall) {
 	if (Rota_Vec < 0) {								//プレイヤーの向くべき方向が-3.14など反時計廻りに回るときに-の値になった時
 		Rota_Vec = PI + (PI + Rota_Vec);			//2PIで一周換算した値にする
 	}
-
-	//DrawFormatString(0, 100, 0x00ffff, "Rota_Vec %f", Rota_Vec);
 
 	int_angle = Rota_Vec / rad;						//向くべき方向をラジアン角度に変換
 
@@ -327,13 +232,6 @@ void c_Player::f_update(bool Isfall) {
 		p_Position.z = 1000;
 	}
 
-	//DrawFormatString(0, 120, 0x00ffff, "p_Rotation.y %f", p_Rotation.y);
-	//DrawFormatString(0, 140, 0x00ffff, "Rota_Dif %d", Rota_Dif);
-	//DrawFormatString(0, 160, 0x00ffff, "NowRota %d", NowRota);
-	//DrawFormatString(0, 180, 0x00ffff, "int_angle %d", int_angle);
-
-
-	if (HitPoly.HitFlag == 0)f_fall();		//重力
 	c_colision->f_update(VGet(sinf(p_Rotation.y) * -DISTANCE_TO_COLLISION_DETECTION + p_Position.x,
 		                      p_Position.y,
 		                      cosf(p_Rotation.y) * -DISTANCE_TO_COLLISION_DETECTION + p_Position.z));
@@ -353,10 +251,9 @@ void c_Player::f_fall() {
 
 void c_Player::f_draw() {
 
-	//c_colision->CubeDraw();//マテリアルで使用されているテクスチャの番号を取得
-	int Skin1 = MV1GetMaterialDifMapTexture(p_Model, 0);
+	static int Skin1 = MV1GetMaterialDifMapTexture(p_Model, 0);
 	//マテリアルで使用されているテクスチャの番号を取得
-	int Skin2 = MV1GetMaterialDifMapTexture(p_Model, 2);
+	static int Skin2 = MV1GetMaterialDifMapTexture(p_Model, 2);
 
 	// テクスチャで使用するグラフィックハンドルを変更する
 	MV1SetTextureGraphHandle(p_Model, Skin1, image_PTexture, FALSE);
