@@ -31,10 +31,7 @@ public:
 	bool IsAcneHit;						//できものとの衝突判定用変数
 	bool IsMove;				        //移動の制限
 
-	//かみそりのプレイヤーからの加算座標格納変数
-	VECTOR Kamisori_Position = VGet(0,20, 0);
 
-	VECTOR StartPos = VGet(0.0f,0.0f,0.0f), EndPos = VGet(0.0f, 0.0f, 0.0f);		//プレイヤーの当たり判定の線分の始点、終点
 
 	c_Collision* c_colision;
 
