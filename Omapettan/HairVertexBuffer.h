@@ -26,7 +26,7 @@ namespace {
 	// òrÇÃç¿ïWçáÇÌÇπ
 	const float ARM_ADJUST_POS = 4500.0f;
 
-	const float HAIR_ADJUST_POS_ACNE = 250.0f;
+	const float HAIR_ADJUST_POS_ACNE = 500.0f;
 
 	// ñ—ÇÃäpìxí≤êÆóp
 	float HAIR_ANGLE_ADJUST = DX_PI / 180 * 0.9f;

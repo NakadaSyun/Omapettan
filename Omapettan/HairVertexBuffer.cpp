@@ -246,18 +246,20 @@ void c_Hair::f_setPosAndRot() {
 		personalPosZ[i] = GetRand(ARM_LENGTH) + ARM_ADJUST_POS;
 	}
 	for(int i = 0; i < HAIR_NUM; i++){
-		if((acnepersonalpos->acnepersonalPosZ[0] + HAIR_ADJUST_POS_ACNE < personalPosZ[i]) && (acnepersonalpos->acnepersonalPosZ[0] - HAIR_ADJUST_POS_ACNE > personalPosZ[i])
-			|| (acnepersonalpos->acnepersonalPosZ[1] + HAIR_ADJUST_POS_ACNE < personalPosZ[i]) && (acnepersonalpos->acnepersonalPosZ[1] - HAIR_ADJUST_POS_ACNE > personalPosZ[i])
-			|| (acnepersonalpos->acnepersonalPosZ[2] + HAIR_ADJUST_POS_ACNE < personalPosZ[i]) && (acnepersonalpos->acnepersonalPosZ[2] - HAIR_ADJUST_POS_ACNE > personalPosZ[i])
-			|| (acnepersonalpos->acnepersonalPosZ[3] + HAIR_ADJUST_POS_ACNE < personalPosZ[i]) && (acnepersonalpos->acnepersonalPosZ[3] - HAIR_ADJUST_POS_ACNE > personalPosZ[i])
+		if(((acnepersonalpos->acnepersonalPosZ[0] + HAIR_ADJUST_POS_ACNE < personalPosZ[i]) || (acnepersonalpos->acnepersonalPosZ[0] - HAIR_ADJUST_POS_ACNE > personalPosZ[i]))
+			&& ((acnepersonalpos->acnepersonalPosZ[1] + HAIR_ADJUST_POS_ACNE < personalPosZ[i]) || (acnepersonalpos->acnepersonalPosZ[1] - HAIR_ADJUST_POS_ACNE > personalPosZ[i]))
+			&& ((acnepersonalpos->acnepersonalPosZ[2] + HAIR_ADJUST_POS_ACNE < personalPosZ[i]) || (acnepersonalpos->acnepersonalPosZ[2] - HAIR_ADJUST_POS_ACNE > personalPosZ[i]))
+			&& ((acnepersonalpos->acnepersonalPosZ[3] + HAIR_ADJUST_POS_ACNE < personalPosZ[i]) || (acnepersonalpos->acnepersonalPosZ[3] - HAIR_ADJUST_POS_ACNE > personalPosZ[i]))
 			&& (CheckingOverlapsWithPlayer(personalRotation[i],personalPosZ[i]) == false)){
-			for (int j = 1; j > 0;) {
+			while (i > 0) {
 				personalPosZ[i] = GetRand(ARM_LENGTH) + ARM_ADJUST_POS;
-				if ((acnepersonalpos->acnepersonalPosZ[0] + HAIR_ADJUST_POS_ACNE < personalPosZ[i]) && (acnepersonalpos->acnepersonalPosZ[0] - HAIR_ADJUST_POS_ACNE > personalPosZ[i])
-					|| (acnepersonalpos->acnepersonalPosZ[1] + HAIR_ADJUST_POS_ACNE < personalPosZ[i]) && (acnepersonalpos->acnepersonalPosZ[1] - HAIR_ADJUST_POS_ACNE > personalPosZ[i])
-					|| (acnepersonalpos->acnepersonalPosZ[2] + HAIR_ADJUST_POS_ACNE < personalPosZ[i]) && (acnepersonalpos->acnepersonalPosZ[2] - HAIR_ADJUST_POS_ACNE > personalPosZ[i])
-					|| (acnepersonalpos->acnepersonalPosZ[3] + HAIR_ADJUST_POS_ACNE < personalPosZ[i]) && (acnepersonalpos->acnepersonalPosZ[3] - HAIR_ADJUST_POS_ACNE > personalPosZ[i])
-					&& (CheckingOverlapsWithPlayer(personalRotation[i], personalPosZ[i]) == false)) break;
+				if (((acnepersonalpos->acnepersonalPosZ[0] + HAIR_ADJUST_POS_ACNE < personalPosZ[i]) || (acnepersonalpos->acnepersonalPosZ[0] - HAIR_ADJUST_POS_ACNE > personalPosZ[i]))
+					&& ((acnepersonalpos->acnepersonalPosZ[1] + HAIR_ADJUST_POS_ACNE < personalPosZ[i]) || (acnepersonalpos->acnepersonalPosZ[1] - HAIR_ADJUST_POS_ACNE > personalPosZ[i]))
+					&& ((acnepersonalpos->acnepersonalPosZ[2] + HAIR_ADJUST_POS_ACNE < personalPosZ[i]) || (acnepersonalpos->acnepersonalPosZ[2] - HAIR_ADJUST_POS_ACNE > personalPosZ[i]))
+					&& ((acnepersonalpos->acnepersonalPosZ[3] + HAIR_ADJUST_POS_ACNE < personalPosZ[i]) || (acnepersonalpos->acnepersonalPosZ[3] - HAIR_ADJUST_POS_ACNE > personalPosZ[i]))
+					&& (CheckingOverlapsWithPlayer(personalRotation[i], personalPosZ[i]) == false)) {
+					break;
+				}
 			}
 			personalAnimTime[i] = 148.0f - (148.0f * (personalPosZ[i] / 7000.0f));
 		}
