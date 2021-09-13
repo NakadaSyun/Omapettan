@@ -13,7 +13,7 @@ namespace {
 	// ステージ(腕)の長さ
 	const float ARM_LENGTH_ACNE = 6000.0f;
 
-	const float ARM_ADJUST_POS_ACNE = 1000.0f;
+	const float ARM_ADJUST_POS_ACNE = 4500.0f;
 
 	const float PLAYER_POSITION = 4500.0f;
 
@@ -21,7 +21,7 @@ namespace {
 
 	const float END_PLAYER_DISTANCE = 4800.0f;
 
-	const float ACNE_PERSONAL_AREA = 1250.0f;
+	const float ACNE_PERSONAL_AREA = 400.0f;
 
 	const float ACNE_DISTANCE = 200.0f;
 }
