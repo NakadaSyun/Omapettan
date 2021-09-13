@@ -7,8 +7,9 @@ c_Result::c_Result(float rate) {
 	f_loadImage();
 	IsNextScene = false;
 	rateData = rate;
-
-	c_pad = new c_GamePad();
+	SceneSeq = FADE_IN;
+	c_pad = new c_GamePad(); 
+	Brightness = 0;
 }
 
 c_Result::~c_Result() {
@@ -17,8 +18,33 @@ c_Result::~c_Result() {
 
 c_Scene* c_Result::f_update() {
 	c_pad->f_update();
+	switch (SceneSeq)
+	{
+	case FADE_IN:
+		f_fadein();
+		break;
 
-	if (c_pad->IsButton1 && IsNextScene) {
+	case IDOL:
+		if (c_pad->IsButton1 && IsNextScene) {
+			SceneSeq = FADE_OUT;
+		}
+
+		if (!c_pad->IsButton1 && !IsNextScene) {
+			IsNextScene = true;
+		}
+		break;
+
+	case FADE_OUT:
+		f_fadeout();
+		break;
+
+	case NEXT_SCENE:
+		return new c_Title();
+		break;
+	}
+
+	return this;
+	/*if (c_pad->IsButton1 && IsNextScene) {
 		return new c_Title();
 	}
 
@@ -26,7 +52,7 @@ c_Scene* c_Result::f_update() {
 		IsNextScene = true;
 	}
 
-	return this;
+	return this;*/
 }
 
 void c_Result::f_output() const {
@@ -45,4 +71,25 @@ void c_Result::f_loadImage() {
 	Common = LoadGraph("images/bonzin.png");
 	Expert = LoadGraph("images/zyukuren.png");
 	God = LoadGraph("images/God.png");
+}
+
+
+void c_Result::f_fadein() {
+	Brightness += 3;
+	if (Brightness > 255) {
+		SceneSeq = IDOL;
+		Brightness = 255;
+	}
+	SetDrawBright(Brightness, Brightness, Brightness);
+}
+
+void c_Result::f_fadeout() {
+	Brightness -= 3;
+	if (Brightness < 0) {
+		Brightness = 0;
+		SceneSeq = NEXT_SCENE;
+	}
+	else {
+		SetDrawBright(Brightness, Brightness, Brightness);
+	}
 }
