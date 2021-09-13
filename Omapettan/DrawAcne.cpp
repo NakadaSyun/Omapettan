@@ -28,8 +28,8 @@ c_Acne::c_Acne(const int Acne_Model,const int Acne_Graph, const int Bandage_Mode
 	for (int i = 0; i < ACNE_NUM; i++) {
 		acnepersonalPosZ[i] = 0.0f;
 		acnepersonalPosZ[i] = ARM_ADJUST_POS_ACNE + (ACNE_PERSONAL_AREA * i) + ((i + 1) * ACNE_DISTANCE) + GetRand(ACNE_PERSONAL_AREA);
-		if ((acnepersonalPosZ[i] > START_PLAYER_DISTANCE) && (acnepersonalPosZ[i] < PLAYER_POSITION)) acnepersonalPosZ[i] = acnepersonalPosZ[i] - 300;
-		if ((acnepersonalPosZ[i] < END_PLAYER_DISTANCE) && (acnepersonalPosZ[i] > PLAYER_POSITION)) acnepersonalPosZ[i] = acnepersonalPosZ[i] + 300;
+		if ((acnepersonalPosZ[i] > START_PLAYER_DISTANCE) && (acnepersonalPosZ[i] < PLAYER_POSITION)) acnepersonalPosZ[i] = acnepersonalPosZ[i] - ACNE_DISTANCE;
+		if ((acnepersonalPosZ[i] < END_PLAYER_DISTANCE) && (acnepersonalPosZ[i] > PLAYER_POSITION)) acnepersonalPosZ[i] = acnepersonalPosZ[i] + ACNE_DISTANCE;
 
 		acnepersonalRotation[i] = GetRand(int(2 * float(DX_PI) * 100)) * 0.01f;
 
@@ -58,7 +58,7 @@ void c_Acne::f_update() {
 	for (int i = 0; i < ACNE_NUM; i++) {
 		position[i] = VGet(cosf(acnepersonalRotation[i] - stageRotation) * ARM_RADIUS_ACNE,
 								sinf(acnepersonalRotation[i] - stageRotation) * ARM_RADIUS_ACNE,
-									 acnepersonalPosZ[i] + ARM_ADJUST_POS_ACNE);
+									 acnepersonalPosZ[i]);
 
 		c_collision[i]->f_update(position[i]);
 	}
