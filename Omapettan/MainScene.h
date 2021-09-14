@@ -10,6 +10,8 @@ public:
 	~c_Main();
 	virtual c_Scene* f_update() override;
 	virtual void f_output() const override;
+	virtual void f_fadeout() override;		//ˆÃ“]‚·‚é
+	virtual void f_fadein() override;			//–¾‚é‚­‚·‚é
 
 	c_GameManager* c_gm;
 	

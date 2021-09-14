@@ -12,10 +12,17 @@ extern Sound g_Snd;
 //static int hour;
 //static int minute;
 //static int sec;
-
+int LightHandle;
 c_Main::c_Main() {
 	//ゲームマネージャー生成
-	c_gm = new c_GameManager();
+	c_gm = new c_GameManager();// ライトハンドルのライトの効果がわかり易いように標準ライトを無効化
+	SetLightEnable(FALSE);
+
+	// ディレクショナルタイプのライトハンドルを作成
+	LightHandle = CreateDirLightHandle(VGet(1.0f, -1.0f, 1.0f));
+
+	// ライトハンドルのディフューズカラーを青色にする
+	SetLightDifColorHandle(LightHandle, GetColorF(0.0f, 0.0f, 1.0f, 0.0f));
 
 	// ゲームマネジャ初期化
 	c_gm->f_init();
@@ -202,6 +209,7 @@ c_Scene* c_Main::f_update() {
 }
 
 void c_Main::f_output() const{
+	
 	c_gm->f_output();
 }
 
@@ -292,4 +300,19 @@ void c_Main::f_debug(bool flg) {
 void c_Main::f_debugUI() {
 	int timeLimit = 2;
 	c_gm->c_mainUI->timeLimit = timeLimit + (c_gm->c_mainUI->f_getTimer() / 1000);
+}
+
+
+void c_Main::f_fadein() {
+	static int c = 0;
+	c += 3;
+	if (c > 255)c = 255;
+	SetDrawBright(c, c, c);
+}
+
+void c_Main::f_fadeout() {
+	static int c = 255;
+	c -= 3;
+	if (c < 0)c = 0;
+	SetDrawBright(c, c, c);
 }
