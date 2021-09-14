@@ -16,6 +16,9 @@ public:
 	c_GameManager* c_gm;
 	
 private:
+	
+	int Freq, Add;			//ステージBGMピッチ変更
+
 	int StageClearImage;	//ステージクリア画像
 	int StageOverImage;	//ステージクリア画像
 	int StageClearTime = 0; //クリアカウント用

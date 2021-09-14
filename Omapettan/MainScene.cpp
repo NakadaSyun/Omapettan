@@ -32,6 +32,9 @@ c_Main::c_Main() {
 	//パッドのキーが押されているか
 	padKeyFlg = false;
 
+	Freq = 60050;
+	//int Add = 10;
+
 	//GetDateTime(&Date);
 	//yeah = Date.Year;
 	//mon = Date.Mon;
@@ -67,6 +70,10 @@ c_Scene* c_Main::f_update() {
 	//ステージBGM処理
 	if (CheckSoundMem(g_Snd.StageBGM) == 0) {
 		PlaySoundMem(g_Snd.StageBGM, DX_PLAYTYPE_LOOP);
+	}
+	if (c_gm->c_mainUI->f_getTimer() > 60000)
+	{
+		SetFrequencySoundMem(Freq, g_Snd.StageBGM);
 	}
 
 	if (CheckHitKey(KEY_INPUT_SPACE) == 1 && IsNextScene) {
