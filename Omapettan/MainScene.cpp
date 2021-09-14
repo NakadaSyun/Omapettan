@@ -42,7 +42,7 @@ c_Main::c_Main() {
 
 
 
-	
+	ChangeVolumeSoundMem(255, g_Snd.StageBGM);
 
 }
 
@@ -78,50 +78,6 @@ c_Scene* c_Main::f_update() {
 		IsNextScene = true;
 	}
 
-	//デバッグモードの受付時間
-	//if (DebugLoadTime > 120)
-	{
-		//if (c_gm->c_player->c_pad->crossKey == LEFT) {
-		//	//デバッグモード表示
-		//	if (!DebugFlg && !KeyDownFlg)
-		//	{
-		//		DebugFlg = true;
-		//		KeyDownFlg = true;
-		//	}
-		//	//デバッグモード非表示
-		//	else if (DebugFlg && !KeyDownFlg)
-		//	{
-		//		DebugFlg = false;
-		//		KeyDownFlg = true;
-		//	}
-		//}
-		//if (c_gm->c_player->c_pad->crossKey == 0) {
-		//	KeyDownFlg = false;
-		//}
-		//if (CheckHitKey(KEY_INPUT_RETURN) == 1) {
-		//	//デバッグモード表示
-		//	if (!DebugFlg && !KeyDownFlg)
-		//	{
-		//		DebugFlg = true;
-		//		KeyDownFlg = true;
-		//	}
-		//	//デバッグモード非表示
-		//	else if (DebugFlg && !KeyDownFlg)
-		//	{
-		//		DebugFlg = false;
-		//		KeyDownFlg = true;
-		//	}
-		//}
-		//if (CheckHitKey(KEY_INPUT_RETURN) == 0) {
-		//	KeyDownFlg = false;
-		//}
-	}
-	//else
-	{
-		//読み込み時間加算
-		//DebugLoadTime++;
-	}
-
 	//デバッグモードを表示するかしないか
 	f_debug(DebugFlg);
 
@@ -129,13 +85,13 @@ c_Scene* c_Main::f_update() {
 	//毛が全部剃られた状態ならResultシーンへ
 	if (c_gm->c_hair->f_hairStatusSee()) {
 		isClearFlg = true;
-
 		if (StageClearTime < 120)
 		{
 			StageClearTime++;
 		}
 		else if (StageClearTime < 240)
 		{
+			ChangeVolumeSoundMem(240 - (StageClearTime - 120) * 2, g_Snd.StageBGM);
 			StageClearTime++;
 			DrawGraph(0, 0, StageClearImage, true);
 			if (CheckSoundMem(g_Snd.StageClear) == 0) {
@@ -155,6 +111,8 @@ c_Scene* c_Main::f_update() {
 	if (c_gm->c_acne->AcneStatus() && isClearFlg == false) {
 		c_gm->c_player->IsMove = false;
 		
+
+
 		if (StageClearTime < 120)
 		{
 			StageClearTime++;
