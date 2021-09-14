@@ -16,14 +16,7 @@ int LightHandle;
 c_Main::c_Main() {
 	//ゲームマネージャー生成
 	c_gm = new c_GameManager();// ライトハンドルのライトの効果がわかり易いように標準ライトを無効化
-	SetLightEnable(FALSE);
-
-	// ディレクショナルタイプのライトハンドルを作成
-	LightHandle = CreateDirLightHandle(VGet(1.0f, -1.0f, 1.0f));
-
-	// ライトハンドルのディフューズカラーを青色にする
-	SetLightDifColorHandle(LightHandle, GetColorF(0.0f, 0.0f, 1.0f, 0.0f));
-
+	
 	// ゲームマネジャ初期化
 	c_gm->f_init();
 	IsNextScene = false;
