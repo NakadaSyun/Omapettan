@@ -3,6 +3,7 @@
 
 #pragma once
 #include "Dxlib.h"
+#include "MainUI.h"
 
 class c_CameraCon {
 public:
@@ -11,9 +12,13 @@ public:
 
 	void f_setPosition();
 	void f_setRotaion();
+	void f_rotate(float* x, float* y, const float ang, const float mx, const float my);
 
 	float Camangle_H = 0.0f;	//カメラの水平角度
 	float Camangle_V = 0.0f;	//カメラの垂直角度
+
+
+	c_MainUI* c_mainui;
 
 	VECTOR position;
 

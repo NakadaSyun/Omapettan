@@ -13,6 +13,9 @@ public:
 	void f_draw();		// 描画
 
 	void MenuUI();		// メニュー
+
+	int f_GetStartFlg();//startFlgを取得する関数
+
 	bool pauseFlg;		// 一時停止フラグ
 
 	bool hairStateFlg[HAIR_NUM] = { 0 };

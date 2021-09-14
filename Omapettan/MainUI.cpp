@@ -49,6 +49,7 @@ void c_MainUI::f_update() {
 
 	if (threeCountTime < 200) {
 		c_MainUI::ThreeCount();
+		c_MainUI::f_GetStartFlg();
 	}
 
 	if(startFlg == true) {
