@@ -139,6 +139,8 @@ void c_GameManager::f_update()
 		c_acne->f_update();
 
 	}
+	if (c_mainUI->startFlg == false) c_player->IsMove = false;
+	else c_player->IsMove = true;
 
 	c_mainUI->f_update();
 	for (int i = 0; i < HAIR_NUM; i++) {

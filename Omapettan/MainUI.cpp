@@ -39,18 +39,27 @@ void c_MainUI::f_init() {
 
 	isBackTitle = false;
 	isNextResult = false;
+
+	threeCountTime = 0;
+	startFlg = false;
 }
 
 void c_MainUI::f_update() {
 	c_Pad->f_update();
 
-	// それぞれのUI処理
-	c_MainUI::MenuUI();
+	if (threeCountTime < 200) {
+		c_MainUI::ThreeCount();
+	}
 
-	if (pauseFlg == false) {
-		c_MainUI::TimeCountUI();
-		c_MainUI::AchievementUI();
-		c_MainUI::LifeUI();
+	if(startFlg == true) {
+		// それぞれのUI処理
+		c_MainUI::MenuUI();
+
+		if (pauseFlg == false) {
+			c_MainUI::TimeCountUI();
+			c_MainUI::AchievementUI();
+			c_MainUI::LifeUI();
+		}
 	}
 }
 
@@ -66,6 +75,9 @@ void c_MainUI::f_draw() {
 	c_MainUI::Life_Draw();
 	c_MainUI::Menu_Draw();
 
+	if (threeCountTime < 200) {
+		c_MainUI::ThreeCount_Draw();
+	}
 	SetFontSize(16);
 	ChangeFontType(DX_FONTTYPE_NORMAL);
 }
@@ -183,6 +195,16 @@ void c_MainUI::LifeUI() {
 	else animSpeed += 0.5f;
 }
 
+void c_MainUI::ThreeCount() {
+	if (threeCountTime < 200) threeCountTime++;
+	else threeCountTime = 200;
+
+	if (threeCountTime > 150) {
+		time = GetNowCount();
+		startFlg = true;
+	}
+}
+
 void c_MainUI::Menu_Draw() {
 	SetFontSize(16);// サイズ16
 	DrawFormatString(5, 460, 0xffffff, "[START] ポーズ");
@@ -266,6 +288,18 @@ void c_MainUI::Life_Draw() {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, damageAnim);
 	DrawBox(0, 0, 640, 480, 0xff0000, TRUE);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+}
+
+void c_MainUI::ThreeCount_Draw() {
+	SetFontSize(96);// サイズ96
+	if (threeCountTime < 150) {
+		DrawFormatString(295, 120, 0xffffff, "%d", 3 - (threeCountTime / 50));
+	}
+	else {
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 + ((150 - threeCountTime) * 5));
+		DrawFormatString(260, 120 + ((150 - threeCountTime) * 2), 0xffffff, "GO!");
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
 }
 
 int c_MainUI::f_getTimer() {

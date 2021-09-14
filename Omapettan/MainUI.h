@@ -28,15 +28,19 @@ public:
 
 	int f_getTimer(); //timerの値を取得
 
+	int startFlg;
+
 private:
 	void TimeCountUI();	// 時間カウント
 	void AchievementUI();// 達成率
 	void LifeUI();		// ライフ
+	void ThreeCount();	// 3秒カウント
 
 	void Menu_Draw();
 	void TimeCount_Draw();
 	void Achivement_Draw();
 	void Life_Draw();
+	void ThreeCount_Draw();
 
 	int time;			// 現在の時間
 	int timer;			// 時間カウント
@@ -55,4 +59,6 @@ private:
 	int mainUI_Img;
 
 	int menuCount;
+
+	int threeCountTime;
 };
