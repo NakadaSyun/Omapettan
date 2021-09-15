@@ -45,6 +45,10 @@ private:
 	void Life_Draw();
 	void ThreeCount_Draw();
 
+	void DrawSetVolume();              // 音量設定画面表示
+	void SetVolumeOperation();         // 音量設定操作
+	bool InputAcceptManage();          // 入力受け入れ管理   true:受け入れ   false;拒否
+
 	int time;			// 現在の時間
 	int timer;			// 時間カウント
 	int minute;			// 分
@@ -53,7 +57,7 @@ private:
 
 	int maxLife;		// 最大ライフ
 	int life;			// ライフ
-	float animSpeed;		// ライフのアニメーションスピード
+	float animSpeed;	// ライフのアニメーションスピード
 	int damageAnim;		// ダメージ
 
 	int menuNum;		// ポーズ時の選択している番号
@@ -64,4 +68,9 @@ private:
 	int menuCount;
 
 	int threeCountTime;
+
+	bool setVolumeFlg;      // 音量設定画面を開く      trueで開く
+	float sliderValue;      // スライダーの値
+	int inputRefusalTime;   // 入力拒否時間
+	bool padInputFlg;       // 入力フラグ              true:あり   false:なし
 };

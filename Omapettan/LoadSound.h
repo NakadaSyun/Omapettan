@@ -3,6 +3,7 @@
 
 struct Sound {
 public:
+	void SetSound();        //音量設定
 
 	int KAMISORI_Hold;		//剃刀を構えたときの音
 	int HIGESORI_SE;		//髭を剃った時の音
@@ -18,6 +19,7 @@ public:
 	int TitleBGM;			//タイトル画面のBGM
 	int StageBGM;			//ステージ内でのBGM
 
+	int volume = 5;             // 音量
 
 };
 

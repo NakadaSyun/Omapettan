@@ -24,12 +24,34 @@ int f_LoadSound(void) {		//音の読み込み
 	if ((g_Snd.StageBGM = LoadSoundMem("Sound/StageBGM.mp3")) == -1)return -1;							//ステージBGM
 
 	//下記のSE,BGMの音量を下げる
-	ChangeVolumeSoundMem(100, g_Snd.Player_footStep);
+	g_Snd.SetSound();
+	/*ChangeVolumeSoundMem(100, g_Snd.Player_footStep);
 	ChangeVolumeSoundMem(100, g_Snd.GameOver);
 	ChangeVolumeSoundMem(100, g_Snd.TitleBGM);
-	ChangeVolumeSoundMem(150, g_Snd.StageBGM);
+	ChangeVolumeSoundMem(150, g_Snd.StageBGM);*/
 
 
 	return 0;
 }
 
+// 音量設定
+void Sound::SetSound() {
+	printf("%d\n", g_Snd.volume);
+
+	ChangeVolumeSoundMem(int(              25.5 * float(g_Snd.volume)), g_Snd.KAMISORI_Hold);
+	ChangeVolumeSoundMem(int(              25.5 * float(g_Snd.volume)), g_Snd.HIGESORI_SE);
+	ChangeVolumeSoundMem(int(              25.5 * float(g_Snd.volume)), g_Snd.StageClear);
+	ChangeVolumeSoundMem(int(100.0 / 255 * 25.5 * float(g_Snd.volume)), g_Snd.Player_footStep);
+	ChangeVolumeSoundMem(int(              25.5 * float(g_Snd.volume)), g_Snd.Menumove);
+	ChangeVolumeSoundMem(int(              25.5 * float(g_Snd.volume)), g_Snd.Menu_Select);
+	ChangeVolumeSoundMem(int(              25.5 * float(g_Snd.volume)), g_Snd.Menu_Open);
+	ChangeVolumeSoundMem(int(              25.5 * float(g_Snd.volume)), g_Snd.Menu_Cansel);
+	ChangeVolumeSoundMem(int(              25.5 * float(g_Snd.volume)), g_Snd.Customer_Damage);
+	ChangeVolumeSoundMem(int(              25.5 * float(g_Snd.volume)), g_Snd.Customer_Cry[0]);
+	ChangeVolumeSoundMem(int(              25.5 * float(g_Snd.volume)), g_Snd.Customer_Cry[1]);
+	ChangeVolumeSoundMem(int(              25.5 * float(g_Snd.volume)), g_Snd.Customer_Cry[2]);
+	ChangeVolumeSoundMem(int(              25.5 * float(g_Snd.volume)), g_Snd.Customer_Cry[3]);
+	ChangeVolumeSoundMem(int(100.0 / 255 * 25.5 * float(g_Snd.volume)), g_Snd.GameOver);
+	ChangeVolumeSoundMem(int(100.0 / 255 * 25.5 * float(g_Snd.volume)), g_Snd.TitleBGM);
+	ChangeVolumeSoundMem(int( 70.0 / 255 * 25.5 * float(g_Snd.volume)), g_Snd.StageBGM);
+}

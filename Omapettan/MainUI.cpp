@@ -42,6 +42,10 @@ void c_MainUI::f_init() {
 
 	threeCountTime = 0;
 	startFlg = false;
+
+	setVolumeFlg = false;
+	sliderValue = 50;
+	padInputFlg = false;
 }
 
 void c_MainUI::f_update() {
@@ -103,32 +107,50 @@ void c_MainUI::MenuUI() {
 
 	// ポーズ中の操作
 	if (pauseFlg == true) {
-		// 上を押したとき
-		if (c_Pad->LeftStick == UP && menuNum == 1) {
-			menuNum = 0;
-			PlaySoundMem(g_Snd.Menumove, DX_PLAYTYPE_BACK);
-		}
-		// 下を押したとき
-		if (c_Pad->LeftStick == DOWN && menuNum == 0) {
-			PlaySoundMem(g_Snd.Menumove, DX_PLAYTYPE_BACK);
-			menuNum = 1;
-		}
-		// [A]を押したとき
-		if (c_Pad->IsButton1 == true) {
-			PlaySoundMem(g_Snd.Menu_Select, DX_PLAYTYPE_BACK);
+		if (InputAcceptManage() == true) {
+			if (setVolumeFlg == true) {
+				SetVolumeOperation();
+			}
+			else {
+				// 上を押したとき
+				if (c_Pad->LeftStick == UP) {
+					if(menuNum-- == 0)
+						menuNum = 2;
+					padInputFlg = true;
+					PlaySoundMem(g_Snd.Menumove, DX_PLAYTYPE_BACK);
+				}
+				// 下を押したとき
+				if (c_Pad->LeftStick == DOWN){
+					if (menuNum++ == 2)
+						menuNum = 0;
+					padInputFlg = true;
+					PlaySoundMem(g_Snd.Menumove, DX_PLAYTYPE_BACK);
+				}
+				// [A]を押したとき
+				if (c_Pad->IsButton1 == true) {
+					padInputFlg = true;
+					PlaySoundMem(g_Snd.Menu_Select, DX_PLAYTYPE_BACK);
 
-			switch (menuNum){
-			case 0:
-				// [ゲームを再開]選択
-				time = time + ((GetNowCount() - time) - timer);
-				pauseFlg = false;
-				break;
-			case 1:
-				// [タイトルへ戻る]選択
-				isBackTitle = true;
-				break;
-			default:
-				break;
+					switch (menuNum) {
+					case 0:
+						// [ゲームを再開]選択
+						time = time + ((GetNowCount() - time) - timer);
+						pauseFlg = false;
+						break;
+
+					case 1:
+						// [サウンド]選択
+						setVolumeFlg = true;
+						break;
+
+					case 2:
+						// [タイトルへ戻る]選択
+						isBackTitle = true;
+						break;
+					default:
+						break;
+					}
+				}
 			}
 		}
 	}
@@ -220,24 +242,37 @@ void c_MainUI::Menu_Draw() {
 		DrawFormatString(185, 10, 0xffffff, "- ポーズ -");
 		SetFontSize(32);
 		//DrawFormatString(222, 250, 0xffffff, "サウンド");
-		switch (menuNum)
-		{
-		case 0:
-			// [ゲームを再開]選択
-			DrawFormatString(205, 150, 0xff0000, "ゲームを再開");
-			DrawFormatString(190, 200, 0xffffff, "タイトルへ戻る");
-			break;
+		
+		if (setVolumeFlg == true)
+			DrawSetVolume();
+		else
+			switch (menuNum)
+			{
+			case 0:
+				// [ゲームを再開]選択
+				DrawFormatString(205, 150, 0xff0000, "ゲームを再開");
+				DrawFormatString(220, 200, 0xffffff, "サウンド");
+				DrawFormatString(190, 250, 0xffffff, "タイトルへ戻る");
+				break;
 
-		case 1:
-			// [タイトルへ戻る]選択
-			DrawFormatString(205, 150, 0xffffff, "ゲームを再開");
-			DrawFormatString(190, 200, 0xff0000, "タイトルへ戻る");
-			break;
+			case 1:
+				// [音量設定]選択
+				DrawFormatString(205, 150, 0xffffff, "ゲームを再開");
+				DrawFormatString(220, 200, 0xff0000, "サウンド");
+				DrawFormatString(190, 250, 0xffffff, "タイトルへ戻る");
+				break;
 
-		default:
+			case 2:
+				// [タイトルへ戻る]選択
+				DrawFormatString(205, 150, 0xffffff, "ゲームを再開");
+				DrawFormatString(220, 200, 0xffffff, "サウンド");
+				DrawFormatString(190, 250, 0xff0000, "タイトルへ戻る");
+				break;
 
-			break;
-		}
+			default:
+
+				break;
+			}
 	}
 
 }
@@ -305,4 +340,69 @@ void c_MainUI::ThreeCount_Draw() {
 
 int c_MainUI::f_getTimer() {
 	return timer;
+}
+
+void c_MainUI::DrawSetVolume() {
+
+	DrawFormatString(220, 190, 0xffffff, "サウンド");
+	DrawFormatString(220, 230, 0xffffff, "--------");
+	DrawFormatString(220 + g_Snd.volume * 12, 230, 0xffffff, "●");
+	
+}
+
+void c_MainUI::SetVolumeOperation() {
+
+	// 右を押したとき
+	if (c_Pad->LeftStick == RIGHT) {
+		if (g_Snd.volume < 10)
+			g_Snd.volume++;
+		padInputFlg = true;
+
+		PlaySoundMem(g_Snd.Menumove, DX_PLAYTYPE_BACK);
+	}
+	// 左を押したとき
+	if (c_Pad->LeftStick == LEFT) {
+		if (g_Snd.volume > 0)
+			g_Snd.volume--;
+		padInputFlg = true;
+
+		PlaySoundMem(g_Snd.Menumove, DX_PLAYTYPE_BACK);
+	}
+	// [A]もしくは[B]を押したとき
+	if (c_Pad->IsButton1 == true || c_Pad->IsButton2 == true) {
+		setVolumeFlg = false;
+		padInputFlg = true;
+		g_Snd.SetSound();
+		
+		PlaySoundMem(g_Snd.Menu_Select, DX_PLAYTYPE_BACK);
+	}
+	//// [B]を押したとき
+	//if (c_Pad->IsButton1 == true) {
+	//	setVolumeFlg = false;
+	//	padInputFlg = true;
+
+	//	PlaySoundMem(g_Snd.Menu_Select, DX_PLAYTYPE_BACK);
+	//}
+}
+
+bool c_MainUI::InputAcceptManage() {
+
+	//if (inputRefusalTime > 0)printf("%d\n", inputRefusalTime);
+
+	// 入力を受け付けるか判断
+	// 入力拒否時間が 0 より大きければ受け入れない（false）
+	//                  以下ならば受け入れる　    （true）
+	if (inputRefusalTime > 0) {
+		inputRefusalTime--;
+		return false;
+	}
+	else if (padInputFlg == false) {
+		return true;
+	}
+	else
+	{
+		padInputFlg = false;
+		inputRefusalTime = 15;
+		return false;
+	}
 }
