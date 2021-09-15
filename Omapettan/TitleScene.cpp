@@ -5,8 +5,8 @@
 extern Sound g_Snd;
 
 
-static int SelectcursorX = 270;
-static int SelectcursorY = 400;
+static int SelectcursorX = 240;
+static int SelectcursorY = 300;
 
 c_Title::c_Title() {
 	f_loadImage();
@@ -37,7 +37,7 @@ c_Scene* c_Title::f_update() {
 		break;
 
 	case IDOL:
-		c_Pad->f_update();
+		c_Pad->f_update(); 
 		f_CheckSound();
 		f_SelectPoint();
 		break;
@@ -55,47 +55,15 @@ c_Scene* c_Title::f_update() {
 	return this;
 
 
-	/*if (CheckSoundMem(g_Snd.TitleBGM) == 0) {
-		PlaySoundMem(g_Snd.TitleBGM, DX_PLAYTYPE_LOOP);
-	}
-
-	if (SelectcursorY == 400) {
-		if (c_Pad->IsButton1 && IsNextScene) {
-			PlaySoundMem(g_Snd.Menu_Select, DX_PLAYTYPE_BACK);
-			StopSoundMem(g_Snd.TitleBGM);
-			return new c_Main();
-		}
-
-		if (!c_Pad->IsButton1 && !IsNextScene) {
-			IsNextScene = true;
-		}
-	}
-
-	if (SelectcursorY == 450) {
-		if (c_Pad->IsButton1) {
-			DxLib_End();
-			PlaySoundMem(g_Snd.Menu_Select, DX_PLAYTYPE_BACK);
-		}
-	}
-
-
-	if (c_Pad->LeftStick == 1 && SelectcursorY == 450) {
-		SelectcursorY = 400;
-		PlaySoundMem(g_Snd.Menumove, DX_PLAYTYPE_BACK);
-	}
-	if (c_Pad->LeftStick == 5 && SelectcursorY == 400) {
-		SelectcursorY = 450;
-		PlaySoundMem(g_Snd.Menumove, DX_PLAYTYPE_BACK);
-	}*/
-
-
+	
 }
 
 void c_Title::f_output() const{
 	DrawGraph(0, 0, BG, true);
+	
 
-	DrawFormatString(300,400,0x000000,"ゲームスタート");
-	DrawFormatString(300,450, 0x000000, "ゲーム終了");
+	DrawFormatString(270,300,0x000000,"ゲームスタート");
+	DrawFormatString(270,350, 0x000000, "ゲーム終了");
 	DrawBox(SelectcursorX, SelectcursorY, SelectcursorX+20, SelectcursorY+20,
 		0x000000,TRUE);
 
@@ -134,7 +102,7 @@ void c_Title::f_CheckSound() {
 }
 
 void c_Title::f_SelectPoint() {
-	if (SelectcursorY == 400) {
+	if (SelectcursorY == 300) {
 		if (c_Pad->IsButton1 && IsNextScene) {
 			PlaySoundMem(g_Snd.Menu_Select, DX_PLAYTYPE_BACK);
 			StopSoundMem(g_Snd.TitleBGM);
@@ -146,7 +114,7 @@ void c_Title::f_SelectPoint() {
 		}
 	}
 
-	if (SelectcursorY == 450) {
+	if (SelectcursorY == 350) {
 		if (c_Pad->IsButton1) {
 			DxLib_End();
 			PlaySoundMem(g_Snd.Menu_Select, DX_PLAYTYPE_BACK);
@@ -154,12 +122,12 @@ void c_Title::f_SelectPoint() {
 	}
 
 
-	if (c_Pad->LeftStick == 1 && SelectcursorY == 450) {
-		SelectcursorY = 400;
+	if (c_Pad->LeftStick == 1 && SelectcursorY == 350) {
+		SelectcursorY = 300;
 		PlaySoundMem(g_Snd.Menumove, DX_PLAYTYPE_BACK);
 	}
-	if (c_Pad->LeftStick == 5 && SelectcursorY == 400) {
-		SelectcursorY = 450;
+	if (c_Pad->LeftStick == 5 && SelectcursorY == 300) {
+		SelectcursorY = 350;
 		PlaySoundMem(g_Snd.Menumove, DX_PLAYTYPE_BACK);
 	}
 }
