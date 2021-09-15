@@ -37,12 +37,12 @@ int f_LoadSound(void) {		//âπÇÃì«Ç›çûÇ›
 
 // âπó ê›íË
 void Sound::SetSound() {
-	printf("%d\n", g_Snd.volume);
 
 	ChangeVolumeSoundMem(int(              25.5 * float(g_Snd.volume)), g_Snd.KAMISORI_Hold);
 	ChangeVolumeSoundMem(int(              25.5 * float(g_Snd.volume)), g_Snd.HIGESORI_SE);
 	ChangeVolumeSoundMem(int(              25.5 * float(g_Snd.volume)), g_Snd.StageClear);
-	ChangeVolumeSoundMem(int(100.0 / 255 * 25.5 * float(g_Snd.volume)), g_Snd.Player_footStep);
+	ChangeVolumeSoundMem(int(150.0 / 255 * 25.5 * float(g_Snd.volume)), g_Snd.Player_footStep);
+	ChangeVolumeSoundMem(int(150.0 / 255 * 25.5 * float(g_Snd.volume)), g_Snd.Player_footStep_DS);
 	ChangeVolumeSoundMem(int(              25.5 * float(g_Snd.volume)), g_Snd.Menumove);
 	ChangeVolumeSoundMem(int(              25.5 * float(g_Snd.volume)), g_Snd.Menu_Select);
 	ChangeVolumeSoundMem(int(              25.5 * float(g_Snd.volume)), g_Snd.Menu_Open);
@@ -55,4 +55,10 @@ void Sound::SetSound() {
 	ChangeVolumeSoundMem(int(100.0 / 255 * 25.5 * float(g_Snd.volume)), g_Snd.GameOver);
 	ChangeVolumeSoundMem(int(100.0 / 255 * 25.5 * float(g_Snd.volume)), g_Snd.TitleBGM);
 	ChangeVolumeSoundMem(int(150.0 / 255 * 25.5 * float(g_Snd.volume)), g_Snd.StageBGM);
+}
+
+// âπó ê›íË
+void Sound::SetSound_Menumove(int volume) {
+	ChangeVolumeSoundMem(int(              25.5 * float(volume)), g_Snd.Menumove);
+	ChangeVolumeSoundMem(int(150.0 / 255 * 25.5 * float(volume)), g_Snd.StageBGM);
 }

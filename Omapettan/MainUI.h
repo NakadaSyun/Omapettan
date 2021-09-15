@@ -70,7 +70,7 @@ private:
 	int threeCountTime;
 
 	bool setVolumeFlg;      // 音量設定画面を開く      trueで開く
-	float sliderValue;      // スライダーの値
+	int sliderValue;        // スライダーの値
 	int inputRefusalTime;   // 入力拒否時間
 	bool padInputFlg;       // 入力フラグ              true:あり   false:なし
 };

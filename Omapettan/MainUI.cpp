@@ -91,14 +91,18 @@ void c_MainUI::MenuUI() {
 	// [START]で一時停止、もう一度押すと再開
 	if (c_Pad->IsButtonOption == true && menuCount == 0) {
 		if (pauseFlg == false) {
-			PlaySoundMem(g_Snd.Menu_Open, DX_PLAYTYPE_BACK);
 			pauseFlg = true;
+			setVolumeFlg = false;
+			sliderValue = g_Snd.volume;
+
+			PlaySoundMem(g_Snd.Menu_Open, DX_PLAYTYPE_BACK);
 		}
 		else {
-			PlaySoundMem(g_Snd.Menu_Cansel, DX_PLAYTYPE_BACK);
 			// 時間 = 時間 + ((起動時間 - 時間) - 経過時間)
 			time = time + ((GetNowCount() - time) - timer);
 			pauseFlg = false;
+
+			PlaySoundMem(g_Snd.Menu_Cansel, DX_PLAYTYPE_BACK);
 		}
 
 		menuCount++;
@@ -346,48 +350,44 @@ void c_MainUI::DrawSetVolume() {
 
 	DrawFormatString(220, 190, 0xffffff, "サウンド");
 	DrawFormatString(220, 230, 0xffffff, "--------");
-	DrawFormatString(220 + g_Snd.volume * 12, 230, 0xffffff, "●");
+	DrawFormatString(220 + sliderValue * 12, 230, 0xffffff, "●");
 	
 }
 
 void c_MainUI::SetVolumeOperation() {
 
+
 	// 右を押したとき
 	if (c_Pad->LeftStick == RIGHT) {
-		if (g_Snd.volume < 10)
-			g_Snd.volume++;
+		if (sliderValue < 10)
+			sliderValue++;
 		padInputFlg = true;
 
+		g_Snd.SetSound_Menumove(sliderValue);
 		PlaySoundMem(g_Snd.Menumove, DX_PLAYTYPE_BACK);
 	}
 	// 左を押したとき
 	if (c_Pad->LeftStick == LEFT) {
-		if (g_Snd.volume > 0)
-			g_Snd.volume--;
+		if (sliderValue > 0)
+			sliderValue--;
 		padInputFlg = true;
 
+		g_Snd.SetSound_Menumove(sliderValue);
 		PlaySoundMem(g_Snd.Menumove, DX_PLAYTYPE_BACK);
 	}
-	// [A]もしくは[B]を押したとき
-	if (c_Pad->IsButton1 == true || c_Pad->IsButton2 == true) {
+	// [A]を押したとき
+	if (c_Pad->IsButton1 == true) {
 		setVolumeFlg = false;
 		padInputFlg = true;
-		g_Snd.SetSound();
+		g_Snd.volume = sliderValue;
 		
+		g_Snd.SetSound();
 		PlaySoundMem(g_Snd.Menu_Select, DX_PLAYTYPE_BACK);
 	}
-	//// [B]を押したとき
-	//if (c_Pad->IsButton1 == true) {
-	//	setVolumeFlg = false;
-	//	padInputFlg = true;
-
-	//	PlaySoundMem(g_Snd.Menu_Select, DX_PLAYTYPE_BACK);
-	//}
 }
 
 bool c_MainUI::InputAcceptManage() {
 
-	//if (inputRefusalTime > 0)printf("%d\n", inputRefusalTime);
 
 	// 入力を受け付けるか判断
 	// 入力拒否時間が 0 より大きければ受け入れない（false）
