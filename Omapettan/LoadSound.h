@@ -9,6 +9,7 @@ public:
 	int HIGESORI_SE;		//髭を剃った時の音
 	int StageClear;			 //ステージクリア時のSE
 	int Player_footStep;	//プレイヤーの足音
+	int Player_footStep_DS; //プレイヤーの足音（倍速）
 	int Menumove;			//メニュー内移動時SE
 	int Menu_Select;		//メニュー内での決定時SE
 	int Menu_Open;			//メニュー開くSE

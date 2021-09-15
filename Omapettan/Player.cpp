@@ -162,8 +162,11 @@ void c_Player::f_update(bool Isfall) {
 	Rota_Dif = Rota_Dif % 360;				//差分が360°以上行かないようにする
 
 	if (MoveKeyFlag == TRUE) {				//移動キーが押されている時
-		if (CheckSoundMem(g_Snd.Player_footStep) == 0) {
+		if ((CheckSoundMem(g_Snd.Player_footStep) == 0) && (c_pad->IsButton2 == FALSE)){
 			PlaySoundMem(g_Snd.Player_footStep, DX_PLAYTYPE_BACK);
+		}
+		if ((CheckSoundMem(g_Snd.Player_footStep_DS) == 0) && (c_pad->IsButton2 == TRUE)){
+			PlaySoundMem(g_Snd.Player_footStep_DS, DX_PLAYTYPE_BACK);
 		}
 		
 		//現在の角度から向きたい方向に向く処理

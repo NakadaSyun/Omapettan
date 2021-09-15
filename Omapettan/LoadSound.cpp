@@ -10,6 +10,7 @@ int f_LoadSound(void) {		//音の読み込み
 	if ((g_Snd.HIGESORI_SE = LoadSoundMem("Sound/hige1.mp3")) == -1)return -1;							//毛を剃ったときの音
 	if ((g_Snd.StageClear = LoadSoundMem("Sound/歓声と拍手.mp3")) == -1)return -1;						//ステージクリア時の音
 	if ((g_Snd.Player_footStep = LoadSoundMem("Sound/footstep.mp3")) == -1)return -1;					//プレイヤーの足音
+	if ((g_Snd.Player_footStep_DS = LoadSoundMem("Sound/footstep2.mp3")) == -1)return -1;				//プレイヤーの足音（倍速）
 	if ((g_Snd.Menumove = LoadSoundMem("Sound/決定、ボタン押下22.mp3")) == -1)return -1;				//メニュー内の移動時SE
 	if ((g_Snd.Menu_Select = LoadSoundMem("Sound/決定、ボタン押下23.mp3")) == -1)return -1;				//メニュー内の決定時SE
 	if ((g_Snd.Menu_Open = LoadSoundMem("Sound/決定、ボタン押下26.mp3")) == -1)return -1;				//ポーズ画面開いたときのSE
@@ -53,5 +54,5 @@ void Sound::SetSound() {
 	ChangeVolumeSoundMem(int(              25.5 * float(g_Snd.volume)), g_Snd.Customer_Cry[3]);
 	ChangeVolumeSoundMem(int(100.0 / 255 * 25.5 * float(g_Snd.volume)), g_Snd.GameOver);
 	ChangeVolumeSoundMem(int(100.0 / 255 * 25.5 * float(g_Snd.volume)), g_Snd.TitleBGM);
-	ChangeVolumeSoundMem(int( 70.0 / 255 * 25.5 * float(g_Snd.volume)), g_Snd.StageBGM);
+	ChangeVolumeSoundMem(int(150.0 / 255 * 25.5 * float(g_Snd.volume)), g_Snd.StageBGM);
 }
