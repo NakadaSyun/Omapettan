@@ -45,7 +45,7 @@ c_Main::c_Main() {
 
 
 
-	ChangeVolumeSoundMem(255, g_Snd.StageBGM);
+	ChangeVolumeSoundMem(int(150.0 / 255 * 25.5 * float(g_Snd.volume)), g_Snd.StageBGM);
 
 }
 
