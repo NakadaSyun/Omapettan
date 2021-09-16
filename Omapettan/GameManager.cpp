@@ -5,6 +5,19 @@
 extern Sound g_Snd;
 VECTOR Playerposition;
 
+c_GameManager::~c_GameManager() {
+	delete c_Dc;
+	delete c_player;
+	delete c_camera;
+	delete c_dispUI;
+	delete c_stage;
+	delete c_hair;
+	delete c_acne;
+	delete c_pad;
+	delete c_mainUI;
+	delete c_hitCheck;
+}
+
 // ‰Šú‰»
 void c_GameManager::f_init()
 {

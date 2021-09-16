@@ -44,7 +44,13 @@ c_Acne::c_Acne(const int Acne_Model,const int Acne_Graph, const int Bandage_Mode
 }
 
 c_Acne::c_Acne(){
+}
 
+c_Acne::~c_Acne() {
+	for (int i = 0; i < ACNE_NUM; i++) {
+		delete c_collision[i];
+	}
+	printf("c_Acne Delete");
 }
 void c_Acne::f_init() {
 	//for (int i = 0; i < ACNE_NUM; i++) {

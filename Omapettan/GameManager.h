@@ -23,6 +23,7 @@ extern VECTOR Playerposition;
 class c_GameManager
 {
 public:
+	~c_GameManager();
 	void f_init();				//ƒQ[ƒ€‚Ì‰Šú‰»
 	void f_RoadModel();			//ƒ‚ƒfƒ‹‚Ì“Ç‚İ
 	void f_RoadImage();         //‰æ‘œ‚Ì“Ç‚İ‚İ
