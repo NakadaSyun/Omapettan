@@ -59,8 +59,8 @@ void c_CameraCon::f_update() {
 
 
 
-	DrawFormatString(0,70,0xffffff,"カメラX座標 %f", position.x);
-	DrawFormatString(0, 90, 0xffffff, "カメラY座標 %f", position.y);
+	//DrawFormatString(0,70,0xffffff,"カメラX座標 %f", position.x);
+	//DrawFormatString(0, 90, 0xffffff, "カメラY座標 %f", position.y);
 
 }
 
