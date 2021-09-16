@@ -3,10 +3,11 @@
 #include "TitleScene.h"
 
 
-c_Result::c_Result(float rate) {
+c_Result::c_Result(float rate,int life) {
 	f_loadImage();
 	IsNextScene = false;
-	rateData = rate;
+	playerLife = life-1;
+	rateData = rate * HairScore / HighScore * AcneScore[playerLife];
 	DrawRate = 0.0f;
 	SceneSeq = FADE_IN;
 	c_pad = new c_GamePad(); 
@@ -85,7 +86,7 @@ void c_Result::f_output() const {
 	SetFontSize(48); 
 	
 	DrawFormatString(100, 100, 0x000000, "èÃçÜ:%s", reward[ResType]);
-	DrawFormatString(385, 320, 0x000000, "%05.2f%%", DrawRate);
+	DrawFormatString(50, 320, 0x000000, "Ç®ãqólñûë´ìxÅc%05.2f%%", DrawRate);
 
 	DrawExtendGraph(120, 150, 320, 350, PictImage[ResType], true);
 

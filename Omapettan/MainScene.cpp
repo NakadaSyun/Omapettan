@@ -79,7 +79,7 @@ c_Scene* c_Main::f_update() {
 
 	if (CheckHitKey(KEY_INPUT_SPACE) == 1 && IsNextScene) {
 		StopSoundMem(g_Snd.StageBGM);
-		return new c_Result(c_gm->c_mainUI->rate);
+		return new c_Result(c_gm->c_mainUI->rate,c_gm->c_mainUI->life);
 	}
 	
 	if (CheckHitKey(KEY_INPUT_SPACE) == 0 && !IsNextScene) {
@@ -111,7 +111,7 @@ c_Scene* c_Main::f_update() {
 		{
 
 			StopSoundMem(g_Snd.StageBGM);
-			return new c_Result(c_gm->c_mainUI->rate);
+			return new c_Result(c_gm->c_mainUI->rate, c_gm->c_mainUI->life);
 		}
 	}
 	
@@ -137,7 +137,7 @@ c_Scene* c_Main::f_update() {
 		else
 		{
 			StopSoundMem(g_Snd.StageBGM);
-			return new c_Result(c_gm->c_mainUI->rate);
+			return new c_Result(c_gm->c_mainUI->rate, c_gm->c_mainUI->life);
 		}
 	}
 
@@ -162,7 +162,7 @@ c_Scene* c_Main::f_update() {
 		}
 		else
 		{
-			return new c_Result(c_gm->c_mainUI->rate);
+			return new c_Result(c_gm->c_mainUI->rate, c_gm->c_mainUI->life);
 		}
 	}
 

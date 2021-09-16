@@ -28,6 +28,7 @@ public:
 
 	int timeLimit;		// 制限時間
 	float rate;			// 率
+	int life;			// ライフ
 
 	int f_getTimer(); //timerの値を取得
 
@@ -57,7 +58,6 @@ private:
 	int oldTime;
 
 	int maxLife;		// 最大ライフ
-	int life;			// ライフ
 	float animSpeed;	// ライフのアニメーションスピード
 	int damageAnim;		// ダメージ
 

@@ -3,9 +3,18 @@
 #include "Scene.h"
 #include "Controller.h"
 
+namespace {
+	//剃毛率の最大得点
+	float HairScore = 80.0f;
+	//吹き出物の倍率
+	float AcneScore[3] = { 1.1, 1.15, 1.25 };
+	//最高スコア
+	float HighScore = 100.0f;
+}
+
 class c_Result : public c_Scene{
 public:
-	c_Result(float rate);
+	c_Result(float rate,int life);
 	~c_Result();
 	virtual c_Scene* f_update() override;
 	virtual void f_output() const override;
@@ -30,4 +39,6 @@ private:
 
 	int PictImage[4];
 	int ResType;
+
+	int playerLife;
 };
