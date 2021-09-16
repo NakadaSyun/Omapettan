@@ -60,6 +60,8 @@ c_Scene* c_Main::f_update() {
 
 	const char data[] = __DATE__;
 	const char time[] = __TIME__;
+
+	const int StageVol = int(150.0 / 255 * 25.5 * float(g_Snd.volume));
 	DrawFormatString(500, 420, 0x0000ff, "%c%c%c%c %c%c%c %c%c\n %s",
 		data[7], data[8], data[9], data[10],
 		data[0], data[1], data[2],
@@ -101,7 +103,7 @@ c_Scene* c_Main::f_update() {
 		}
 		else if (StageClearTime < 240)
 		{
-			ChangeVolumeSoundMem(240 - (StageClearTime - 120) * 2, g_Snd.StageBGM);
+			ChangeVolumeSoundMem(StageVol * (1.0f - (((float)StageClearTime - 120.0f) / 120.0f)), g_Snd.StageBGM);
 			StageClearTime++;
 			DrawGraph(0, 0, StageClearImage, false);
 			if (CheckSoundMem(g_Snd.StageClear) == 0) {
@@ -133,6 +135,7 @@ c_Scene* c_Main::f_update() {
 		}
 		else if (StageClearTime < 240)
 		{
+			ChangeVolumeSoundMem(StageVol * (1.0f - (((float)StageClearTime - 120.0f) / 120.0f)), g_Snd.StageBGM);
 			StageClearTime++;
 			DrawGraph(0, 0, StageOverImage, false);
 			if (CheckSoundMem(g_Snd.GameOver) == 0) {
