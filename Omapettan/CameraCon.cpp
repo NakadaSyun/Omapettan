@@ -17,7 +17,7 @@ c_CameraCon::c_CameraCon() {
 
 	rotation = VGet(VRotate, HRotate, TRotate);
 
-	c_mainui = new c_MainUI(0,0);
+	c_mainui = new c_MainUI(0,0,0);
 
 }
 void c_CameraCon::f_rotate(float* x, float* y, const float ang, const float mx, const float my) {

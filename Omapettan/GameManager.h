@@ -61,4 +61,5 @@ private:
 	int image_Acne;
 	int image_Bansoko;
 	int image_mainUI;
+	int image_volumeIcon;
 };
