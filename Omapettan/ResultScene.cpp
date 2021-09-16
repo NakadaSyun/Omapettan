@@ -6,7 +6,7 @@
 c_Result::c_Result(float rate,int life) {
 	f_loadImage();
 	IsNextScene = false;
-	playerLife = life-1;
+	playerLife = life;
 	rateData = rate * HairScore / HighScore * AcneScore[playerLife];
 	DrawRate = 0.0f;
 	SceneSeq = FADE_IN;

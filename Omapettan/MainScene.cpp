@@ -81,7 +81,7 @@ c_Scene* c_Main::f_update() {
 
 	if (CheckHitKey(KEY_INPUT_SPACE) == 1 && IsNextScene) {
 		StopSoundMem(g_Snd.StageBGM);
-		return new c_Result(c_gm->c_mainUI->rate,c_gm->c_mainUI->life);
+		return new c_Result(c_gm->c_mainUI->rate, c_gm->c_acne->f_AcneAliveNum());
 	}
 	
 	if (CheckHitKey(KEY_INPUT_SPACE) == 0 && !IsNextScene) {
@@ -117,7 +117,7 @@ c_Scene* c_Main::f_update() {
 				return this;
 			}
 			StopSoundMem(g_Snd.StageBGM);
-			return new c_Result(c_gm->c_mainUI->rate, c_gm->c_mainUI->life);
+			return new c_Result(c_gm->c_mainUI->rate, c_gm->c_acne->f_AcneAliveNum());
 		}
 	}
 	
@@ -148,7 +148,7 @@ c_Scene* c_Main::f_update() {
 				return this;
 			}
 			StopSoundMem(g_Snd.StageBGM);
-			return new c_Result(c_gm->c_mainUI->rate, c_gm->c_mainUI->life);
+			return new c_Result(c_gm->c_mainUI->rate, c_gm->c_acne->f_AcneAliveNum());
 		}
 	}
 
@@ -179,7 +179,7 @@ c_Scene* c_Main::f_update() {
 				f_fadeout();
 				return this;
 			}
-			return new c_Result(c_gm->c_mainUI->rate, c_gm->c_mainUI->life);
+			return new c_Result(c_gm->c_mainUI->rate, c_gm->c_acne->f_AcneAliveNum());
 		}
 	}
 

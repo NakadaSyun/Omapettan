@@ -94,3 +94,12 @@ bool c_Acne::AcneStatus() {
 
 	return true;		//‚·‚×‚ÄØ‚ç‚ê‚Ä‚¢‚½‚çtrue‚ğ•Ô‚·
 }
+
+int c_Acne::f_AcneAliveNum() {
+	int acneNum = 0;
+	for (int num = 0; num < ACNE_NUM; num++)
+	{
+		if (status[num] == 0)acneNum++;
+	}
+	return acneNum;
+}

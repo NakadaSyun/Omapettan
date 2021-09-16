@@ -7,7 +7,7 @@ namespace {
 	//剃毛率の最大得点
 	float HairScore = 80.0f;
 	//吹き出物の倍率
-	float AcneScore[3] = { 1.1, 1.15, 1.25 };
+	float AcneScore[5] = { 0, 1.1, 1.15, 1.2, 1.25 };
 	//最高スコア
 	float HighScore = 100.0f;
 }
