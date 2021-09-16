@@ -54,6 +54,7 @@ private:
 	int minute;			// 分
 	int second;			// 秒
 	float animCount;
+	int oldTime;
 
 	int maxLife;		// 最大ライフ
 	int life;			// ライフ

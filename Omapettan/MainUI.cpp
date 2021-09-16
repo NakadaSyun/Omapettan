@@ -25,6 +25,7 @@ void c_MainUI::f_init() {
 	minute = timeLimit / 60;			// 分
 	second = timeLimit - (60 * minute);	// 秒
 	animCount = 0.0f;
+	oldTime = 0;
 
 	rate = 0.0f;			// 率
 
@@ -180,6 +181,9 @@ void c_MainUI::TimeCountUI() {
 	}
 	else {
 		// リザルトシーンへ
+		if (isNextResult == false) {
+			PlaySoundMem(g_Snd.TimeUp, DX_PLAYTYPE_BACK);
+		}
 		isNextResult = true;
 	}
 
@@ -189,6 +193,17 @@ void c_MainUI::TimeCountUI() {
 	//	//second = (timer / 1000) - (minute * 60);
 	//}
 
+	// 残り30秒でフォントの色を動かす
+	if (((timer / 1000) != oldTime) && count >= 0) {
+		if (animCount > 30.0f) {
+			oldTime = (timer / 1000);
+			animCount = 0.0f;
+		}
+		else animCount += 1.0f;
+	}
+	else {
+		animCount = 0.0f;
+	}
 }
 
 void c_MainUI::AchievementUI() {
@@ -223,6 +238,13 @@ void c_MainUI::LifeUI() {
 }
 
 void c_MainUI::ThreeCount() {
+	if (threeCountTime % 50 == 0 && threeCountTime / 50 < 3) {
+		PlaySoundMem(g_Snd.ThreeCount, DX_PLAYTYPE_BACK);
+	}
+	if (threeCountTime / 50 == 3 && CheckSoundMem(g_Snd.ThreeCountStart) == 0) {
+		PlaySoundMem(g_Snd.ThreeCountStart, DX_PLAYTYPE_BACK);
+	}
+
 	if (threeCountTime < 200) threeCountTime++;
 	else threeCountTime = 200;
 
@@ -284,6 +306,11 @@ void c_MainUI::Menu_Draw() {
 void c_MainUI::TimeCount_Draw() {
 	SetFontSize(48);// サイズ48
 	DrawFormatString(10, 30, 0xffffff, "%02d:%02d", minute, second);
+	if (minute == 0 && second <= 30) {
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - animCount * 25);
+		DrawFormatString(10, 30, 0xff0000, "%02d:%02d", minute, second);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
 
 	SetFontSize(24);// サイズ24
 	DrawFormatString(24, 5, 0x00ff00, "残り時間");

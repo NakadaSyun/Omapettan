@@ -68,7 +68,7 @@ c_Scene* c_Main::f_update() {
 	//DrawFormatString(300, 460, 0x0000ff, "ビルド作成日時%d年%d月%d日%d時%d分%d秒\n", yeah, mon, day, hour, minute, sec);
 
 	//ステージBGM処理
-	if (CheckSoundMem(g_Snd.StageBGM) == 0) {
+	if (CheckSoundMem(g_Snd.StageBGM) == 0 && c_gm->c_mainUI->startFlg == true) {
 		SetFrequencySoundMem(48000, g_Snd.StageBGM);
 		PlaySoundMem(g_Snd.StageBGM, DX_PLAYTYPE_LOOP);
 	}
@@ -154,9 +154,11 @@ c_Scene* c_Main::f_update() {
 		if (StageClearTime < 180)
 		{
 			StageClearTime++;
+			ChangeFontType(DX_FONTTYPE_ANTIALIASING_EDGE);
 			SetFontSize(64);// サイズ64
-			DrawFormatString(190, 220, 0x00ff00, "TIME UP!");
+			DrawFormatString(190, 200, 0x00ff00, "TIME UP!");
 			SetFontSize(16);// サイズ16
+			ChangeFontType(DX_FONTTYPE_NORMAL);
 		}
 		else
 		{

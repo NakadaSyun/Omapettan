@@ -20,6 +20,9 @@ int f_LoadSound(void) {		//音の読み込み
 	if ((g_Snd.Customer_Cry[1] = LoadSoundMem("Sound/ダメージ音２.wav")) == -1)return -1;				//お客さんのダメージSE2
 	if ((g_Snd.Customer_Cry[2] = LoadSoundMem("Sound/ダメージ音３.mp3")) == -1)return -1;				//お客さんのダメージSE3
 	if ((g_Snd.Customer_Cry[3] = LoadSoundMem("Sound/ダメージ音４.wav")) == -1)return -1;				//お客さんのダメージSE4
+	if ((g_Snd.TimeUp = LoadSoundMem("Sound/試合終了のゴング.mp3")) == -1)return -1;					//タイムアップ時SE
+	if ((g_Snd.ThreeCount = LoadSoundMem("Sound/Countdown01-5.mp3")) == -1)return -1;					//3秒カウントSE
+	if ((g_Snd.ThreeCountStart = LoadSoundMem("Sound/Countdown01-6.mp3")) == -1)return -1;				//3秒カウント(ゲーム開始)SE
 	if ((g_Snd.GameOver = LoadSoundMem("Sound/sei_ge_garasu_ware03.mp3")) == -1)return -1;				//ゲームオーバー時SE
 	if ((g_Snd.TitleBGM = LoadSoundMem("Sound/MusMus-BGM-128.mp3")) == -1)return -1;					//タイトルBGM
 	if ((g_Snd.StageBGM = LoadSoundMem("Sound/StageBGM.mp3")) == -1)return -1;							//ステージBGM
@@ -52,6 +55,9 @@ void Sound::SetSound() {
 	ChangeVolumeSoundMem(int(              25.5 * float(g_Snd.volume)), g_Snd.Customer_Cry[1]);
 	ChangeVolumeSoundMem(int(              25.5 * float(g_Snd.volume)), g_Snd.Customer_Cry[2]);
 	ChangeVolumeSoundMem(int(              25.5 * float(g_Snd.volume)), g_Snd.Customer_Cry[3]);
+	ChangeVolumeSoundMem(int(              25.5 * float(g_Snd.volume)), g_Snd.TimeUp);
+	ChangeVolumeSoundMem(int(              25.5 * float(g_Snd.volume)), g_Snd.ThreeCount);
+	ChangeVolumeSoundMem(int(              25.5 * float(g_Snd.volume)), g_Snd.ThreeCountStart);
 	ChangeVolumeSoundMem(int(100.0 / 255 * 25.5 * float(g_Snd.volume)), g_Snd.GameOver);
 	ChangeVolumeSoundMem(int(100.0 / 255 * 25.5 * float(g_Snd.volume)), g_Snd.TitleBGM);
 	ChangeVolumeSoundMem(int(150.0 / 255 * 25.5 * float(g_Snd.volume)), g_Snd.StageBGM);

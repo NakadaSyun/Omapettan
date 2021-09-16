@@ -17,6 +17,9 @@ public:
 	int Menu_Cansel;		   //メニュー内でのキャンセル
 	int Customer_Damage;	   //フキデモの破壊
 	int Customer_Cry[4];	   //フキデモの破壊、客の叫び
+	int TimeUp;					//タイムアップ
+	int ThreeCount;				//三秒カウント
+	int ThreeCountStart;		//三秒カウント(ゲーム開始)
 	int GameOver;			   //ゲームオーバー時SE
 	int TitleBGM;			   //タイトル画面のBGM
 	int StageBGM;			   //ステージ内でのBGM
