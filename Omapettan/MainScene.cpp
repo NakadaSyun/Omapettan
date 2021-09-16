@@ -103,7 +103,7 @@ c_Scene* c_Main::f_update() {
 		{
 			ChangeVolumeSoundMem(240 - (StageClearTime - 120) * 2, g_Snd.StageBGM);
 			StageClearTime++;
-			DrawGraph(0, 0, StageClearImage, true);
+			DrawGraph(0, 0, StageClearImage, false);
 			if (CheckSoundMem(g_Snd.StageClear) == 0) {
 				PlaySoundMem(g_Snd.StageClear, DX_PLAYTYPE_BACK);
 			}
@@ -112,7 +112,7 @@ c_Scene* c_Main::f_update() {
 		else
 		{
 			if (SceneSeq == IDOL) {
-				DrawGraph(0, 0, StageClearImage, true);
+				DrawGraph(0, 0, StageClearImage, false);
 				f_fadeout();
 				return this;
 			}
@@ -143,7 +143,7 @@ c_Scene* c_Main::f_update() {
 		else
 		{
 			if (SceneSeq == IDOL) {
-				DrawGraph(0, 0, StageOverImage, true);
+				DrawGraph(0, 0, StageOverImage, false);
 				f_fadeout();
 				return this;
 			}

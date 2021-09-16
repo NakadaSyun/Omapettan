@@ -30,6 +30,7 @@ class c_Acne{
 public:
 	c_Acne(const int Acne_Model,const int Acne_Graph, const int Bandage_Model);
 	c_Acne();
+	~c_Acne();
 	void f_init();
 	void f_output();
 	void f_update();
