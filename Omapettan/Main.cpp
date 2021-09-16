@@ -9,11 +9,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_
 
 
 	//デバックコンソールの表示
-	AllocConsole();
-	FILE* fp;
+	//AllocConsole();
+	/*FILE* fp;
 	freopen_s(&fp, "CONOUT$", "w", stdout);
 	freopen_s(&fp, "CONIN$", "r", stdin);
-	printf("デバックコンソール\n");
+	printf("デバックコンソール\n");*/
 
 	//ゲームの環境設定
 	if (gameBase.f_init() == false) {

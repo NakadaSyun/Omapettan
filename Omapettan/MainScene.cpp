@@ -96,6 +96,7 @@ c_Scene* c_Main::f_update() {
 
 	//–Ñ‚ª‘S•”’ä‚ç‚ê‚½ó‘Ô‚È‚çResultƒV[ƒ“‚Ö
 	if (c_gm->c_hair->f_hairStatusSee()) {
+		c_gm->c_player->IsMove = false;
 		isClearFlg = true;
 		if (StageClearTime < 120)
 		{
