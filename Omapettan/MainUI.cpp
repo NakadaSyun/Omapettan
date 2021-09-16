@@ -46,7 +46,7 @@ void c_MainUI::f_init() {
 	startFlg = false;
 
 	setVolumeFlg = false;
-	sliderValue = 50;
+	sliderValue = g_Snd.volume;
 	padInputFlg = false;
 }
 
@@ -95,7 +95,6 @@ void c_MainUI::MenuUI() {
 		if (pauseFlg == false) {
 			pauseFlg = true;
 			setVolumeFlg = false;
-			sliderValue = g_Snd.volume;
 
 			PlaySoundMem(g_Snd.Menu_Open, DX_PLAYTYPE_BACK);
 		}
@@ -103,7 +102,9 @@ void c_MainUI::MenuUI() {
 			// ŽžŠÔ = ŽžŠÔ + ((‹N“®ŽžŠÔ - ŽžŠÔ) - Œo‰ßŽžŠÔ)
 			time = time + ((GetNowCount() - time) - timer);
 			pauseFlg = false;
+			sliderValue = g_Snd.volume;
 
+			g_Snd.SetSound_Menumove(sliderValue);
 			PlaySoundMem(g_Snd.Menu_Cansel, DX_PLAYTYPE_BACK);
 		}
 
