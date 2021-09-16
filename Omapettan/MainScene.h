@@ -23,6 +23,9 @@ private:
 	int StageOverImage;	//ステージクリア画像
 	int StageClearTime = 0; //クリアカウント用
 
+	int Brightness;		//明るさ調整用変数
+	int SceneSeq;		//フェード用変数
+
 	bool DebugFlg; //デバッグモード表示・非表示用フラグ
 	bool KeyDownFlg;//キーが押されたどうかのフラグ
 

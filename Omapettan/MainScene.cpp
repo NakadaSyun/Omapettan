@@ -43,7 +43,8 @@ c_Main::c_Main() {
 	//minute = Date.Min;
 	//sec = Date.Sec;
 
-
+	SceneSeq = IDOL;
+	Brightness = 255;
 
 	ChangeVolumeSoundMem(int(150.0 / 255 * 25.5 * float(g_Snd.volume)), g_Snd.StageBGM);
 
@@ -109,7 +110,11 @@ c_Scene* c_Main::f_update() {
 		}
 		else
 		{
-
+			if (SceneSeq == IDOL) {
+				DrawGraph(0, 0, StageClearImage, true);
+				f_fadeout();
+				return this;
+			}
 			StopSoundMem(g_Snd.StageBGM);
 			return new c_Result(c_gm->c_mainUI->rate, c_gm->c_mainUI->life);
 		}
@@ -136,6 +141,11 @@ c_Scene* c_Main::f_update() {
 		}
 		else
 		{
+			if (SceneSeq == IDOL) {
+				DrawGraph(0, 0, StageOverImage, true);
+				f_fadeout();
+				return this;
+			}
 			StopSoundMem(g_Snd.StageBGM);
 			return new c_Result(c_gm->c_mainUI->rate, c_gm->c_mainUI->life);
 		}
@@ -162,6 +172,10 @@ c_Scene* c_Main::f_update() {
 		}
 		else
 		{
+			if (SceneSeq == IDOL) {
+				f_fadeout();
+				return this;
+			}
 			return new c_Result(c_gm->c_mainUI->rate, c_gm->c_mainUI->life);
 		}
 	}
@@ -265,15 +279,22 @@ void c_Main::f_debugUI() {
 
 
 void c_Main::f_fadein() {
-	static int c = 0;
-	c += 3;
-	if (c > 255)c = 255;
-	SetDrawBright(c, c, c);
+	Brightness += 3;
+	if (Brightness > 255) {
+		SceneSeq = IDOL;
+		Brightness = 255;
+	}
+	SetDrawBright(Brightness, Brightness, Brightness);
+
 }
 
 void c_Main::f_fadeout() {
-	static int c = 255;
-	c -= 3;
-	if (c < 0)c = 0;
-	SetDrawBright(c, c, c);
+	Brightness -= 3;
+	if (Brightness < 0) {
+		Brightness = 0;
+		SceneSeq = NEXT_SCENE;
+	}
+	else {
+		SetDrawBright(Brightness, Brightness, Brightness);
+	}
 }

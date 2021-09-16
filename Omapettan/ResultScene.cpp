@@ -76,7 +76,7 @@ c_Scene* c_Result::f_update() {
 
 void c_Result::f_output() const {
 	char reward[4][20] = {
-		 {"Got Of こびと"},
+		 {"神・こびと"},
 		 {"熟練こびと"},
 		 {"凡人こびと"},
 		 {"新人こびと"},
