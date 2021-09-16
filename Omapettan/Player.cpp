@@ -243,7 +243,9 @@ void c_Player::f_update(bool Isfall) {
 		                      cosf(p_Rotation.y) * +DISTANCE_TO_COLLISION_DETECTION + p_Position.z));
 
 	if (IsAcneHit) {			//吹き出物と衝突していたら一フレーム前の座標に戻す
-		p_Position = p_OldPosition;
+		p_Position = VGet(p_OldPosition.x,
+						p_Position.y,
+						cosf(p_Rotation.y) * 100 + p_OldPosition.z);
 	}
 	else {
 		p_OldPosition = p_Position;

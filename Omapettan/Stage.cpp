@@ -28,6 +28,7 @@ c_Stage::c_Stage(const int Model) {
 }
 
 c_Stage::~c_Stage() {
+	printf("c_Stage Delete\n");
 	delete c_colision;
 	delete c_pad;
 }
@@ -82,7 +83,7 @@ void c_Stage::f_update() {
 	}
 
 	if (IsAcneHit) {		//吹き出物に衝突していたら一フレーム前の回転値に戻す
-		Arm_XRotate = Arm_OldXRotate;
+		Arm_XRotate = Arm_XRotate - (Arm_XRotate - Arm_OldXRotate) * 5;
 	}
 	else {
 		Arm_OldXRotate = Arm_XRotate;
