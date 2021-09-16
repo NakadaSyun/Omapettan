@@ -21,6 +21,7 @@ private:
 
 	int StageClearImage;	//ステージクリア画像
 	int StageOverImage;	//ステージクリア画像
+	int TimeUPImage;		//タイムアップ画像
 	int StageClearTime = 0; //クリアカウント用
 
 	int Brightness;		//明るさ調整用変数

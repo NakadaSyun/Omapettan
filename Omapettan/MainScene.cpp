@@ -24,6 +24,7 @@ c_Main::c_Main() {
 	//
 	StageOverImage = LoadGraph("images/GameOver.png");
 	StageClearImage = LoadGraph("images/StageClear.png");
+	TimeUPImage = LoadGraph("images/TimeUP.png");
 	
 	//デバッグモードを非表示
 	DebugFlg = false;
@@ -164,15 +165,17 @@ c_Scene* c_Main::f_update() {
 		if (StageClearTime < 180)
 		{
 			StageClearTime++;
-			ChangeFontType(DX_FONTTYPE_ANTIALIASING_EDGE);
-			SetFontSize(64);// サイズ64
-			DrawFormatString(190, 200, 0x00ff00, "TIME UP!");
-			SetFontSize(16);// サイズ16
-			ChangeFontType(DX_FONTTYPE_NORMAL);
+			DrawGraph(0, 0, TimeUPImage, true);
+			//ChangeFontType(DX_FONTTYPE_ANTIALIASING_EDGE);
+			//SetFontSize(64);// サイズ64
+			//DrawFormatString(190, 200, 0x00ff00, "TIME UP!");
+			//SetFontSize(16);// サイズ16
+			//ChangeFontType(DX_FONTTYPE_NORMAL);
 		}
 		else
 		{
 			if (SceneSeq == IDOL) {
+				DrawGraph(0, 0, TimeUPImage, true);
 				f_fadeout();
 				return this;
 			}
