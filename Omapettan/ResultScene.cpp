@@ -7,9 +7,23 @@ c_Result::c_Result(float rate) {
 	f_loadImage();
 	IsNextScene = false;
 	rateData = rate;
+	DrawRate = 0.0f;
 	SceneSeq = FADE_IN;
 	c_pad = new c_GamePad(); 
 	Brightness = 0;
+
+	if (rateData >= 75) {
+		ResType = 0;
+	}
+	else if ((rateData < 75) && (rateData >= 50)) {
+		ResType = 1;
+	}
+	else if ((rateData < 50) && (rateData >= 25)) {
+		ResType = 2;
+	}
+	else {
+		ResType = 3;
+	}
 }
 
 c_Result::~c_Result() {
@@ -31,6 +45,10 @@ c_Scene* c_Result::f_update() {
 
 		if (!c_pad->IsButton1 && !IsNextScene) {
 			IsNextScene = true;
+		}
+		if (DrawRate < rateData) {
+			DrawRate += rateData / 60;
+			if (DrawRate > rateData)DrawRate = rateData;
 		}
 		break;
 
@@ -56,13 +74,24 @@ c_Scene* c_Result::f_update() {
 }
 
 void c_Result::f_output() const {
+	char reward[4][20] = {
+		 {"Got Of こびと"},
+		 {"熟練こびと"},
+		 {"凡人こびと"},
+		 {"新人こびと"},
+	};
+
 	DrawGraph(0, 0, BG, true);
-	if (rateData >= 75) DrawGraph(500, 380, God, true);
-	else if ((rateData < 75) && (rateData >= 50)) DrawGraph(500, 380, Expert, true);
-	else if ((rateData < 50) && (rateData >= 25)) DrawGraph(500, 380, Common, true);
-	else DrawGraph(500, 380, Beginner, true);
-	DrawFormatString(250, 400, 0x000000, "Aボタンでタイトルに戻る");
-	DrawFormatString(480, 30, 0x000000, "%03d%%", (int)rateData);
+	SetFontSize(48); 
+	
+	DrawFormatString(100, 100, 0x000000, "称号:%s", reward[ResType]);
+	DrawFormatString(385, 320, 0x000000, "%05.2f%%", DrawRate);
+
+	DrawExtendGraph(120, 150, 320, 350, PictImage[ResType], true);
+
+
+	SetFontSize(12);
+	DrawFormatString(250, 395, 0x000000, "Aボタンでタイトルに戻る");
 }
 
 void c_Result::f_loadImage() {
@@ -71,6 +100,11 @@ void c_Result::f_loadImage() {
 	Common = LoadGraph("images/bonzin.png");
 	Expert = LoadGraph("images/zyukuren.png");
 	God = LoadGraph("images/God.png");
+
+	PictImage[0] = LoadGraph("images/GotPict.png");
+	PictImage[1] = LoadGraph("images/ExpertPict.png");
+	PictImage[2] = LoadGraph("images/NormalPict.png");
+	PictImage[3] = LoadGraph("images/NoobPict.png");
 }
 
 

@@ -24,6 +24,10 @@ private:
 	int God;
 
 	float rateData;
+	float DrawRate;
 	int SceneSeq;	//タイトルシーンの状態	0:フェードイン　1:入力待ち　2:フェードアウト
 	int Brightness;
+
+	int PictImage[4];
+	int ResType;
 };
