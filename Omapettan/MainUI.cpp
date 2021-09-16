@@ -4,10 +4,11 @@
 
 extern Sound g_Snd;
 
-c_MainUI::c_MainUI(int bansokoImg, int mainUIImg) {
+c_MainUI::c_MainUI(int bansokoImg, int mainUIImg, int soundIconImg) {
 	c_MainUI::f_init();
 	bansoko_Img = bansokoImg;
 	mainUI_Img = mainUIImg;
+	soundIcon_Img = soundIconImg;
 
 	c_Pad = new c_GamePad();
 }
@@ -277,21 +278,21 @@ void c_MainUI::Menu_Draw() {
 			case 0:
 				// [ゲームを再開]選択
 				DrawFormatString(205, 150, 0xff0000, "ゲームを再開");
-				DrawFormatString(220, 200, 0xffffff, "サウンド");
+				DrawFormatString(246, 200, 0xffffff, "サウンド");
 				DrawFormatString(190, 250, 0xffffff, "タイトルへ戻る");
 				break;
 
 			case 1:
 				// [音量設定]選択
 				DrawFormatString(205, 150, 0xffffff, "ゲームを再開");
-				DrawFormatString(220, 200, 0xff0000, "サウンド");
+				DrawFormatString(246, 200, 0xff0000, "サウンド");
 				DrawFormatString(190, 250, 0xffffff, "タイトルへ戻る");
 				break;
 
 			case 2:
 				// [タイトルへ戻る]選択
 				DrawFormatString(205, 150, 0xffffff, "ゲームを再開");
-				DrawFormatString(220, 200, 0xffffff, "サウンド");
+				DrawFormatString(246, 200, 0xffffff, "サウンド");
 				DrawFormatString(190, 250, 0xff0000, "タイトルへ戻る");
 				break;
 
@@ -375,9 +376,12 @@ int c_MainUI::f_getTimer() {
 
 void c_MainUI::DrawSetVolume() {
 
-	DrawFormatString(220, 190, 0xffffff, "サウンド");
-	DrawFormatString(220, 230, 0xffffff, "--------");
-	DrawFormatString(220 + sliderValue * 12, 230, 0xffffff, "●");
+	DrawFormatString(246, 190, 0xffffff, "サウンド");
+	DrawBox(215, 240, 207 + sliderValue * 20, 245, GetColor(200, 200, 200), true);
+	DrawBox(207 + sliderValue * 20, 240, 420, 245, GetColor(100, 100, 100), true);
+	DrawExtendGraph(207 + sliderValue * 20, 230,
+		            207 + sliderValue * 20 + 25, 230 + 25,
+		            soundIcon_Img, true);
 	
 }
 

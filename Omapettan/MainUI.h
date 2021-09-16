@@ -6,7 +6,7 @@
 
 class c_MainUI {
 public:
-	c_MainUI(int bansokoImg, int mainUIImg);
+	c_MainUI(int bansokoImg, int mainUIImg, int soundIconImg);
 	~c_MainUI();
 	void f_init();		// ‰Šú‰»
 	void f_update();	// XV
@@ -65,6 +65,7 @@ private:
 
 	int bansoko_Img;
 	int mainUI_Img;
+	int soundIcon_Img;
 
 	int menuCount;
 

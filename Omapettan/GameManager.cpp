@@ -38,7 +38,7 @@ void c_GameManager::f_init()
 
 	c_pad = new c_GamePad();
 
-	c_mainUI = new c_MainUI(image_Bansoko, image_mainUI);
+	c_mainUI = new c_MainUI(image_Bansoko, image_mainUI, image_volumeIcon);
 
 	c_acne = new c_Acne(model_Acne, image_Acne, model_Bandage);
 
@@ -69,6 +69,7 @@ void c_GameManager::f_RoadImage()
 	image_Acne = LoadGraph("images/acne.bmp");
 	image_Bansoko = LoadGraph("images/Bansoko.png");
 	image_mainUI = LoadGraph("images/MainUI.png");
+	image_volumeIcon = LoadGraph("images/volume_icon.png");
 
 }
 
