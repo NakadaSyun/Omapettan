@@ -100,10 +100,7 @@ void c_GameManager::f_update()
 			c_hair->f_getRotationY(num, c_player->f_GetPlayerRotationY());
 			c_hair->f_hairCut(num);
 			c_pad->f_HairCutVibration();
-			//printf("%d\n", num);
 
-			//printf("\npR = %f\n", c_player->f_GetPlayerRotationY());
-			//printf("\ncPx=%f, cPz=%f\n", c_player->c_colision->pos.x, c_player->c_colision->pos.z);
 		}
 	}
 
@@ -121,18 +118,7 @@ void c_GameManager::f_update()
 			}
 		}
 	}
-	
 
-	////毛の当たり判定用のデバッグ
-	//for (int num = 0; num < HAIR_NUM; num++)
-	//{
-	//	if (!c_hair->HitHair[num])
-	//	{
-	//		//printf("atatta");
-	//		std::cout << "HitHair" << num << "is" << c_hair->HitHair[num] << std::endl;
-	//		c_hair->HitHair[num] = true;
-	//	}
-	//}
 
 	// 一時停止用フラグ
 	if (c_mainUI->pauseFlg == false) {

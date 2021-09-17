@@ -250,14 +250,16 @@ void c_Hair::f_setPosAndRot() {
 			|| (((acnepersonalpos->acnepersonalPosZ[1] + HAIR_ADJUST_POS_ACNE > personalPosZ[i]) && (acnepersonalpos->acnepersonalPosZ[1] < personalPosZ[i])) || ((acnepersonalpos->acnepersonalPosZ[1] - HAIR_ADJUST_POS_ACNE < personalPosZ[i]) && (acnepersonalpos->acnepersonalPosZ[1] > personalPosZ[i])))
 			|| (((acnepersonalpos->acnepersonalPosZ[2] + HAIR_ADJUST_POS_ACNE > personalPosZ[i]) && (acnepersonalpos->acnepersonalPosZ[2] < personalPosZ[i])) || ((acnepersonalpos->acnepersonalPosZ[2] - HAIR_ADJUST_POS_ACNE < personalPosZ[i]) && (acnepersonalpos->acnepersonalPosZ[2] > personalPosZ[i])))
 			|| (((acnepersonalpos->acnepersonalPosZ[3] + HAIR_ADJUST_POS_ACNE > personalPosZ[i]) && (acnepersonalpos->acnepersonalPosZ[3] < personalPosZ[i])) || ((acnepersonalpos->acnepersonalPosZ[3] - HAIR_ADJUST_POS_ACNE < personalPosZ[i]) && (acnepersonalpos->acnepersonalPosZ[3] > personalPosZ[i])))
-			&& (CheckingOverlapsWithPlayer(personalRotation[i], personalPosZ[i]) == false)); {
+			&& (CheckingOverlapsWithPlayer(personalRotation[i], personalPosZ[i]) == false)) {
 			while (i > 0) {
 				personalPosZ[i] = GetRand(ARM_LENGTH) + ARM_ADJUST_POS;
 				if ((((acnepersonalpos->acnepersonalPosZ[0] + HAIR_ADJUST_POS_ACNE > personalPosZ[i]) && (acnepersonalpos->acnepersonalPosZ[0] < personalPosZ[i])) || ((acnepersonalpos->acnepersonalPosZ[0] - HAIR_ADJUST_POS_ACNE < personalPosZ[i]) && (acnepersonalpos->acnepersonalPosZ[0] > personalPosZ[i])))
 					|| (((acnepersonalpos->acnepersonalPosZ[1] + HAIR_ADJUST_POS_ACNE > personalPosZ[i]) && (acnepersonalpos->acnepersonalPosZ[1] < personalPosZ[i])) || ((acnepersonalpos->acnepersonalPosZ[1] - HAIR_ADJUST_POS_ACNE < personalPosZ[i]) && (acnepersonalpos->acnepersonalPosZ[1] > personalPosZ[i])))
 					|| (((acnepersonalpos->acnepersonalPosZ[2] + HAIR_ADJUST_POS_ACNE > personalPosZ[i]) && (acnepersonalpos->acnepersonalPosZ[2] < personalPosZ[i])) || ((acnepersonalpos->acnepersonalPosZ[2] - HAIR_ADJUST_POS_ACNE < personalPosZ[i]) && (acnepersonalpos->acnepersonalPosZ[2] > personalPosZ[i])))
 					|| (((acnepersonalpos->acnepersonalPosZ[3] + HAIR_ADJUST_POS_ACNE > personalPosZ[i]) && (acnepersonalpos->acnepersonalPosZ[3] < personalPosZ[i])) || ((acnepersonalpos->acnepersonalPosZ[3] - HAIR_ADJUST_POS_ACNE < personalPosZ[i]) && (acnepersonalpos->acnepersonalPosZ[3] > personalPosZ[i])))
-					&& (CheckingOverlapsWithPlayer(personalRotation[i], personalPosZ[i]) == false));
+					&& (CheckingOverlapsWithPlayer(personalRotation[i], personalPosZ[i]) == false)) {
+					;
+				}
 				else {
 					break;
 				}
@@ -283,7 +285,6 @@ void c_Hair::f_hairCut(int num) {
 		hairStatus[num] = SHAVED;
 		HitHair[num] = false;
 		PlaySoundMem(g_Snd.HIGESORI_SE, DX_PLAYTYPE_BACK);
-		//printf("num=%d status=%d\n", num,hairStatus[num]);
 	}
 }
 
@@ -332,7 +333,6 @@ void c_Hair::f_hairUpdate() {
 				num++;
 			}
 		}
-		//printf("%d\n",num);
 		numflg = false;
 	}
 
@@ -345,12 +345,10 @@ bool c_Hair::f_hairStatusSee() {
 	{
 		if (hairStatus[i] == ROOTED_IS)
 		{
-			//printf("%d", hairStatus[0]);
 			return false;
 		}
 	}
 
-	//printf("gomi");
 	//‘S•”’ä‚ç‚ê‚Ä‚½‚çtrue‚ð•Ô‚·
 	return true;
 }
@@ -395,7 +393,6 @@ void c_Hair::f_Animupdate(int i) {
 		NowAnimTime = (AnimTotalTime * (3.0f / 4.0f)) - (personalAnimTime[i] - (AnimTotalTime * (3.0f / 4.0f)));
 	}
 
-	//if (i == 0)printf("Now = %f\tpersonal = %f\n", NowAnimTime, personalAnimTime[i]);
 	MV1SetAttachAnimTime(modelHandle, 0, NowAnimTime);
 }
 

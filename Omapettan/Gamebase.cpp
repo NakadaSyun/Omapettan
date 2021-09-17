@@ -14,6 +14,7 @@ bool GameBase::f_init()
 	//Windowサイズの設定
 	SetGraphMode(640, 480, 16);
 
+	isRunning = TRUE;
 
 
 	//Windowモード変更と初期化

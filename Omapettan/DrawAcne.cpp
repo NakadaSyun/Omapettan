@@ -33,8 +33,6 @@ c_Acne::c_Acne(const int Acne_Model,const int Acne_Graph, const int Bandage_Mode
 
 		acnepersonalRotation[i] = GetRand(int(2 * float(DX_PI) * 100)) * 0.01f;
 
-		//printf("\n%d\t%f", i, acnepersonalPosZ[i]);
-
 		status[i] = 0;
 
 		c_collision[i] = new c_Collision(position[i], 120.0f, 120.0f, 80.0f);
@@ -50,14 +48,8 @@ c_Acne::~c_Acne() {
 	for (int i = 0; i < ACNE_NUM; i++) {
 		delete c_collision[i];
 	}
-	printf("c_Acne Delete");
 }
 void c_Acne::f_init() {
-	//for (int i = 0; i < ACNE_NUM; i++) {
-	//	acnepersonalRotation[i] = GetRand(int(2 * float(DX_PI) * 100)) * 0.01f;
-	//	acnepersonalPosZ[i] = GetRand(ARM_LENGTH_ACNE);
-		//printf("guys!%f\n", acnepersonalPosZ[i]);
-	//}
 }
 
 void c_Acne::f_update() {

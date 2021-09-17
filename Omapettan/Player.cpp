@@ -313,6 +313,5 @@ void c_Player::AnimSet() {
 	if (NowAnimTime > TotalAnimTime) {
 		NowAnimTime = 0.0f;
 	}
-	printf("%d\n", p_SpeedMagnification);
 	MV1SetAttachAnimTime(p_Model, 0, NowAnimTime);
 }

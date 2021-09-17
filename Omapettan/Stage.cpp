@@ -28,7 +28,6 @@ c_Stage::c_Stage(const int Model) {
 }
 
 c_Stage::~c_Stage() {
-	printf("c_Stage Delete\n");
 	delete c_colision;
 	delete c_pad;
 }
